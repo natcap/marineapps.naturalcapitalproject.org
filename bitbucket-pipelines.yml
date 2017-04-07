@@ -6,4 +6,4 @@ pipelines:
         script:
           - echo ${GOOGLE_SERVICE_ACC_KEY} > client-secret.json
           - gcloud auth activate-service-account --key-file=client-secret.json
-          - gsutil rsync -dmr site gs://marineapps.naturalcapitalproject.org
+          - gsutil -m rsync -dr site gs://marineapps.naturalcapitalproject.org
