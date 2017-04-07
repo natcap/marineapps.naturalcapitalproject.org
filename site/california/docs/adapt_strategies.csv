@@ -1,0 +1,8 @@
+STRATEGY,TYPE,Description,EXAMPLE,LAT,LON,HABITAT,ZONING,NNBS
+Shoreline protection device,Protect,Use of hard protection only if allowable and if no feasible less damaging alternative exists (A.20),Stinson Beach,37.901424,-122.651212,None,Commercial and Industrial,Not using nature
+Nourish beach,Protect,Establish a beach nourishment program and protocols (A.19a),Ocean Beach,37.7607,-122.511956,Beach,Public Parks Open,Using nature
+Restore dune,Protect,Establish management actions to maintain and restore dunes and natural processes (A.19b),Mouth of Salinas River,36.750774,-121.804764,Dune,Public Parks Open,Using nature
+Residential condemnation,Retreat,Develop a plan to remove or relocate structures that become threatened (A.9a),Gleason Beach,38.388712,-123.084796,None,Residential,Not using nature
+Conservation easement,Hybrid,Establish conservation easements or other development restrictions to protect habitat (C.1c),Lower Eel River Delta,40.636089,-124.3121,None,Agricultural,Not using nature
+Wetland restoration in salt marsh,Accommodate,Identify opportunities for beneficial reuse of sediment to support wetland restoration (A.19c),Elkhorn Slough,36.807384,-121.788866,Wetlands,Public Parks Open,Using nature
+Revetment with dune,Protect,Establish a dune management system with some hard armoring as a foundation,Broad Beach,34.035185,-118.857188,Dune,Residential,Nature and built
