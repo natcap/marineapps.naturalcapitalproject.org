@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.js'></script>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.css' rel='stylesheet' />
+  <script src="../L.Wax.js"></script>
+  <!--[if lte IE 8]>
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.ie.css' rel='stylesheet' >
+  <![endif]-->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+<style>
+
+ #map-ui {
+    position:absolute;
+    top:10px;left:10px;
+    z-index:100;
+    }
+ #map-ui ul {
+    list-style:none;
+    margin:0;padding:0;
+    }
+ #map-ui a {
+	font: normal 13px/18px 'Helvetica Neue', Helvetica, sans-serif;
+    font-size:13px;
+    background:#ECF5FA;
+    color:#000000;
+    display:block;
+    margin:0;padding:0;
+    border:1px solid #BBB;
+    border-bottom-width:0;
+    min-width:138px;
+    padding:10px;
+    text-decoration:none;
+    }
+ #map-ui a:hover { background:#3887BE; }
+ #map-ui li:last-child a {
+    border-bottom-width:1px;
+    -webkit-border-radius:0 0 3px 3px;
+    border-radius:0 0 3px 3px;
+    }
+ #map-ui li:first-child a {
+    -webkit-border-radius:3px 3px 0 0;
+    border-radius:3px 3px 0 0;
+    }
+</style>
+
+
+<div id='map-ui'>
+  <ul>
+  <br><p><br><p><br><p><br><p>
+    <center>
+	<basefont color="black" face="Helvetica Neue, Helvetica, sans-serif"><b><u>Regional Zoom</u>:</b>
+	<li><a href='#' data-position1='40,-121'>US West Coast</a></li>
+    <li><a href='#' data-position1='36.5,-70'>US East Coast</a></li>
+    <li><a href='#' data-position2='28,-89'>US Gulf Coast</a></li>
+	<li><a href='#' data-position3='64,-155'>Alaska</a></li>
+    <li><a href='#' data-position2='20,-155'>Hawaii</a></li>
+	<li><a href='#' data-position3='40,-98'>Continental US</a></li>
+	</center>
+  </ul>
+</div>
+
+<div id='map'></div>
+
+<div id='legend-content' style='display: none;'>
+	<div class='my-legend'>
+	
+	<div class='legend-title'>COASTAL HAZARD INDEX</div>
+	<div class='legend-scale'>
+	  <ul class='legend-labels'>
+		<li><span style='background:#528FD4;'></span>Lowest</li>
+		<li><span style='background:#FFCC00;'></span>Medium</li>
+		<li><span style='background:#C00000;'></span>Highest</li>
+		<br>
+		<h5>
+		<li>< 2.36</li>
+		<li>2.36 - 3.36</li>
+		<li>> 3.36</li>
+		</h5>
+	  </ul>
+	</div>
+
+  <div class='legend-source'>Source: <a href="http://data.naturalcapitalproject.org/invest-releases/documentation/current_release/coastal_vulnerability.html" target="_blank">InVEST Coastal Vulnerability model</a></div>
+  <br>
+  <center>
+  <img src="http://www.geointerest.frih.org/InVESTNatCap_logo.png">
+  <hr>
+  </center><u>Change Layers</u>: hover over layers pallete in upper right<br>
+  <u>Quick Zoom</u>: hold shift key and draw box<br>
+
+  </div>
+
+
+<div id='legend-content' style='display: none;'>
+  <style type='text/css'>
+    .my-legend .legend-title {
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 90%;
+      }
+    .my-legend .legend-scale ul {
+      margin: 0;
+      padding: 0;
+      float: left;
+      list-style: none;
+      }
+    .my-legend .legend-scale ul li {
+      display: block;
+      float: left;
+      width: 50px;
+      margin-bottom: 6px;
+      text-align: center;
+      font-size: 80%;
+      list-style: none;
+      }
+    .my-legend ul.legend-labels li span {
+      display: block;
+      float: left;
+      height: 15px;
+      width: 50px;
+      }
+    .my-legend .legend-source {
+      font-size: 70%;
+      color: #999;
+      clear: both;
+      }
+    .my-legend a {
+      color: #777;
+      }
+  </style>
+</div>
+
+<script type='text/javascript'>
+
+  var map = L.mapbox.map('map', 'mapbox.world-light', { zoomControl: false }).setView([39, -99], 4); 
+
+  map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
+  map.gridControl.options.follow = true;
+  new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+  L.control.scale().addTo(map);
+  map.attributionControl.setPrefix('<a href="http://www.naturalcapitalproject.org/">Map by: Gregg Verutes, Natural Capital Project © 2013</a>');
+
+  var gridLayerWC = L.mapbox.gridLayer('geointerest.NCA_C_H_WC');
+  var gridLayerEC = L.mapbox.gridLayer('geointerest.NCA_C_H_EC');
+  var gridLayerGC = L.mapbox.gridLayer('geointerest.NCA_C_H_GC');
+  var gridLayerAK = L.mapbox.gridLayer('geointerest.NCA_C_H_AK');
+  var gridLayerHI = L.mapbox.gridLayer('geointerest.NCA_C_H_HI');
+  map.addLayer(gridLayerWC);
+  map.addLayer(gridLayerEC);
+  map.addLayer(gridLayerGC);
+  map.addLayer(gridLayerAK);
+  map.addLayer(gridLayerHI);
+  map.addControl(L.mapbox.gridControl(gridLayerWC));
+  map.addControl(L.mapbox.gridControl(gridLayerEC));
+  map.addControl(L.mapbox.gridControl(gridLayerGC));
+  map.addControl(L.mapbox.gridControl(gridLayerAK));
+  map.addControl(L.mapbox.gridControl(gridLayerHI));
+
+  var GC_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_GC');
+      WC_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_WC');
+	  EC_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_EC');
+	  AK_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_AK');
+	  HI_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_HI');
+  var C_H = L.layerGroup([GC_C_H, WC_C_H, EC_C_H, AK_C_H, HI_C_H]);
+  
+  var GC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_GC');
+      WC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_WC');
+	  EC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_EC');
+	  AK_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_AK');
+	  HI_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_HI');
+  var C_NH = L.layerGroup([GC_C_NH, WC_C_NH, EC_C_NH, AK_C_NH, HI_C_NH]);
+ 
+ 
+  var GC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_GC');
+      WC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_WC');
+	  EC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_EC');
+	  AK_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_AK');
+	  HI_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_HI');
+  var T_H = L.layerGroup([GC_T_H, WC_T_H, EC_T_H, AK_T_H, HI_T_H]);
+  
+  var GC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_GC');
+      WC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_WC');
+	  EC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_EC');
+	  AK_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_AK');
+	  HI_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_HI');
+  var T_NH = L.layerGroup([GC_T_NH, WC_T_NH, EC_T_NH, AK_T_NH, HI_T_NH]);
+
+  
+  var GC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_GC');
+      WC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_WC');
+	  EC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_EC');
+	  AK_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_AK');
+	  HI_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_HI');
+  var L_H = L.layerGroup([GC_L_H, WC_L_H, EC_L_H, AK_L_H, HI_L_H]);
+  
+  var GC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_GC');
+      WC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_WC');
+	  EC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_EC');
+	  AK_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_AK');
+	  HI_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_HI');
+  var L_NH = L.layerGroup([GC_L_NH, WC_L_NH, EC_L_NH, AK_L_NH, HI_L_NH]);
+
+  
+  var GC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_GC');
+      WC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_WC');
+	  EC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_EC');
+	  AK_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_AK');
+	  HI_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_HI');
+  var M_H = L.layerGroup([GC_M_H, WC_M_H, EC_M_H, AK_M_H, HI_M_H]);
+  
+  var GC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_GC');
+      WC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_WC');
+	  EC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_EC');
+	  AK_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_AK');
+	  HI_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_HI');
+  var M_NH = L.layerGroup([GC_M_NH, WC_M_NH, EC_M_NH, AK_M_NH, HI_M_NH]);
+
+  
+  var GC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_GC');
+      WC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_WC');
+	  EC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_EC');
+	  AK_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_AK');
+	  HI_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_HI');
+  var H_H = L.layerGroup([GC_H_H, WC_H_H, EC_H_H, AK_H_H, HI_H_H]);
+  
+  var GC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_GC');
+      WC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_WC');
+	  EC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_EC');
+	  AK_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_AK');
+	  HI_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_HI');
+  var H_NH = L.layerGroup([GC_H_NH, WC_H_NH, EC_H_NH, AK_H_NH, HI_H_NH]);  
+
+  L.control.layers({
+    'Layers off<br><u><b>SLR (habitat) Scenarios</u>:</b>': L.mapbox.tileLayer('mapbox.world-light'),
+    'Current (hab)': C_H.addTo(map),
+    'Current (w/o hab)': C_NH,
+	'Trend (hab)': T_H,
+	'Trend (w/o hab)': T_NH,
+    'Low (hab)': L_H,
+	'Low (w/o hab)': L_NH,
+    'Medium (hab)': M_H,
+	'Medium (w/o hab)': M_NH,
+    'High (hab)': H_H,
+    'High (w/o hab)': H_NH,
+	}).addTo(map);
+
+	document.getElementById('map-ui').onclick = function(e) {
+    var pos = e.target.getAttribute('data-position1');
+    if (pos) {
+        var loc = pos.split(',');
+        map.setView(loc, 5);
+    }
+	var pos = e.target.getAttribute('data-position2');
+    if (pos) {
+        var loc = pos.split(',');
+        map.setView(loc, 6);
+    }
+	var pos = e.target.getAttribute('data-position3');
+    if (pos) {
+        var loc = pos.split(',');
+        map.setView(loc, 4);
+    }
+}
+
+</script>
+</body>
+</html>
