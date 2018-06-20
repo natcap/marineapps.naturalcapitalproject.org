@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>CA REIP Viewer</title>
+<title>Coastal California</title>
 <head>
   <meta charset="utf-8" />
   <html lang="en">
@@ -16,21 +16,15 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-  <!--jsPDF-->
-  <!--<script type="text/javascript" src="js/jspdf.min.js"></script>-->
-  <script src="https://parall.ax/parallax/js/jspdf.js"></script>
+  
+<link rel="stylesheet" type="text/css" href="css/styleSswitch.css" />
+<script type="text/javascript" src="js/Sswitch.js"></script>
 
   <!--Basic jQUery Slider-->
   <link rel="stylesheet" href="css/bjqs.css">
   <link rel="stylesheet" href="css/demo.css">
   <script src="js/bjqs-1.3.min.js"></script> 
-
   
-  <!--Slick slider-->
-  <link rel="stylesheet" type="text/css" href="css/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
-  <script type="text/javascript" src="js/slick.min.js"></script>
-
   <!--Stylesheet-->
   <link rel="stylesheet" href="inc/style.css" />
   
@@ -39,41 +33,32 @@
   
   <!--Mapbox API-->
   <meta name='viewport' content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <link href="https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel="stylesheet" />
+  <!--<link href="https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel="stylesheet" />-->
+  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   
   <!--Fonts-->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css"><!--Open Sans-->
 
-  <!--CartoDB SidePanel-->
+  <!--CartoDB and Mapbox-->
   <link rel="stylesheet" href="css/light-theme.css">
   <link rel="stylesheet" href="css/makeitresponsive.css">
-  <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-  
-  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js">
-  </script>
+  <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />  
+  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
   <script src="https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.standalone.js"></script>
-  
- <link rel="stylesheet" href="css/leaflet.css"/>
- <link rel="stylesheet" href="css/leaflet.draw.css"/>
-  <script src="js/leaflet.draw.js"></script>
 
- 
+
+  <!--Leaflet --> 
+  <link rel="stylesheet" href="css/leaflet.draw.css"/>
+  <script src="js/leaflet.draw.js"></script>
+  
   <!--Google API-->
 	<script type="text/javascript" src="https://www.google.com/jsapi">
 	</script>
   
-  
   <!--Yellow AOI polygon-->
-  <script src="src/gridCR_2500.js"></script>  
-
-  <script>
-    $(function() {
-      $( "#dialog" ).dialog({
-	modal: true
-      });
-    });
-  </script>
+  <script src="src/gridCR_2500.js"></script>    
+  
 
   <!--[if lte IE 8]>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
@@ -87,13 +72,17 @@
   
   <style>
 	body{
-		font: 75% "Trebuchet MS", sans-serif;
+		font: 62.5% "Trebuchet MS", sans-serif;
 	}
-
+	
+	h2{font-size:115%;line-height: 1%; }
+	
+	
 	#dialog-link {
 		padding: .4em 1em .4em 20px;
 		text-decoration: none;
 		position: absolute;
+		
 	}
 	#dialog-link span.ui-icon {
 		margin: 0 5px 0 0;
@@ -152,12 +141,26 @@
 	 vertical-align: middle;
 	}
 
+	input[type="checkbox"]{
+	 vertical-align: middle;
+	}
+	
+	
     #layer_selector {
         position: absolute;
         top: 4px;
         right: 30px;
       }
+	 
+	.reload-button {
+		position:absolute;
+		bottom: 18px;
+		right: 0px;
+		z-index:101;
+	}
 	
+	 
+	 
 	#button {
 		position:absolute;
 		bottom: 5px;
@@ -176,8 +179,6 @@
 		background-position: 0 0;
 	}
 		
-	
-
 	.overlay {
 	  position: absolute;
 	  top: 0;
@@ -196,11 +197,12 @@
 
 	.popup {
 	  margin: 50px auto;
-	  padding: 0px;
+	  padding: 15px;
 	  background: #fff;
 	  border-radius: 5px;
-	  width: 30%;
+	  width: 35%;
 	  position: relative;
+	  right: 10%;
 	  transition: all 5s ease-in-out;
 	  z-index:101;
 	}
@@ -208,7 +210,7 @@
 	.popup h2 {
 	  margin-top: 0;
 	  color: #333;
-	  font-family: Tahoma, Arial, sans-serif;
+	  font-family: "Trebuchet MS", sans-serif;
 	}
 	.popup .close {
 	  position: absolute;
@@ -224,175 +226,518 @@
 	  color: orange;
 	}
 	.popup .content {
-	  max-height: 30%;
+	  max-height: 50%;
 	  overflow: auto;
+	  padding: 15px;
+	}	
+
+	.info {
+		padding: 6px 8px;
+		font: 14px/16px Verdana, Geneva, sans-serif;
+		background: white;
+		background: rgba(255,255,255,1);
+		box-shadow: 0 0 15px rgba(0,0,0,0);
+		border-radius: 5px;
+		border:1px solid #000;
+		position:absolute;
+		left: 6px;
+		top: 265px;
+	}
+
+	.top{
+	   border-radius: 5px;
+	   position: absolute;
+	   top: 285px;
+	   left: 6px;
+	   left: 6px;
+	   border:1px solid #000;
+	   z-index:3;
 	}	
 	
-  
-  
-  
-  </style>
+	
+	.legend {
+		line-height: 18px;
+		color: #555;
+	}
+	.legend i {
+		width: 18px;
+		height: 18px;
+		float: left;
+		margin-right: 8px;
+		opacity: 0.7;
+	}
+		
+	#CVI{
+	  width:65px;   
+	}	
+		
+	#CVI option{
+	  width:65px;   
+	}		
+	#hab-role{
+	  width:60px;   
+	}	
+		
+	#hab-role option{
+	  width:60px;   
+	}	
+	
+
+	/* Tooltip container */
+	a.tooltip {
+		z-index: 9999;
+		display: inline-block;
+		border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+	}
+
+	/* Tooltip text */
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 220px;
+		background-color: black;
+		color: #fff;
+		text-align: left;
+		vertical-align: middle;
+		padding: 10px 10px;
+		border-radius: 6px;
+	 
+		/* Position the tooltip */
+		position: absolute;
+		top: 15%;
+		right: 9.5%;
+	}
+
+	/* Show the tooltip text when you mouse over the tooltip container */
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+	}
+
+	.film-background {
+	   z-index: -1;
+	   position: absolute;
+	   top: 0;
+	   left: 0;
+	   width: 100%;
+	}
+
+	#slider {
+		margin: 5px;
+	}
+	.ui-slider-horizontal {
+		height: 10px;
+		width: 150px;
+	}
+	.ui-slider .ui-slider-handle {
+		height: 10px;
+		width: 5px;
+		padding-left: 5px;
+		padding-bottom: 5px;
+	}
+	
+	
+a.tooltip {outline:none; }
+a.tooltip strong {line-height:30px;}
+a.tooltip:hover {text-decoration:none;} 
+a.tooltip span {
+    z-index:10;display:none; padding:14px 20px;
+    margin-top:30px; margin-left:-140px;
+    width:650px; line-height:16px;
+}
+a.tooltip:hover span{
+    display:inline; position:absolute; 
+    border:2px solid #FFF;  color:#EEE;
+    background:#333 url(img/css-tooltip-gradient-bg.png) repeat-x 0 0;
+}
+.callout {z-index:20;position:absolute;border:0;top:-14px;left:100px;}
+    
+/*CSS3 extras*/
+a.tooltip span
+{
+    border-radius:2px;        
+    box-shadow: 0px 0px 8px 4px #666;
+    /*opacity: 0.8;*/
+}
+
+
+.centerText{
+   text-align: center; 
+}
+
+#page{
+	display:none;
+}
+
+#loading {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(192, 192, 192, 1);
+  background-image: url("https://i.stack.imgur.com/MnyxU.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+	
+	
+    </style>
+	
+    <script>
+        function myFunction()
+        {
+            document.getElementById("page").style.display = "block";
+            document.getElementById("loading").style.diplay = "none";
+        }
+    </script>
 </head>
 
- <body>
- <!--
-  <div id="dialog" title="ADAPTATION VIEWER TOOL">
-    <div class="note">
-	<p><h2>Nature-Based Strategies for Adaptation Planning</h2></p><p></p>
-	Rising sea levels, population growth along coastlines and increasing hazards associated with storms threaten California's coastal communities.  Our team is engaging coastal planners, managers and the public to co-develop a multiscaled decision-support tool to highlight where natural habitats play an important role in protecting at-risk coastal populations and infrustructure.	
+<body>
+
+
+
+<div class="page"> 
+ 
+<div class="map" id="map">
+
+<button class="reload-button" type="submit" title="Reload this page" onclick="location.reload();">&#8634;</button>
+<!--<img src="img/legend.png" class="top" />-->
+</div>
+
+<div class="box"></div>
+
+<div id="popup1a" class="overlay">
+	<div class="popup">
+		<a class="close" href="#">×</a>
+		<div class="content">
+			<br>
+			<h2><img src="img/products_sm.png" valign="middle">&nbsp; <b>COASTAL EXPOSURE</b></h2>
+			<!--<table><tr><td>c</td><td>c</td></tr><tr><td>c</td><td>c</td></tr></table>-->
+			The InVEST Hazard Index was used to map California's coastal exposure to hazards at 250-meter segments, specifically erosion and inundation during storm events and sea level rise to year:2050. The index also accounts for biodiversity's individual and combined role in buffering wave energy, called "Habitat Role".<br><br> <!--Hover over the map to get Geomorphology classification based on NOAA's Environmental Sensitivity Index (ESI).-->
+			<br>
+			<br>
+			<center><img src="img/FAQ_1a.png"></center>
+			
+		</div>
+	</div>
+</div>
+
+<div id="popup1b" class="overlay">
+	<div class="popup">
+		<a class="close" href="#">×</a>
+		<div class="content">
+		<center><h2><img src="img/strategies_sm.png" valign="middle">&nbsp; <b>CLIMATE ADAPTATION STRATEGIES</b></h2>
+			<i>** Click on strategy name to download policy brief**</i></center>
+1.  ENGINEERED<br>
+<ul>
+<li> <b><a href="docs/BeachNourishment.pdf" target="_blank">Beach Nourishment:</a></b> Artificial placing of sand on a beach to replace eroded sand or to protect against future erosion</li> 
+<li> <b>Cliff Stabilization:</b>   Engineered project to decrease or limit erosion of cliff faces to maintain the cliff in its present location</li>
+<li> <b><a href="docs/DuneRestorationProject.pdf" target="_blank">Dune Restoration Project:</a></b>   Engineered project to enhance or restore vulnerable or eroded dune systems</li>
+<li> <b><a href="docs/LivingShorelines.pdf" target="_blank">Living Shorelines:</a></b> Restoration utilizing plants or other natural elements sometimes in combination with harder shoreline structures to decrease wave impacts</li>
+<li> <b><a href="docs/Riprap.pdf" target="_blank">Riprap:</a></b> Large rocks and boulders placed on shoreline to buffer against erosion and waves</li>
+<li> <b><a href="docs/Seawalls.pdf" target="_blank">Seawalls</a></b> Structure parallel to shoreline; engineered to protect against encroaching seas</li>
+<li> <b><a href="docs/ElevationofStructures.pdf" target="_blank">Elevation of Structures:</a></b> Engineered solution where a structure is raised in response to a current or expected flooding hazard</li>
+<li> <b><a href="docs/WetlandRestoration.pdf" target="_blank">Wetland Restoration:</a></b>  Restoration effort allowing tidal wetlands to recover in areas that have been diked or otherwise altered from their original conditions</li>
+</ul>
+2.  FINANCIAL<br>
+<ul>
+<li> <b><a href="docs/BuyoutProgram.pdf" target="_blank">Buyout Program</a></b> Government tool to acquire properties</li>
+<li> <b><a href="docs/ConservationEasements.pdf" target="_blank">Conservation Easements:</a></a></b>  Agreements not to develop property in exchange for money or tax incentives</li>
+<li> <b><a href="docs/GeologicHazardAbatementDistricts.pdf" target="_blank">Geologic Hazard Abatement Districts:</a></b>  Special district formed to prevent, mitigate, abate or control some geologic hazard</li>
+<li> <b><a href="docs/TransferofDevelopmentRights.pdf" target="_blank">Transfer of Development Rights:</a></b>  Tradable development credit program where development rights are severed from sending areas and transferred to receiving areas </li>
+</ul>
+3.  LEGAL AND REGULATORY<br>
+<ul>
+<li> <b><a href="docs/DevelopmentMoratoria.pdf" target="_blank">Development Moratoria:</a></b>  Temporary development prohibition while planning proceeds</li>
+<li> <b><a href="docs/OverlayZones.pdf" target="_blank">Overlay Zones:</a></b> Additional set of zoning restrictions that overlay original zoning of area</li>
+<li> <b><a href="docs/RedevelopmentRestrictions.pdf" target="_blank">Redevelopment Restrictions:</a></b>  Building code amendments to limit the redevelopment allowed in a certain location</li>
+<li> <b><a href="docs/TriggerLanguage.pdf" target="_blank">Trigger Language:</a></b> Planning framework whereby an observed event “triggers” a shift to implementing specific adaptation policies</li>
+</ul>
+OTHER PROPOSED TOPICS<br>
+<ul>
+<li> Public Trust Doctrine (PTD):</b> Investigation of PTDs role in SLR adaptation planning</li>
+<li> Takings Concerns:</b>  Distillation of current case law regarding takings claims in California</li>
+</ul>
+		</div>
+	</div>
+</div>
+
+<div id="popup1c" class="overlay">
+	<div class="popup">
+		<a class="close" href="#">×</a>
+		<div class="content">
+			<br>
+			<h2>Sea level rise:</h2>
+			<img src="img/county_map.png" valign="middle" align="left"><br>A one-foot rise in sea level projected for year 2050, relative to year 2000 sea levels,would be appropriate for modeling the exposure assessment and habitat protective role assessment.<br><br>We considered the National Research Council 2012 Report's projections for San Francisco of an 11-inch rise in mean sea level by 2050 (Table 5.3, page 117) and the Rising Seas in California: Update on Sea-Level Rise Science 2017 report’s summary of a 67% probability that the sea level rises between 0.6–1.1 feetby 2050 (Table 1, page 26) to determine this value and timeline.<br><br>These figures agree with the coastal planning community's approach to incorporating the upper limits of a 30-year timeline of predicted rising sea levels as well as Step One of the California Coastal Commission Sea Level Rise Guidance on addressing sea level rise in Local Coastal Programs.<br><br>We used NOAA tide gauges for xx counties to allocate net SLR through 2050 based on zones.  The map to the left shows how they were allocated in the model and in our visualizations for Coastal Exposure: Hazard Index.
+			
+			
+		</div>
+	</div>
+</div>
+
+<div id="popup2" class="overlay">
+	<div class="popup">
+		<a class="close" href="#">×</a>
+		<div class="content">
+			<br>
+			<h2><img src="img/LeafletDraw_buttons.png" valign="middle">&nbsp;&nbsp;<b>DRIVERS OF EXPOSURE</b></h2>
+			&#8226; Six biophysical variables were ranked from 1-5 statewide.<br>&#8226; Coastal segments ranked 4 or 5 drive highest hazard index scores.<br>&#8226; Ranking for relief and wave exposure variables varies at county scale.
+			<br>
+			<br>
+			<center><img src="img/FAQ_2.png"></center>
+		</div>
+	</div>
+</div>
+
+
+<div class="sidepanel">
+
+<!-- <br> -->
+<!-- JQuery Tabs -->
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1"><b>SCALE</b></a></li>	
+		<li><a href="#tabs-2"><b>HAZARD</b></a></li>
+		<li><a href="#tabs-3"><b>STRATEGIES</b></a></li>
+		<li><a href="#tabs-4"><b>KEY</b></a></li>
+		<li><a href="#tabs-5">&#8505;</a></li>
+		<li><a href="#tabs-6">&#8593;</a></li>
+
+		<!--<li><a href="#tabs-5"><b>RESOURCES</b></a></li>-->	
+	</ul>
+	
+	
+	<div id="tabs-1">
+	<fieldset style="width:375px;">
+	 <legend><img src="img/doc_sm.png" valign="middle">&nbsp; <b>SCIENCE-POLICY SUMMARY</b></legend>
+	 <b>County of interest:</b>
+	<div class="controlgroup">
+      <select id="scale">
+        <option value="0">Select...</option>	
+        <option value="1">Del Norte</option>
+        <option value="2">Humboldt</option>
+        <option value="3">Mendocino</option>
+        <option value="4">Sonoma</option>
+        <option value="5">Marin</option>
+        <option value="6">San Francisco</option>
+        <option value="7">San Mateo</option>
+        <option value="8">Santa Cruz</option>
+        <option value="9">Monterey</option>
+        <option value="10">San Luis Obispo</option>
+        <option value="11">Santa Barbara</option>
+        <option value="12">Ventura</option>
+        <option value="13">Los Angeles</option>
+        <option value="14">Orange</option>
+        <option value="15">San Diego</option>
+        <option value="16">ALL CALIFORNIA</option>
+      </select>
+	</div>
+	</fieldset>	
+
+	<div id="test1"></div> <!--Monterey-->
+	</div>
+
+
+	<div id="tabs-2">
+	<fieldset style="width:375px;">
+	<legend><img src="img/products_sm.png" valign="middle">&nbsp; <b>COASTAL EXPOSURE</b>&nbsp;&nbsp;<a class="button" href="#popup1a"><img src="img/info_sm.png" title="Click to get info" valign="middle"></a></legend>
+	<b>Scale:</b><br>
+    <input type="radio" name="radio-1" id="radio-1a" checked>
+	    <label for="radio-1a">Statewide</label>
+    <input type="radio" name="radio-1" id="radio-1b">
+	    <label for="radio-1b">County</label>
+	<br><br>	
+	<b>Sea level rise:</b>&nbsp;&nbsp;<a class="button" href="#popup1c"><img src="img/faq_sm.png" valign="middle" title="Click to read about SLR projections" ></a><br>
+    <input type="radio" name="radio-3" id="radio-3a" checked>
+	    <label for="radio-3a">None</label>
+    <input type="radio" name="radio-3" id="radio-3b">
+	    <label for="radio-3b">2050 (+1 foot)</label>
+	<br><br>
+	<b>SHOW ME...</b><br>
+    <input type="radio" name="radio-4" id="radio-4a" checked>
+	    <label for="radio-4a">Relative exposure to hazards</label> <select name="CVI" select id="CVI">
+        <option value="1">with</option>
+        <option value="2">without</option> </select> current habitats</label><br>	
+    <input type="radio" name="radio-4" id="radio-4b">
+	    <label for="radio-4b">Habitat role in reducing risk to coastal communities</label><br>
+    <input type="radio" name="radio-4" id="radio-4c">
+	<label for="radio-4c">Priority conservation where <select name="hab-role" select id="hab-role">
+        <option value="1">marsh</option>
+		<option value="2">dune</option> </select> likely reduce risk</label>
+	<br><br>
+	
+
+	<input type="button" value="SHOW" onclick="showHazard();"> <input type="button" value="HIDE" onclick="clearHazard();">
+	 
+    </fieldset>
+	<div id="HazardLegend"></div>
+	<br>
+	<fieldset style="width:375px;">
+	<legend><img src="img/LeafletDraw_buttons.png" valign="middle">&nbsp;&nbsp;<b>DRIVERS OF EXPOSURE</b>&nbsp;&nbsp;<a class="button" href="#popup2"><img src="img/info_sm.png" valign="middle" title="Click to get info"></a></legend>
+	<div id="AOISummary"></div>
+	<div id="chartBar_div" style="width: 325x; height: 160px;"></div>
+	</fieldset>
+	</div>
+
+
+	<div id="tabs-3">
+	<fieldset style="width:375px;">
+	<legend><img src="img/strategies_sm.png" valign="middle">&nbsp; <b>CLIMATE ADAPTATION STRATEGIES</b>&nbsp;&nbsp;<a class="button" href="#popup1b"><img src="img/info_sm.png" valign="middle" title="Click to get info" ></a></legend>
+	<b>Map a category:</b><br>
+	<ol>
+	<li>ENGINEERED <input type="checkbox" name="checkboxName1" class="checkbox1" id="checkbox1" /></li>
+	<li>FINANCIAL <input type="checkbox" name="checkboxName2" class="checkbox2" id="checkbox2" /></li>
+	<li>LEGAL / REG<input type="checkbox" name="checkboxName3" class="checkbox3" id="checkbox3" /></li>
+		</ol>
+
+
+	<div id="accordion">
+	<h4>&nbsp;</h4>
+	<div>
+	&nbsp;ENGINEERED STRATEGIES<hr>
+	<img src="img/icon_engineered.png" align="right">
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_bnr" onclick='showEngineered();'><label for="checkbox-5a"><a href="docs/BeachNourishment.pdf" target="_blank">Beach Nourishment</a></label><span class="tooltiptext"><b>Beach Nourishment</b><br>Artificial placing of sand on a beach to replace eroded sand or to protect against future erosion</span></div>	
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_cfs" onclick='showEngineered();'><label for="checkbox-5b">Cliff Stabilization</label><span class="tooltiptext"><b>Cliff Stabilization:</b><br>Engineered project to decrease or limit erosion of cliff faces to maintain the cliff in its present location</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_drp" onclick='showEngineered();' checked><label for="checkbox-5c"><a href="docs/DuneRestorationProject.pdf" target="_blank">Dune Restoration Project</a></label><span class="tooltiptext"><b>Dune Restoration Project:</b><br>Engineered project to enhance or restore vulnerable or eroded dune systems</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_lvs" onclick='showEngineered();'><label for="checkbox-5d"><a href="docs/LivingShorelines.pdf" target="_blank">Living Shorelines</a></label><span class="tooltiptext"><b>Living Shorelines:</b><br>Restoration utilizing plants or other natural elements sometimes in combination with harder shoreline structures to decrease wave impacts</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_rrp" onclick='showEngineered();'><label for="checkbox-5e"><a href="docs/Riprap.pdf" target="_blank">Riprap</a></label><span class="tooltiptext"><b>Riprap:</b><br>Large rocks and boulders placed on shoreline to buffer against erosion and waves</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_swl" onclick='showEngineered();'><label for="checkbox-5f"><a href="docs/Seawalls.pdf" target="_blank">Seawalls</a></label><span class="tooltiptext"><b>Seawalls:</b><br>Structure parallel to shoreline that is engineered to protect against encroaching seas</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_eos" onclick='showEngineered();'><label for="checkbox-5g"><a href="docs/ElevationofStructures.pdf" target="_blank">Elevation of Structures</a></label><span class="tooltiptext"><b>Elevation of Structures:</b><br>Engineered solution where a structure is raised in response to a current or expected flooding hazard</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-5" value="eng_wlr" onclick='showEngineered();'><label for="checkbox-5h"><a href="docs/WetlandRestoration.pdf" target="_blank">Wetland Restoration</a></label><span class="tooltiptext"><b>Wetland Restoration:</b><br>Restoration effort that allows tidal wetlands to recover in areas that have been diked or otherwise altered from their original conditions</span></div>
+	</div>
+	
+	<h4>&nbsp;</h4>
+	<div>
+	&nbsp;FINANCIAL STRATEGIES<hr>
+	<img src="img/icon_financial.png" align="right">
+	<div class="tooltip"> <input type="checkbox" name="checkbox-6" value="fin_bop" onclick='showFinancial();' checked><label for="checkbox-6a"><a href="docs/BuyoutProgram.pdf" target="_blank">Buyout Program</a></label><span class="tooltiptext"><b>Buyout Program</b><br>Government tool to acquire at-risk properties</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-6" value="fin_cse" onclick='showFinancial();'><label for="checkbox-6b"><a href="docs/ConservationEasements.pdf" target="_blank">Conservation Easements</a></label><span class="tooltiptext"><b>Conservation Easements:</b><br>Agreements not to develop property in exchange for money or something else of value, such as a tax incentive</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-6" value="fin_gad" onclick='showFinancial();'><label for="checkbox-6c"><a href="docs/GeologicHazardAbatementDistricts.pdf" target="_blank">Geologic Hazard Abatement Districts</a></label><span class="tooltiptext"><b>Geologic Hazard Abatement Districts (GHADs):</b><br>Special district formed to prevent, mitigate, abate or control some geologic hazard</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-6" value="fin_tdr" onclick='showFinancial();'><label for="checkbox-6d"><a href="docs/TransferofDevelopmentRights.pdf" target="_blank">Transfer of Development Rights</a></label><span class="tooltiptext"><b>Transfer of Development Rights:</b><br>Government program to shift development away from environmentally sensitive areas by exchanging the right to do so in one area for another</span></div>
+	</div>
+	
+	<h4>&nbsp;</h4>
+	<div>
+	&nbsp;LEG / REG STRATEGIES<hr>
+	<img src="img/icon_legalregulatory.png" align="right">
+	<div class="tooltip"> <input type="checkbox" name="checkbox-7" value="lgr_dvm" onclick='showLegalRegulatory();'><label for="checkbox-7a"><a href="docs/DevelopmentMoratoria.pdf" target="_blank">Development Moratoria</a></label><span class="tooltiptext"><b>Development Moratoria:</b><br>Temporary development prohibition while planning proceeds</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-7" value="lgr_olz" onclick="showLegalRegulatory();"><label for="checkbox-7b"><a href="docs/OverlayZones.pdf" target="_blank">Overlay Zones</a></label><span class="tooltiptext"><b>Overlay Zones:</b><br>An additional set of zoning restrictions that overlay the original zoning of a specific area</span></div>	
+	<div class="tooltip"> <input type="checkbox" name="checkbox-7" value="lgr_drr" onclick='showLegalRegulatory();' checked><label for="checkbox-7c"><a href="docs/RedevelopmentRestrictions.pdf" target="_blank">Redevelopment Restrictions</a></label><span class="tooltiptext"><b>Redevelopment Restrictions:</b><br>Building code amendments to limit the redevelopment allowed in a certain location</span></div>
+	<div class="tooltip"> <input type="checkbox" name="checkbox-7" value="lgr_tgl" onclick="showLegalRegulatory();"><label for="checkbox-7d"><a href="docs/TriggerLanguage.pdf" target="_blank">Trigger Language</a></label><span class="tooltiptext"><b>Trigger Language:</b><br>Planning framework whereby an observed event triggers a shift to implementing specific adaptation policies</span></div>
+	
+	</div>
+
+	</fieldset>	
+
+	</div>	
+		
+		
+		
+	<div id="tabs-4">
+	<fieldset style="width:375px;">
+	<legend><img src="img/zoom_sm.png" valign="middle">&nbsp; <b>MAP LAYERS</b></legend>
+ 
+	<div id="accordion-2">
+
+
+	<h4>photos</h4>
+	<div>
+	<b>California Coastal Records Project</b><br>
+	<i>An aerial photographic survey of the California Coastline</i><br>
+	© 2002-2006 Kenneth & Gabrielle Adelman
+	</div>		
+	
+	<h4>habitats</h4>
+	<div>
+	<span style='color:#3d5728'><font size='3'>&#9632;</font></span> Marshes<br>
+	<span style='color:#B81609'><font size='3'>&#9632;</font></span> High Dunes (> 5 meters)<br>
+	<span style='color:#FF9900'><font size='3'>&#9632;</font></span> Low Dunes<br>
+	<!--<span style='color:#081B47'><font size='3'>&#9632;</font></span> Intertidal Aquatic Vegetation<br>-->
+	<span style='color:#00ff96'><font size='3'>&#9632;</font></span> Seagrass Meadows<br>
+	<span style='color:#229A00'><font size='3'>&#9632;</font></span> Kelp Forests<br>
+
+	</div>	
+
+	<h4>population</h4>
+	<div>
+	Population Density (# of people per 30 m<sup>2</sup>)<br>
+	<span style='color:#F0F0F0'><font size='3'>&#9632;</font></span> Low (1 - 5)<br>
+	<span style='color:#D3D3D3'><font size='3'>&#9632;</font></span> Medium (6 - 10)<br>
+	<span style='color:#636363'><font size='3'>&#9632;</font></span> High (> 10)
+	</div>		
+	
+	<h4>zoning</h4>
+	<div>
+	Layer opacity: &nbsp;<input type="text" id="minval" size="2" style="border:0; color:#000; font-weight:bold;">%
+	<div id="slider">
+	</div>
+	<p>
+	<input type="checkbox" name="zoning[]" id="1" onclick='handleClick(this);' />  <span style='color:#D2691E'><font size='3'>&#9632;</font></span> Agriculture<br><input type="checkbox" name="zoning[]" id="2" onclick='handleClick(this);' />  <span style='color:#006400'><font size='3'>&#9632;</font></span> Parks / Open Spaces / Public Land<br><input type="checkbox" name="zoning[]" id="3" onclick='handleClick(this);' /> <span style='color:#253494'><font size='3'>&#9632;</font></span> Residential<br><input type="checkbox" name="zoning[]" id="4" onclick='handleClick(this);' >  <span style='color:#c51b8a'><font size='3'>&#9632;</font></span> Commercial / Industrial<br><input type="checkbox" name="zoning[]" id="5" onclick='handleClick(this);' /> <span style='color:#D3D3D3'><font size='3'>&#9632;</font></span> Special Use and Uncategorized<br><!--<input type="checkbox" name="zoning[]" id="6" onclick='handleClick(this);' /> <span style='color:#FFF'><font size='3'>&#9632;</font></span> No Data--></p>
+	</div>	
+	</div>
+	
+	</div>
+	<!--
+	<div id="tabs-5">
+	<fieldset>
+	<legend><img src="img/doc_sm.png" valign="middle">&nbsp; <b>PROJECT DOCUMENTS</b></legend>
+	<br>
+	<a href="" target="_blank"><img src="img/links_sm.png" align="top"></a> Key recommendations<br>
+	<a href="" target="_blank"><img src="img/links_sm.png" align="top"></a> Glossary of terms<br>	
+	<a href="" target="_blank"><img src="img/links_sm.png" align="top"></a> Technical report<br><br>	
+	</fieldset>
+	<br>
+	<fieldset>
+	<br>
+	<legend><img src="img/data_sm.png" valign="middle">&nbsp; <b>DATA SOURCES</b></legend>
+	<b>Reference</b><br>
+	&#8594 Land mass/coastline: <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a><br>
+	&#8594; Coastal zone boundary: <a href="https://www.coastal.ca.gov/" target="_blank">CA Coastal Commission</a><br><br>
+	<b>Biophysical</b><br>
+	&#8594; Topography/bathymetry: <a href="https://maps.ngdc.noaa.gov/viewers/bathymetry/" target="_blank">NOAA</a>; <a href="http://www.mbari.org/" target="_blank">MBARI</a>; <a href="https://viewer.nationalmap.gov/launch/" target="_blank">USGS</a><br>
+	&#8594; Coastal geomorphology: <a href="https://response.restoration.noaa.gov/esi" target="_blank">NOAA ESI</a><br>
+	&#8594; Natural habitats: <a href="http://msp.naturalcapitalproject.org/msp_concierge_master/docs/Arkema_etal_2013_NCC_SI.pdf" target="_blank"><i>Arkema et al. 2013</i></a><br> 
+	&#8594; Climatic forcing: <a href="http://polar.ncep.noaa.gov/waves/index2.shtml" target="_blank">NOAA/NWS WaveWatch III</a><br>
+	&#8594; Sea-level rise: <a href="" target="_blank">xxx</a><br><br>
+	<b>Socioeconomic</b><br>	
+	&#8594; Population: <a href="https://www.census.gov/programs-surveys/acs/" target="_blank">US Census Bureau / ACS</a><br>
+	&#8594; Shoreline armoring: <a href="https://www.coastal.ca.gov/" target="_blank">CA Coastal Commission</a><br>
+	&#8594; Zoning: <a href="" target="_blank">County and local government agencies</a>
+	<br><br>
+	</fieldset>
+	</div>
+	-->
+<div id="tabs-5">	
+	<fieldset style="width:375px;">
+	<legend><img src="img/overview_sm.png" valign="middle">&nbsp; <b>NATURE-BASED STRATEGIES FOR ADAPTATION PLANNING</b></legend>
+	Rising sea levels, population growth along coastlines and increasing hazards associated with storms threaten California's coastal communities.<br><br>Our team engaged coastal planners, managers, and the public to codevelop a multiscaled decision-support tool that highlights where nature-based and other suitable coastal zone strategies can protect at-risk coastal populations and infrustructure.	
 	<br><br>
 	<div id="banner-slide">
 	<ul class="bjqs">
 		<li><img src="img/1.jpg" title="Rocky formation along the coast provide protection from large wave events <i>(Cape Mendocino, Mendocino County)</i>"></li>
 		<li><img src="img/2.jpg" title="Small harbors provide protection for fishing fleets and increase cultural attachment to the sea <i>(Trinidad, Humboldt County)</i>"></li>
-		<li><img src="img/3.jpg" title="Some areas are seeing an increase in erosion rates<br><i>(Stinson Beach, Marin County)</i>"></li>
-		<li><img src="img/4.jpg" title="Revetment to protect Hwy 1 limits access to the beach and threatens to increase erosion <i>(Surfer's Beach, San Mateo County)</i>"></li>
-		<li><img src="img/5.jpg" title="Built structures fail, further threatening property along the coast <i>(Gleason Beach, Sonoma County)</i>"></li>
+		<li><img src="img/3.jpg" title="Some areas are seeing increasing erosion<br><i>(Stinson Beach, Marin County)</i>"></li>
+		<li><img src="img/4.jpg" title="Coastal planners are actively making decisions about how we engage with the coastline <i>(Surfer's Beach, San Mateo County)</i>"></li>
+		<li><img src="img/5.jpg" title="Built structures fail, further threatening property along the coast<br><i>(Gleason Beach, Sonoma County)</i>"></li>
 		<li><img src="img/6.jpg" title="Dune restoration protects coastal access<br><i>(Surfer's Point, Ventura County)</i>"></li>
 	</ul>
 	</div>
+	<hr>
+	<b>FOR SCREEN CAPTURE:</b><ul><li><b>Mac users:</b> Hold <i>Shift + ⌘ + 3</i></li><li><b>PC users:</b> Hold <i>Alt + PrtScr</i>, then <i>Ctrl + V</i> in Paint</li></ul>
+    </div>	
 	
-    </div>
-  </div>
--->
-  
-<!--
- <div id='map-ui'>
-  <p><a class="switch" href="#">ZOOM (+/-)</a></p>
-	<ul id='zooms'>
-   	<li><a href='#' data-position6='37.5, -117'>STATEWIDE</a></li>		
-		<li><a href='#' data-position10='41.73, -123.9'>Del Norte</a></li>
-		<li><a href='#' data-position8='40.7, -123'>Humboldt</a></li>
-		<li><a href='#' data-position9='39.37, -123.6'>Mendocino</a></li>
-		<li><a href='#' data-position10='38.55, -123.1'>Sonoma</a></li>
-		<li><a href='#' data-position10='38.05, -122.7'>Marin</a></li>
-		<li><a href='#' data-position12='37.77, -122.45'>Sn Francisco</a></li>
-		<li><a href='#' data-position10='37.385, -122.35'>Sn Mateo</a></li>
-		<li><a href='#' data-position10='36.95, -121.8'>Santa Cruz</a></li>
-		<li><a href='#' data-position9='36.3, -121.4'>Monterey</a></li>
-		<li><a href='#' data-position9='35.4, -120.7'>SL Obispo</a></li>
-		<li><a href='#' data-position9='34.41, -119.9'>Sta Barbara</a></li>
-		<li><a href='#' data-position10='34.12, -119.0'>Ventura</a></li>
-		<li><a href='#' data-position9='33.4, -118.3'>Los Angeles</a></li>
-		<li><a href='#' data-position10='33.5, -117.8'>Orange</a></li>
-		<li><a href='#' data-position9='32.95, -117.0'>Sn Diego</a></li>
-	</ul>
- </div> 
- -->
-
-<div class="map" id="map"></div>
-
-
-<div class="sidepanel">
-
-<!-- Tabs -->
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1"><b>ZOOM</b></a></li>
-		<li><a href="#tabs-2"><b>HAZARD</b></a></li>
-		<li><a href="#tabs-3"><b>LEGAL</b></a></li>
-	</ul>
-	
-	
-	<div id="tabs-1">
-	<fieldset>
-	 <legend><b>Zoom to Location</b></legend>
-	<div class="controlgroup">
-      <select id="zoom">
-        <option value="0">Select...</option>
-        <option value="1">CA Statewide</option>		
-        <option value="2">Sonoma</option>
-        <option value="3">Marin</option>
-        <option value="4">Monterey</option>
-      </select>
-	</div>	
-	</fieldset>	
-	</div>
-
-	
-	<div id="tabs-2">
-	<fieldset>
-	 <legend><b>Coastal Exposure Index</b></legend>
-	 Differentiates relative exposure to erosion and inundation during storm events.
+<div id="tabs-6">
 	<br>
-	<u>Habitats</u>:	
-    <input type="radio" name="radio-1a" id="radio-1a" checked>
-	    <label for="radio-1a">Current</label>
-    <input type="radio" name="radio-1a" id="radio-2a">
-	    <label for="radio-2a">None</label>
-	<br>
-	<u>Scale</u>:	
-    <input type="radio" name="radio-1c" id="radio-1c" checked>
-	    <label for="radio-1c">State</label>
-    <input type="radio" name="radio-1c" id="radio-2c">
-	    <label for="radio-2c">Districts</label>
-    <input type="radio" name="radio-1c" id="radio-3c">
-	    <label for="radio-3c">Counties</label>
-	<br>
-		<a href="#" class="screenshot" rel="img/Legend_CVI.gif"><img src="img/info_sm.png" valign="middle"></a> <input type="button" value="SHOW" onclick="showCVI();"> <input type="button" value="CLEAR" onclick="clearLayers();">
-    </fieldset>
-	
-	<br>
-	
-	<fieldset>
-	 <legend><b>Habitat Role</b></legend>
-	A metric to account for biodiversity's individual or combined ability to buffer wave energy during storms.
-	<br>
-	<div class="controlgroup">
-      <select id="hab-type">
-        <option value="1">All Habitats</option>
-        <option value="2">Kelp</option>
-        <option value="3">Wetlands</option>
-        <option value="4">Eelgrass</option>
-        <option value="5">SAV</option>
-        <option value="6">Coastal Forest</option>
-        <option value="7">Dunes</option>
-      </select>
-	<br><a href="#" class="screenshot" rel="img/Legend_HabitatRole.gif"><img src="img/info_sm.png" valign="middle"></a> <input type="button" value="SHOW" onclick="showHabRole();"> <input type="button" value="CLEAR" onclick="clearLayers();">
-	</div>  
-    </fieldset>
-	
-	<br>
-	
-	<fieldset>
-	 <legend><b>Variable Ranks</b></legend>
-	Six biophysical variables were ranked 1 to 5. Segments ranked '4' or '5' have highest index scores.
-	<div class="controlgroup">
-      <select id="var-type">
-        <option value="1">Wave Exposure</option>
-        <option value="2">Elevation</option>
-        <option value="3">Surge Potential</option>
-        <option value="4">Geomorphology</option>
-      </select>
-	<br><a href="#" class="screenshot" rel="img/Legend_VariableRanks.gif"><img src="img/info_sm.png" valign="middle"></a> <input type="button" value="SHOW" onclick="showVariableRanks();"> <input type="button" value="CLEAR" onclick="clearLayers();">
-    </fieldset>
-	<br>	
-	<fieldset>
-	 <legend><b>AOI Results</b></legend>	
-		<center>
-	<div id="chartBar_div" style="width: 250px; height: 150px;;"></div>
-	</center>
-	</fieldset>	
-	<br>
-	</div>
 
-	<div id="tabs-3">
-	<fieldset>
-	 <legend><b>Adaptation Strategies</b></legend>
-	<div class="controlgroup">
-      <select id="strategies">
-        <option value="0">Select...</option>
-        <option value="1">Setbacks</option>
-        <option value="2">Dune Restoration</option>
-        <option value="3">Conservation Easement</option>
-      </select>
-	</div>
-	<div id="Strategy"></div>	
-	</fieldset>		
-	</div>
-
+</div>		
+	
 </div>
+</div>
+
+<div id="loading"></div> 
 
   <script src="js/script.js" ></script>
   </body>
 </html>
+
