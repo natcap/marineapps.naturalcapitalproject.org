@@ -4,7 +4,7 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
   <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.js'></script>
   <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.css' rel='stylesheet' />
-  <script src="../L.Wax.js"></script>
+  <script src="L.Wax.js"></script>
   <!--[if lte IE 8]>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.ie.css' rel='stylesheet' >
   <![endif]-->
@@ -34,7 +34,7 @@
     margin:0;padding:0;
     border:1px solid #BBB;
     border-bottom-width:0;
-    min-width:138px;
+    min-width:125px;
     padding:10px;
     text-decoration:none;
     }
@@ -55,16 +55,16 @@
   <ul>
   <br><p><br><p><br><p><br><p>
     <center>
-	<basefont color="black" face="Helvetica Neue, Helvetica, sans-serif"><b><u>Regional Zoom</u>:</b>
 	<li><a href='#' data-position1='40,-121'>US West Coast</a></li>
     <li><a href='#' data-position1='36.5,-70'>US East Coast</a></li>
     <li><a href='#' data-position2='28,-89'>US Gulf Coast</a></li>
-	<li><a href='#' data-position3='64,-155'>Alaska</a></li>
     <li><a href='#' data-position2='20,-155'>Hawaii</a></li>
 	<li><a href='#' data-position3='40,-98'>Continental US</a></li>
 	</center>
   </ul>
 </div>
+
+
 
 <div id='map'></div>
 
@@ -86,13 +86,10 @@
 	  </ul>
 	</div>
 
-  <div class='legend-source'>Source: <a href="http://data.naturalcapitalproject.org/invest-releases/documentation/current_release/coastal_vulnerability.html" target="_blank">InVEST Coastal Vulnerability model</a></div>
-  <br>
-  <center>
-  <img src="http://www.geointerest.frih.org/InVESTNatCap_logo.png">
+  <div class='legend-source'>Source: <a href="http://data.naturalcapitalproject.org/nightly-build/invest-users-guide/html/coastal_vulnerability.html" target="_blank">InVEST Coastal Vulnerability model</a></div>
   <hr>
-  </center><u>Change Layers</u>: hover over layers pallete in upper right<br>
-  <u>Quick Zoom</u>: hold shift key and draw box<br>
+  </center><u>Change Layers</u>: Hover over layers pallete in upper right<br>
+  <u>Quick Zoom</u>: Hold down 'Shift' key and draw box<br>
 
   </div>
 
@@ -138,14 +135,22 @@
 </div>
 
 <script type='text/javascript'>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
+	
+	var map = L.mapbox.map('map');
 
-  var map = L.mapbox.map('map', 'mapbox.world-light', { zoomControl: false }).setView([39, -99], 4); 
+	var cartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+		}).addTo(map);
+
+		map.setView([39, -93], 4);
+		//map.maxZoom:4;
+
 
   map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
   map.gridControl.options.follow = true;
-  new L.Control.Zoom({ position: 'topleft' }).addTo(map);
   L.control.scale().addTo(map);
-  map.attributionControl.setPrefix('<a href="http://www.naturalcapitalproject.org/">Map by: Gregg Verutes, Natural Capital Project © 2013</a>');
+  map.attributionControl.setPrefix('<a href="http://www.naturalcapitalproject.org/">Viewer: Gregg Verutes, Natural Capital Project © 2013</a>');
 
   var gridLayerWC = L.mapbox.gridLayer('geointerest.NCA_C_H_WC');
   var gridLayerEC = L.mapbox.gridLayer('geointerest.NCA_C_H_EC');

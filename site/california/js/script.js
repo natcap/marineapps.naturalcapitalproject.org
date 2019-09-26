@@ -552,7 +552,7 @@ map.closePopup();
 	});
 
 // mini map
-var MapboxStreets = 'http://a.tiles.mapbox.com/v3/mapbox.world-light/{z}/{x}/{y}.png';
+var MapboxStreets = 'http://a.tiles.mapbox.com/v3/geointerest.e4qjes5f/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
 var mb = new L.TileLayer(MapboxStreets, {minZoom: 2, maxZoom: 16});
 var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '250', width: '150'}).addTo(map); 
 
