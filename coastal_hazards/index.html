@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-  <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.js'></script>
-  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.css' rel='stylesheet' />
   <script src="L.Wax.js"></script>
   <!--[if lte IE 8]>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.ie.css' rel='stylesheet' >
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.0.4/mapbox.ie.css' rel='stylesheet' >
   <![endif]-->
   <style>
     body { margin:0; padding:0; }
@@ -70,7 +70,7 @@
 
 <div id='legend-content' style='display: none;'>
 	<div class='my-legend'>
-	
+
 	<div class='legend-title'>COASTAL HAZARD INDEX</div>
 	<div class='legend-scale'>
 	  <ul class='legend-labels'>
@@ -86,7 +86,7 @@
 	  </ul>
 	</div>
 
-  <div class='legend-source'>Source: <a href="http://data.naturalcapitalproject.org/nightly-build/invest-users-guide/html/coastal_vulnerability.html" target="_blank">InVEST Coastal Vulnerability model</a></div>
+  <div class='legend-source'>Source: <a href="https://data.naturalcapitalproject.org/nightly-build/invest-users-guide/html/coastal_vulnerability.html" target="_blank">InVEST Coastal Vulnerability model</a></div>
   <hr>
   </center><u>Change Layers</u>: Hover over layers pallete in upper right<br>
   <u>Quick Zoom</u>: Hold down 'Shift' key and draw box<br>
@@ -136,11 +136,11 @@
 
 <script type='text/javascript'>
 L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
-	
+
 	var map = L.mapbox.map('map');
 
-	var cartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	var cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+		  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
 		}).addTo(map);
 
 		map.setView([39, -93], 4);
@@ -150,7 +150,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
   map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
   map.gridControl.options.follow = true;
   L.control.scale().addTo(map);
-  map.attributionControl.setPrefix('<a href="http://www.naturalcapitalproject.org/">Viewer: Gregg Verutes, Natural Capital Project © 2013</a>');
+  map.attributionControl.setPrefix('<a href="https://www.naturalcapitalproject.org/">Viewer: Gregg Verutes, Natural Capital Project © 2013</a>');
 
   var gridLayerWC = L.mapbox.gridLayer('geointerest.NCA_C_H_WC');
   var gridLayerEC = L.mapbox.gridLayer('geointerest.NCA_C_H_EC');
@@ -174,22 +174,22 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
 	  AK_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_AK');
 	  HI_C_H = L.mapbox.tileLayer('geointerest.NCA_C_H_HI');
   var C_H = L.layerGroup([GC_C_H, WC_C_H, EC_C_H, AK_C_H, HI_C_H]);
-  
+
   var GC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_GC');
       WC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_WC');
 	  EC_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_EC');
 	  AK_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_AK');
 	  HI_C_NH = L.mapbox.tileLayer('geointerest.NCA_C_NH_HI');
   var C_NH = L.layerGroup([GC_C_NH, WC_C_NH, EC_C_NH, AK_C_NH, HI_C_NH]);
- 
- 
+
+
   var GC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_GC');
       WC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_WC');
 	  EC_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_EC');
 	  AK_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_AK');
 	  HI_T_H = L.mapbox.tileLayer('geointerest.NCA_T_H_HI');
   var T_H = L.layerGroup([GC_T_H, WC_T_H, EC_T_H, AK_T_H, HI_T_H]);
-  
+
   var GC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_GC');
       WC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_WC');
 	  EC_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_EC');
@@ -197,14 +197,14 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
 	  HI_T_NH = L.mapbox.tileLayer('geointerest.NCA_T_NH_HI');
   var T_NH = L.layerGroup([GC_T_NH, WC_T_NH, EC_T_NH, AK_T_NH, HI_T_NH]);
 
-  
+
   var GC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_GC');
       WC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_WC');
 	  EC_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_EC');
 	  AK_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_AK');
 	  HI_L_H = L.mapbox.tileLayer('geointerest.NCA_L_H_HI');
   var L_H = L.layerGroup([GC_L_H, WC_L_H, EC_L_H, AK_L_H, HI_L_H]);
-  
+
   var GC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_GC');
       WC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_WC');
 	  EC_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_EC');
@@ -212,14 +212,14 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
 	  HI_L_NH = L.mapbox.tileLayer('geointerest.NCA_L_NH_HI');
   var L_NH = L.layerGroup([GC_L_NH, WC_L_NH, EC_L_NH, AK_L_NH, HI_L_NH]);
 
-  
+
   var GC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_GC');
       WC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_WC');
 	  EC_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_EC');
 	  AK_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_AK');
 	  HI_M_H = L.mapbox.tileLayer('geointerest.NCA_M_H_HI');
   var M_H = L.layerGroup([GC_M_H, WC_M_H, EC_M_H, AK_M_H, HI_M_H]);
-  
+
   var GC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_GC');
       WC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_WC');
 	  EC_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_EC');
@@ -227,20 +227,20 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
 	  HI_M_NH = L.mapbox.tileLayer('geointerest.NCA_M_NH_HI');
   var M_NH = L.layerGroup([GC_M_NH, WC_M_NH, EC_M_NH, AK_M_NH, HI_M_NH]);
 
-  
+
   var GC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_GC');
       WC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_WC');
 	  EC_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_EC');
 	  AK_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_AK');
 	  HI_H_H = L.mapbox.tileLayer('geointerest.NCA_H_H_HI');
   var H_H = L.layerGroup([GC_H_H, WC_H_H, EC_H_H, AK_H_H, HI_H_H]);
-  
+
   var GC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_GC');
       WC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_WC');
 	  EC_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_EC');
 	  AK_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_AK');
 	  HI_H_NH = L.mapbox.tileLayer('geointerest.NCA_H_NH_HI');
-  var H_NH = L.layerGroup([GC_H_NH, WC_H_NH, EC_H_NH, AK_H_NH, HI_H_NH]);  
+  var H_NH = L.layerGroup([GC_H_NH, WC_H_NH, EC_H_NH, AK_H_NH, HI_H_NH]);
 
   L.control.layers({
     'Layers off<br><u><b>SLR (habitat) Scenarios</u>:</b>': L.mapbox.tileLayer('mapbox.world-light'),
