@@ -152,7 +152,8 @@ var labels = L.mapbox.tileLayer('geointerest.BH_Names'); // switch to panel with
 		var overlayMaps = {	 
 		"<b>labels:</b> islands/towns": labels.addTo(map),
 		"<b>natural habitats</b>": layer,
-		"<b>model validation</b><br>&nbsp;&nbsp;(Hurricane Matthew<br>&nbsp;&nbsp;damage assessment)": Matthew,
+		"<b>comparison to actual<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flooding/damages</b>": Matthew,
+
 
 		//"images": imageGroup,
 
