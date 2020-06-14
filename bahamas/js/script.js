@@ -164,8 +164,9 @@ var labels = L.mapbox.tileLayer('geointerest.BH_Names'); // switch to panel with
 
 	
 // mini map
-  	var CartoDB_positron = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
-	var mb = new L.TileLayer(CartoDB_positron, {minZoom: 2, maxZoom: 16});
+	var CartoLight = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'	
+  	//var CartoDB_positron = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+	var mb = new L.TileLayer(CartoLight, {minZoom: 2, maxZoom: 16});
 	var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true}).addTo(map);    
 
 
