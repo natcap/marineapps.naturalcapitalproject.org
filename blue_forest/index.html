@@ -12,9 +12,9 @@
  <!--jQuery-->
   <script src="js/jquery.js" type="text/javascript"></script>
   <script src="js/main.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
   <link rel="stylesheet" type="text/css" href="css/styleSswitch.css" />
   <script type="text/javascript" src="js/Sswitch.js"></script>
@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="css/bjqs.css">
   <link rel="stylesheet" href="css/demo.css">
   <script src="js/bjqs-1.3.min.js"></script>
+  <script src="js/bjqs-1.3.min2.js"></script>
   
   <!--Stylesheet-->
   <link rel="stylesheet" href="inc/style.css" />
@@ -33,18 +34,18 @@
   
   <!--Mapbox API-->
   <meta name='viewport' content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <link href='//api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   
   <!--Fonts-->
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link href="//fonts.googleapis.com/css?family=Lato:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css">
+  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Lato:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css">
 
   <!--CartoDB and Mapbox-->
   <link rel="stylesheet" href="css/light-theme.css">
   <link rel="stylesheet" href="css/makeitresponsive.css">
-  <link rel="stylesheet" href="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />  
-  <script src="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
-  <script src="//api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.standalone.js"></script>
+  <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />  
+  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
+  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.standalone.js"></script>
 
   <!--Leaflet --> 
   <!--
@@ -52,7 +53,7 @@
   <script src="js/leaflet.draw.js"></script>-->
   
   <!--Google API-->
-  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   
   <!--Yellow AOI polygon-->
   <script src="src/Waterbodies.js"></script>
@@ -499,7 +500,7 @@
 	<div>
 	Annual wildfire risk of forested regions is produced by the U.S. Forest Service from a nationwide fire modeling effort using USFS Wildfire Hazard Potential, which provides an absolute indication of annual fire risk at a point in time. This map reveals the severity of wildfire risk over a 30-year time period.<p></p>
 	<div class='my-legend'>
-	<div class='legend-title'>Wildfire Risk Map</div>
+	<div class='legend-title'>Wildfire Risk</div>
 	<div class='legend-scale'>
 	  <ul class='legend-labels'>
 	    <li><span style='background:#FFFFB2;'></span>Low</li>
@@ -519,7 +520,7 @@
 	<div>
 	In some cases, removing small-diameter trees from dry western forests can lead to increased water supply available for downstream communities. Using remote-sensing and hydrologic tools, this map shows the potential for increases in water supply following forest restoration, based on long-term precipitation and vegetation water demand.<p></p>
 	<div class='my-legend'>
-	<div class='legend-title'>Pontential for Water Supply Enghancement Map</div>
+	<div class='legend-title'>Pontential for Water Supply Enhancement</div>
 	<div class='legend-scale'>
 	  <ul class='legend-labels'>
 	    <li><span style='background:#ECF0F6;'></span>Low</li>
@@ -545,7 +546,7 @@
 	<div>
 	Fire risk estimates interact with the water yield impact, because water yield is a function of vegetation state, which is both a function of time since treatment and time to disturbance (fire). This map overlays the two spatial layers to provide insights into the coupled potential for restoration work to decrease fire risk while increasing water yield.<p></p>
 	<div class='my-legend'>
-	<div class='legend-title'>Bivariate Map<br><i>Fire Risk (x) vs. Water Availability (y)</i></div>
+	<div class='legend-title'>Bivariate Map<br><i>Fire Risk vs. Water Availability</i></div>
 	<div class='legend-scale2'>
 	  <ul class='legend-labels2'>
 	    <li><span style='border:#fff;'>High</span><span style='background:#64acbe;'></span><span style='background:#627f8c;'></span><span style='background:#574249;'></span></li>
@@ -565,7 +566,7 @@
 	<fieldset>
 	 <legend><img src="img/data_sm.png" valign="middle">&nbsp; <b>Forest Resilience Bonds</b></legend>
 	 The Forest Resilience Bond (FRB) is an environmental impact bond that deploys private capital to make our national forests more resilient to a changing climate. By investing in restoration projects that protect forest health, the FRB mitigates the risk of catastrophic wildfire while also protecting water resources, avoiding carbon emissions, and creating rural jobs.<br><br>
-		<div id="banner-slide">
+	<div id="banner-slide">
 	<ul class="bjqs">
 		<li><img src="img/4.jpg" title="By investing in projects that protect forest health..."></li>
 		<li><img src="img/6.jpg" title="the FRB mitigates the risk of catastrophic wildfire..."></li>
@@ -607,12 +608,15 @@
 	<div id="tabs-3">
 	<fieldset>
 	 <legend><img src="img/cc_sm.png" valign="middle">&nbsp; <b>About the Partnership</b></legend>
-	<ul>
-	<li><b><a href='https://www.blueforestconservation.com/' target='_blank'>Blue Forest Conservation</a>:</b><br>Blue Forest Conservation is a 501c3 nonprofit organization dedicated to leveraging financial innovation to develop sustainable solutions to pressing environmental challenges.</li><br>
-	<li><b><a href='https://snri.ucmerced.edu/' target='_blank'>Sierra Nevada Research Institute</a>:</b><br>Based at U.C. Merced, the Sierra Nevada Research Institute (SNRI) conducts basic and applied natural resources research in the San Joaquin Valley and the Sierra Nevada regions of California.</li><br>
-	<li><b><a href='http://restorethesierra.org/tahoesierra' target='_blank'>The Tahoe-Central Sierra Initiative (TCSI)</a>:</b><br>A part of the Sierra Nevada Watershed Improvement Program (WIP), brings together innovative approaches to increase the pace and scale of restoration work that gets done across watersheds of the Central Sierras.</li><br> 
-	<li><b><a href='https://nifa.usda.gov/program/small-business-innovation-research-program-sbir' target='_blank'>USDA SBIR</a>:</b><br>This dashboard was funded by the Small Business Innovation Research (SBIR) program at the U.S. Department of Agriculture (USDA), which offers competitively awarded grants to qualified small businesses to support high quality research related to important scientific problems and opportunities in agriculture that could lead to significant public benefits.</li> 
+	 <div id="banner-slide2">
+	<ul class="bjqs">
+		<li><img src="img/1_BFC.png" title="<b><a href='https://www.blueforestconservation.com/' target='_blank'>Blue Forest Conservation</a>:</b><br>Blue Forest Conservation is a 501c3 nonprofit organization dedicated to leveraging financial innovation to develop sustainable solutions to systemic climate resilience challenges faced by vulnerable communities."></li>
+		<li><img src="img/2_WRI.png" title="<b><a href='https://www.wri.org/' target='_blank'>World Resources Institute (WRI)</a>:</b><br>WRI is a global research organization that works closely with leaders to turn big ideas into action to sustain a healthy environment—the foundation of economic opportunity and human well-being. They aim to achieve a water-secure future by mapping, measuring and mitigating water risks."></li>
+		<li><img src="img/3_SNRI.png" title="<b><a href='https://snri.ucmerced.edu/' target='_blank'>Sierra Nevada Research Institute</a>:</b><br>Based at the U.C. Merced, the Sierra Nevada Research Institute (SNRI) conducts basic and applied natural resources research in the San Joaquin Valley and Sierra Nevada regions of California."></li>
+		<li><img src="img/4_USDA.png" title="<b><a href='https://nifa.usda.gov/program/small-business-innovation-research-program-sbir' target='_blank'>USDA SBIR</a>:</b><br>This viewer was funded by the Small Business Innovation Research (SBIR) program at the USDA, which offers grants to qualified small businesses to support research related to important scientific problems and opportunities in agriculture that could lead to significant public benefits."></
 	</ul>
+	</div>
+	<br><br>
 	</fieldset>	
 	</div>
 	</div>
@@ -669,6 +673,28 @@ $( document ).ready(function() {
 	centermarkers   : true,     // horizontally center markers
 	});
 
+  
+  // bjqs slider
+  $('#banner-slide2').bjqs({
+    animtype      : 'slide',
+    height        : 350,
+    width         : 400,
+    responsive    : true,
+    randomstart   : false,
+
+	animtype        : 'fade',
+	animduration    : 300,      // length of transition
+	animspeed       : 5000,     // delay between transitions
+	automatic       : true,     // enable/disable automatic slide rotation
+
+	// control and marker configuration
+	showcontrols    : true,     // enable/disable next + previous UI elements
+	centercontrols  : true,     // vertically center controls
+	nexttext        : '>',   // text/html inside next UI element
+	prevtext        : '<',   // text/html inside previous UI element
+	showmarkers     : true,     // enable/disable individual slide UI markers
+	centermarkers   : true,     // horizontally center markers
+	});
 
 	//$( "#tabs" ).tabs({ active: 4}); 
 	$( "#tabs" ).tabs(); 
@@ -769,9 +795,9 @@ $( document ).ready(function() {
 	$(".accordion").accordion({ active: 0});
 	ckb1 = 1;
 	//endFire = 1;
-  	}, 3100);  
+  	}, 4000);  
 
-	
+	/*	
   $( "#slider1" ).slider({
    	change: function(event, ui) {} ,
   	//change: function(event, ui) {showWY(ui.value);} ,
@@ -799,7 +825,7 @@ $( document ).ready(function() {
 	   }	
 	});
 	$( "#minval2" ).val( $( "#slider2" ).slider( "value" ) );	
-	
+	*/
  
 	
 ///////////////////////////////////////////////////////////////////////////////////
