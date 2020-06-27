@@ -1000,6 +1000,15 @@ function resetHighlight(e) {
 	geojson3.resetStyle(e.target);
 }
 
+function zoomToFeature(e) {
+	map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(e) {
+	// turnoff watersheds layer that is blocking CARTO tooltip
+	map.removeLayer(watersheds);
+}
+
 // tell what functions to call when mousing over and out of a neighborhood
 // add vector data to map
 geojson = L.geoJson(grid, {
@@ -1029,7 +1038,9 @@ geojson3 = L.geoJson(grid3, {
 	onEachFeature: function (feature, layer) {
 	layer.on({
 	mouseover: highlightFeature2,
-	mouseout: resetHighlight
+	mouseout: resetHighlight,
+	//click: zoomToFeature
+	click: onEachFeature
 	});
 
 	  }
@@ -1091,7 +1102,7 @@ map.on('overlayadd', onOverlayAdd);
 function onOverlayAdd(e){
     if (e.name == 'rivers'){showRivers();} //showRivers();
 	else if (e.name == 'waterbodies'){showWB();} //showWB();
-	else if (e.name == 'basins (TSCI)'){showBasins();} //showUrban();
+	//else if (e.name == 'basins (TSCI)'){showBasins();} //showUrban();
 }
 
 map.on('overlayremove', onOverlayRemove);
@@ -1099,7 +1110,7 @@ map.on('overlayremove', onOverlayRemove);
 function onOverlayRemove(e){
 	if (e.name == 'rivers'){clearRivers();} //clearRivers();
 	else if (e.name == 'waterbodies'){clearWB();} //clearWB();
-	else if (e.name == 'basins (TSCI)'){clearBasins();} //clearUrban();
+	//else if (e.name == 'basins (TSCI)'){clearBasins();} //clearUrban();
 }
 
 
