@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Blue Forest | TCSI Viewer</title>
+<title>Watershed Assessment Toolkit</title>
 <head>
   <meta charset="utf-8" />
   <html lang="en">
@@ -57,7 +57,8 @@
   
   <!--Yellow AOI polygon-->
   <script src="src/Waterbodies.js"></script>
-  <script src="src/Rivers.js"></script>   
+  <script src="src/Rivers.js"></script>
+  <script src="src/HUC10.js"></script>     
 
   <!--[if lte IE 8]>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
@@ -260,11 +261,15 @@
 	.legend i {
 		width: 18px;
 		height: 18px;
-		float: left;
+		float: left;s
 		margin-right: 8px;
 		opacity: 0.7;
 	}
-		
+	
+	@media (hover: none) {
+	  .leaflet-tooltip-pane { display: none; }
+	}	
+
 	.ui-tabs .ui-tabs-nav{
 		background: rgba(40, 92, 148, 0.75);
 
@@ -456,9 +461,10 @@
 	<div class="popup">
 		<a class="close" href="#">×</a>
 		<div class="content">
-			<h2>Restoration Objectives</h2>
-			<p>Forests around the US, which provide critical natural infrastructure for our water resources, are threatened by catastrophic wildfire.  A suite of challenges, including historic fire exclusion and climate change, have led to unhealthy landscapes with high risk of severe wildfire and degraded water supply.  Forest restoration offers a path forward – by removing excess fuels, restoring native tree species, and introducing prescribed fire, these forest health treatments restore ecological function and create more resilient forests for communities near and far that rely on forests for clean water, air, and recreation.</p>
-			<p>Here we highlight the risk of catastrophic fire, the potential for water supply enhancement, and the intersection of these two classifications to better understand the value of forest restoration across the Sierra Nevada mountain range in California.</p>
+			<h2>Watershed Assessment Toolkit<br>for Ecosystem Resilience</h2>	
+			<p><b>Restoration Objectives</b><br><br>Forests around the US, which provide critical natural infrastructure for our water resources, are threatened by catastrophic wildfire. A suite of challenges, including historic fire exclusion and climate change, have led to unhealthy landscapes with high risk of severe wildfire and threatened water supply. Forest restoration offers a path forward – by removing excess fuels, restoring native tree species, and introducing prescribed fire, these forest health treatments restore ecological function and create more resilient forests for communities near and far that rely on forests for clean water, air, and recreation.
+			</p>
+			<p>Here we highlight the risk of catastrophic fire, the potential for water supply enhancement, and the intersection of these risks and opportunities to better understand the value of implementing forest restoration across the Sierra Nevada mountain range in California.</p>
 		</div>
 	</div>
 </div>
@@ -506,7 +512,7 @@
 	    <li><span style='background:#FFFFB2;'></span>Low</li>
 	    <li><span style='background:#FED976;'></span></li>
 	    <li><span style='background:#FEB24C;'></span></li>
-	    <li><span style='background:#FD8D3C;'></span>Intermediate</li>
+	    <li><span style='background:#FD8D3C;'></span>Intermed</li>
 	    <li><span style='background:#FC4E2A;'></span></li>
 	    <li><span style='background:#E31A1C;'></span></li>
 	    <li><span style='background:#B10026;'></span>High</li>
@@ -526,7 +532,7 @@
 	    <li><span style='background:#ECF0F6;'></span>Low</li>
 	    <li><span style='background:#B2C2DB;'></span></li>
 	    <li><span style='background:#9BB0D0;'></span></li>
-	    <li><span style='background:#849EC5;'></span>Intermediate</li>
+	    <li><span style='background:#849EC5;'></span>Intermed</li>
 	    <li><span style='background:#6182B5;'></span></li>
 	    <li><span style='background:#4E71A6;'></span></li>
 	    <li><span style='background:#43618F;'></span>High</li>
@@ -544,7 +550,7 @@
 
 	<h4>&nbsp;</h4>
 	<div>
-	Fire risk estimates interact with the water yield impact, because water yield is a function of vegetation state, which is both a function of time since treatment and time to disturbance (fire). This map overlays the two spatial layers to provide insights into the coupled potential for restoration work to decrease fire risk while increasing water yield.<p></p>
+	Fire risk estimates interact with the water yield impact, because water yield is a function of vegetation state, which is both a function of time since treatment and time to disturbance (fire). This map overlay of two spatial layers provides insights into the coupled potential for restoration work to decrease fire risk while increasing water yield.<p></p>
 	<div class='my-legend'>
 	<div class='legend-title'>Bivariate Map<br><i>Fire Risk vs. Water Availability</i></div>
 	<div class='legend-scale2'>
@@ -565,14 +571,14 @@
 	<div id="tabs-2">
 	<fieldset>
 	 <legend><img src="img/data_sm.png" valign="middle">&nbsp; <b>Forest Resilience Bonds</b></legend>
-	 The Forest Resilience Bond (FRB) is an environmental impact bond that deploys private capital to make our national forests more resilient to a changing climate. By investing in restoration projects that protect forest health, the FRB mitigates the risk of catastrophic wildfire while also protecting water resources, avoiding carbon emissions, and creating rural jobs.<br><br>
+	 The Forest Resilience Bond (FRB) is an environmental impact bond that deploys private capital to make our national forests more resilient to a changing climate.<br><br>
 	<div id="banner-slide">
 	<ul class="bjqs">
-		<li><img src="img/4.jpg" title="By investing in projects that protect forest health..."></li>
-		<li><img src="img/6.jpg" title="the FRB mitigates the risk of catastrophic wildfire..."></li>
+		<li><img src="img/4.jpg" title="By investing in projects that protect forest health,"></li>
+		<li><img src="img/6.jpg" title="the FRB mitigates risk of catastrophic wildfire..."></li>
 		<li><img src="img/1.jpg" title="...while also protecting water resources, avoiding carbon emissions, and creating rural jobs."></li>
-		<li><img src="img/3.jpg" title="These impacts protect communities near and far..."></li>
-		<li><img src="img/2.jpg" title="...while also benefiting public-private stakeholders"></li>
+		<li><img src="img/2.jpg" title="These impacts protect communities near and far while also benefiting public-private stakeholders"></li>
+		<!--<li><img src="img/2.jpg" title=""></li>-->
 		<li><img src="img/5.jpg" title="such as the US Forest Service, water and electric utilities, and state governments."></li>
 		<li><img src="img/7.jpg" title="The FRB contracts with the beneficiaries..."></li>
 		<li><img src="img/8.jpg" title="to share in the costs of forest restoration while providing modest returns to investors."></li>
@@ -610,7 +616,7 @@
 	 <legend><img src="img/cc_sm.png" valign="middle">&nbsp; <b>About the Partnership</b></legend>
 	 <div id="banner-slide2">
 	<ul class="bjqs">
-		<li><img src="img/1_BFC.png" title="<b><a href='https://www.blueforestconservation.com/' target='_blank'>Blue Forest Conservation</a>:</b><br>Blue Forest Conservation is a 501c3 nonprofit organization dedicated to leveraging financial innovation to develop sustainable solutions to systemic climate resilience challenges faced by vulnerable communities."></li>
+		<li><img src="img/1_BFC.png" title="<b><a href='https://www.blueforestconservation.com/' target='_blank'>Blue Forest Conservation</a>:</b><br>Blue Forest Conservation is an organization dedicated to leveraging financial innovation to develop sustainable solutions to systemic climate resilience challenges faced by vulnerable communities."></li>
 		<li><img src="img/2_WRI.png" title="<b><a href='https://www.wri.org/' target='_blank'>World Resources Institute (WRI)</a>:</b><br>WRI is a global research organization that works closely with leaders to turn big ideas into action to sustain a healthy environment—the foundation of economic opportunity and human well-being. They aim to achieve a water-secure future by mapping, measuring and mitigating water risks."></li>
 		<li><img src="img/3_SNRI.png" title="<b><a href='https://snri.ucmerced.edu/' target='_blank'>Sierra Nevada Research Institute</a>:</b><br>Based at the U.C. Merced, the Sierra Nevada Research Institute (SNRI) conducts basic and applied natural resources research in the San Joaquin Valley and Sierra Nevada regions of California."></li>
 		<li><img src="img/4_USDA.png" title="<b><a href='https://nifa.usda.gov/program/small-business-innovation-research-program-sbir' target='_blank'>USDA SBIR</a>:</b><br>This viewer was funded by the Small Business Innovation Research (SBIR) program at the USDA, which offers grants to qualified small businesses to support research related to important scientific problems and opportunities in agriculture that could lead to significant public benefits."></
@@ -871,7 +877,7 @@ map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: false });
 });
 
-map.attributionControl.setPrefix('Viewer: <a href="mailto:gverutes@gmail.org" target="_top">G. Verutes</a>');
+map.attributionControl.setPrefix('Viewer: <a href="http://cons.scienceontheweb.net" target="_blank">G. Verutes</a>');
 	
 // add basemap and overlays
 var baseMaps = {
@@ -951,6 +957,16 @@ function style2(feature) {
   };
 }
 
+function style3(feature) {
+  return {
+	weight: 0,
+	fillOpacity: 0,
+	fillColor: '#c6dbef',
+	color:'#c6dbef'
+	//hovertip: false, 
+  };
+}
+
 // set hover colors
 function highlightFeature(e) {
 	var layer = e.target;
@@ -961,13 +977,27 @@ function highlightFeature(e) {
 		dashArray: '3',
 		fillOpacity: 0.2,
 		fillColor: '#2171b5'
+		//hovertip: false,
 	});
 }
 
-// a function to reset the colors when a neighborhood is not longer 'hovered'
+function highlightFeature2(e) {
+	var layer = e.target;
+	layer.setStyle({
+		weight: 2,
+		opacity: 0.35,
+		color: '#000', 
+		//dashArray: '2',
+		fillOpacity: 0.1,
+		fillColor: '#fff',
+	});
+}
+
+// a function to reset the colors when a neighborhood is no longer 'hovered'
 function resetHighlight(e) {
 	geojson.resetStyle(e.target);
 	geojson2.resetStyle(e.target);
+	geojson3.resetStyle(e.target);
 }
 
 // tell what functions to call when mousing over and out of a neighborhood
@@ -988,6 +1018,17 @@ geojson2 = L.geoJson(grid2, {
 	onEachFeature: function (feature, layer) {
 	layer.on({
 	mouseover: highlightFeature,
+	mouseout: resetHighlight
+	});
+
+	  }
+	});
+
+geojson3 = L.geoJson(grid3, {
+	style: style3,
+	onEachFeature: function (feature, layer) {
+	layer.on({
+	mouseover: highlightFeature2,
 	mouseout: resetHighlight
 	});
 
@@ -1015,7 +1056,7 @@ cartodb.createLayer(map, layerUrban)
 	var overlayMaps = {
 	"rivers": rivers.addTo(map),
 	"waterbodies": waterbodies.addTo(map),
-	"basins (TSCI)": basins.addTo(map),
+	"watersheds": geojson3.addTo(map),
 	"urban areas": layer
 	};
 	L.control.layers(baseMaps, overlayMaps, {position: 'topleft', collapsed: false}).addTo(map);
@@ -1023,10 +1064,7 @@ cartodb.createLayer(map, layerUrban)
 });
 
 
-// zoom control
-L.control.zoom({ position: 'topleft' }).addTo(map);
-// scale
-L.control.scale({ position: 'topleft' }).addTo(map);
+
 // mini map
 //var ESRIStreetMap = 'http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png';
 //var StamenToner = 'http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
@@ -1035,7 +1073,10 @@ var CartoLight = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{
 var mb = new L.TileLayer(CartoLight, {minZoom: 4, maxZoom: 16});
 var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '150', width: '112'}).addTo(map); 
 
-
+// zoom control
+L.control.zoom({ position: 'topright' }).addTo(map);
+// scale
+L.control.scale({ position: 'topleft' }).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -1263,7 +1304,7 @@ function showRivers(){
 		var sublayer = layer.getSubLayer(0);
 		sublayer.set(subLayerOptions);
 		sublayersRivers.push(sublayer);
-		layer.setZIndex(6);
+		layer.setZIndex(22);
 	  }).on('error', function() {
 		// log the error
 	  });
@@ -1294,7 +1335,7 @@ function clearWY(){
 		var sublayer = layer.getSubLayer(0);
 		sublayer.set(subLayerOptions);
 		sublayersWY.push(sublayer);
-		layer.setZIndex(21);
+		layer.setZIndex(6);
 	  }).on('error', function() {
 		// log the error
 	  });
@@ -1307,7 +1348,7 @@ function showWY(){
 	
 	var MapQueryWY = "SELECT * FROM tcsi_huc10_geonad83";
 		
-	var CartoCSSWY = "#tcsi_huc10_geonad83{polygon-fill: #ECF0F6;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ etwy_avg <= 591] {polygon-fill: #43618F;}#tcsi_huc10_geonad83 [ etwy_avg <= 533] {polygon-fill: #4E71A6;}#tcsi_huc10_geonad83 [ etwy_avg <= 483] {polygon-fill: #6182B5;}#tcsi_huc10_geonad83 [ etwy_avg <= 407] {polygon-fill: #849EC5;}#tcsi_huc10_geonad83 [ etwy_avg <= 364] {polygon-fill: #9BB0D0;}#tcsi_huc10_geonad83 [ etwy_avg <= 219] {polygon-fill: #B2C2DB;}#tcsi_huc10_geonad83 [ etwy_avg <= 0] {polygon-fill: #ECF0F6;}";
+	var CartoCSSWY = "#tcsi_huc10_geonad83{polygon-fill: #eff3ff;polygon-opacity: 1;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ pptmet_avg <= 1156.23] {polygon-fill: #084594;}#tcsi_huc10_geonad83 [ pptmet_avg <= 902.74] {polygon-fill: #2171b5;}#tcsi_huc10_geonad83 [ pptmet_avg <= 782.604] {polygon-fill: #4292c6;}#tcsi_huc10_geonad83 [ pptmet_avg <= 627.258] {polygon-fill: #6baed6;}#tcsi_huc10_geonad83 [ pptmet_avg <= 496.764] {polygon-fill: #9ecae1;}#tcsi_huc10_geonad83 [ pptmet_avg <= 426.346] {polygon-fill: #c6dbef;}#tcsi_huc10_geonad83 [ pptmet_avg <= 356.102] {polygon-fill: #eff3ff;}";
 
 	  cartodb.createLayer(map, layerWY)
 	  .addTo(map)
@@ -1320,7 +1361,7 @@ function showWY(){
 		var sublayer = layer.getSubLayer(0);
 		sublayer.set(subLayerOptions);
 		sublayersWY.push(sublayer);
-		layer.setZIndex(21);
+		layer.setZIndex(22);
 		
 	  }).on('error', function() {
 		// log the error
@@ -1352,7 +1393,7 @@ function clearBivar(){
 		var sublayer = layer.getSubLayer(0);
 		sublayer.set(subLayerOptions);
 		sublayersBivar.push(sublayer);
-		layer.setZIndex(22);
+		layer.setZIndex(6);
 	  }).on('error', function() {
 		// log the error
 	  });
@@ -1375,7 +1416,7 @@ function showBivar(){
 	
 	var MapQueryBivar = "SELECT * FROM tcsi_huc10_geonad83";
 		
-	var CartoCSSBivar = "#tcsi_huc10_geonad83{polygon-fill: #000;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ rk_bivar = 'A1'] {polygon-fill: #e8e8e8;}#tcsi_huc10_geonad83 [ rk_bivar = 'A2'] {polygon-fill: #b0d5df;}#tcsi_huc10_geonad83 [  rk_bivar = 'A3'] {polygon-fill: #64acbe;}#tcsi_huc10_geonad83 [ rk_bivar = 'B1'] {polygon-fill: #e4acac;}#tcsi_huc10_geonad83 [ rk_bivar = 'B2'] {polygon-fill: #ad9ea5;}#tcsi_huc10_geonad83 [ rk_bivar = 'B3'] {polygon-fill: #627f8c;}#tcsi_huc10_geonad83 [ rk_bivar = 'C1'] {polygon-fill: #c85a5a;}#tcsi_huc10_geonad83 [ rk_bivar = 'C2'] {polygon-fill: #985356;}#tcsi_huc10_geonad83 [ rk_bivar = 'C3'] {polygon-fill: #574249;}";
+	var CartoCSSBivar = "#tcsi_huc10_geonad83{polygon-fill: #000;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ rk_bivar = 'A1'] {polygon-fill: #e8e8e8;}#tcsi_huc10_geonad83 [ rk_bivar = 'A2'] {polygon-fill: #b0d5df;}#tcsi_huc10_geonad83 [ rk_bivar = 'A3'] {polygon-fill: #64acbe;}#tcsi_huc10_geonad83 [ rk_bivar = 'B1'] {polygon-fill: #e4acac;}#tcsi_huc10_geonad83 [ rk_bivar = 'B2'] {polygon-fill: #ad9ea5;}#tcsi_huc10_geonad83 [ rk_bivar = 'B3'] {polygon-fill: #627f8c;}#tcsi_huc10_geonad83 [ rk_bivar = 'C1'] {polygon-fill: #c85a5a;}#tcsi_huc10_geonad83 [ rk_bivar = 'C2'] {polygon-fill: #985356;}#tcsi_huc10_geonad83 [ rk_bivar = 'C3'] {polygon-fill: #574249;}";
 
 	  cartodb.createLayer(map, layerBivar)
 	  .addTo(map)
@@ -1433,7 +1474,7 @@ function showFire(){
 	
 	var MapQueryFire = "SELECT * FROM tcsi_huc10_geonad83";
 		
-	var CartoCSSFire = "#tcsi_huc10_geonad83{polygon-fill: #FFFFB2;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ whp_med <= 6788] {polygon-fill: #B10026;}#tcsi_huc10_geonad83 [ whp_med <= 2088] {polygon-fill: #E31A1C;}#tcsi_huc10_geonad83 [ whp_med <= 1421] {polygon-fill: #FC4E2A;}#tcsi_huc10_geonad83 [ whp_med <= 982] {polygon-fill: #FD8D3C;}#tcsi_huc10_geonad83 [ whp_med <= 726] {polygon-fill: #FEB24C;}#tcsi_huc10_geonad83 [ whp_med <= 494] {polygon-fill: #FED976;}#tcsi_huc10_geonad83 [ whp_med <= 415] {polygon-fill: #FFFFB2;}";
+	var CartoCSSFire = "#tcsi_huc10_geonad83{polygon-fill: #FFFFB2;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ whp_avg <= 7181] {polygon-fill: #B10026;}#tcsi_huc10_geonad83 [ whp_avg <= 3694] {polygon-fill: #E31A1C;}#tcsi_huc10_geonad83 [ whp_avg <= 2747] {polygon-fill: #FC4E2A;}#tcsi_huc10_geonad83 [ whp_avg <= 2218] {polygon-fill: #FD8D3C;}#tcsi_huc10_geonad83 [ whp_avg <= 1262] {polygon-fill: #FEB24C;}#tcsi_huc10_geonad83 [ whp_avg <= 811] {polygon-fill: #FED976;}#tcsi_huc10_geonad83 [ whp_avg <= 492] {polygon-fill: #FFFFB2;}";
 
 	  cartodb.createLayer(map, layerFire)
 	  .addTo(map)
@@ -1484,7 +1525,7 @@ function zoomWB(){
 	var MapQueryZoomWB = "SELECT * FROM waterbodies_canv_nad83 WHERE name = '"+nameWB+"'";
 	sql.getBounds(MapQueryZoomWB).done(function(bounds) {
 	map.fitBounds(bounds);
-	map.setZoom(12);
+	map.setZoom(9);
 	
 	// remove previous
 	//if (endCounty > 0){sublayersCounty[endCounty-1].remove();}
@@ -1624,24 +1665,40 @@ autocomplete(document.getElementById("myWB"), WBList);
 </body>
 
 <!--
-SELECT tcsi_huc10_3vars.r_bivar,tcsi_huc10_3vars.r_wy,tcsi_huc10_3vars.r_fire
-FROM tcsi_huc10_geonad83, tcsi_huc10_3vars
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_3vars.gnis_id
+UPDATE tcsi_huc10_geonad83
+SET pptmet_avg = tcsi_huc10_qual_geonad83_r2
+.pptmet_avg
+FROM tcsi_huc10_qual_geonad83_r2
+WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
+.gnis_id
 
 UPDATE tcsi_huc10_geonad83
-SET rk_bivar = tcsi_huc10_3vars.r_bivar
-FROM tcsi_huc10_3vars
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_3vars.gnis_id
+SET pptmet_sum = tcsi_huc10_qual_geonad83_r2.pptmet_sum
+FROM tcsi_huc10_qual_geonad83_r2
+WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
+.gnis_id
 
 UPDATE tcsi_huc10_geonad83
-SET rk_wy = tcsi_huc10_3vars.r_wy
-FROM tcsi_huc10_3vars
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_3vars.gnis_id
+SET rk_bivar = tcsi_huc10_qual_geonad83_r2
+.r_bivar
+FROM tcsi_huc10_qual_geonad83_r2
+WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
+.gnis_id
 
 UPDATE tcsi_huc10_geonad83
-SET rk_fire = tcsi_huc10_3vars.r_fire
-FROM tcsi_huc10_3vars
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_3vars.gnis_id
+SET rk_wy = tcsi_huc10_qual_geonad83_r2
+.r_wy
+FROM tcsi_huc10_qual_geonad83_r2
+WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
+.gnis_id
+
+UPDATE tcsi_huc10_geonad83
+SET rk_fire = tcsi_huc10_qual_geonad83_r2
+.r_fire
+FROM tcsi_huc10_qual_geonad83_r2
+WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
+.gnis_id
+
 -->
 </html>
 
