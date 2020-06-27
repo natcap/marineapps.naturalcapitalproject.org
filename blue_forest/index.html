@@ -1005,8 +1005,13 @@ function zoomToFeature(e) {
 }
 
 function onEachFeature(e) {
-	// turnoff watersheds layer that is blocking CARTO tooltip
-	map.removeLayer(watersheds);
+	// turnoff watersheds/json
+	map.removeLayer(geojson3);
+	setTimeout(function() {  
+	// turn on watershed json
+	map.addLayer(geojson3)
+  	}, 7500);  
+
 }
 
 // tell what functions to call when mousing over and out of a neighborhood
