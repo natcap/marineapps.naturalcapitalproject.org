@@ -260,6 +260,9 @@ h4 {
 
 	
 /* LEAFLETS GENERAL */
+.leaflet-control-zoom a.leaflet-control-zoom-in { color: #000; position: fixed; top: 12px; right: 29%}
+.leaflet-control-zoom a.leaflet-control-zoom-out { color: #000;   position: fixed; top: 39px; right: 29%;}
+
 .leaflet-container {
     font-family: 'Open Sans', Arial, sans-serif !important;
 }
@@ -283,7 +286,7 @@ h4 {
 .leaflet-control-layers {
     box-shadow: 1px 1px 3px rgba(50,50,50,0.3)!important;
     background: #fff!important;
-    border: 1px solid #555 !important;
+    border: 0px solid #555 !important;
 
 }
 
