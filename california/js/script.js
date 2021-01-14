@@ -421,8 +421,7 @@ L.drawLocal.draw.toolbar.buttons.polygon = 'Draw a polygon';
 var baseMaps = {
 	"<b>imagery</b>": ESRIImagery,
 	"<b>dark</b>": CartoDark,
-	"<b>elevation</b>": ESRIOcean,
-	"<b>terrain</b>": MapboxTerrain,	
+	"<b>elevation</b>": ESRIOcean
 };
 
 
@@ -552,7 +551,7 @@ map.closePopup();
 	});
 
 // mini map
-var MapboxStreets = 'http://a.tiles.mapbox.com/v3/geointerest.e4qjes5f/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
+var MapboxStreets = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
 var mb = new L.TileLayer(MapboxStreets, {minZoom: 2, maxZoom: 16});
 var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '250', width: '150'}).addTo(map); 
 
