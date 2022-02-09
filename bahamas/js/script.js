@@ -76,7 +76,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzH
 var map = new L.Map('map', {
   zoomControl: false,
   layer_selector: true,
-  layers: [MapboxTerrain],
+  layers: [ESRIImagery],
   center: [23.88, -74],
   zoom: 7,
   minZoom: 6,
@@ -96,8 +96,7 @@ map.attributionControl.setPrefix('Map viewer by: <a href="mailto:gverutes@gmail.
 // add basemap and overlays
 var baseMaps = {
 	//"Terrain": terrainMapbox,
-	"<b>imagery</b>": ESRIImagery,
-	"<b>terrain</b>": MapboxTerrain,
+	"<b>imagery</b>": ESRIImagery
 };
 
 
