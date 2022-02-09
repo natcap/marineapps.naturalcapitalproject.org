@@ -1,6 +1,6 @@
-<!DOCTYPE html>
 <html>
-<title>Watershed Assessment Toolkit</title>
+<head>
+<title>Smart Coasts</title>
 <head>
   <meta charset="utf-8" />
   <html lang="en">
@@ -9,867 +9,346 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
- <!--jQuery-->
-  <script src="js/jquery.js" type="text/javascript"></script>
-  <script src="js/main.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-  <link rel="stylesheet" type="text/css" href="css/styleSswitch.css" />
-  <script type="text/javascript" src="js/Sswitch.js"></script>
-
-  <!--Basic jQUery Photo Slider-->
-  <link rel="stylesheet" href="css/bjqs.css">
-  <link rel="stylesheet" href="css/demo.css">
-  <script src="js/bjqs-1.3.min.js"></script>
-  <script src="js/bjqs-1.3.min2.js"></script>
+  <!--jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
-  <!--Stylesheet-->
-  <link rel="stylesheet" href="inc/style.css" />
-  <link rel="icon" href="img/BFC_logo_icon.png">
+  <!--CartoDB-->
+  <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
   
-  <!--Custom JS-->
-  <script type="text/javascript" src="inc/initiators.js"></script>
-  
-  <!--Mapbox API-->
-  <meta name='viewport' content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+  <!-- Leaflet Plugins -->
+  <link rel="stylesheet" href="src/Control.MiniMap.css" />
+  <script src="src/Control.MiniMap.js" type="text/javascript"></script> 
+   <link rel="stylesheet" href="css/leaflet.draw.css"/>
+  <script src="js/leaflet.draw.js"></script>
   
   <!--Fonts-->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Lato:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css">
-
-  <!--CartoDB and Mapbox-->
-  <link rel="stylesheet" href="css/light-theme.css">
-  <link rel="stylesheet" href="css/makeitresponsive.css">
-  <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />  
-  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
-  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.standalone.js"></script>
-
-  <!--Leaflet --> 
-  <!--
-  <link rel="stylesheet" href="css/leaflet.draw.css"/>
-  <script src="js/leaflet.draw.js"></script>-->
   
-  <!--Google API-->
+  <!--Google-->  
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   
-  <!--Yellow AOI polygon-->
-  <script src="src/Waterbodies.js"></script>
-  <script src="src/Rivers.js"></script>
-  <script src="src/HUC10.js"></script>     
-
-  <!--[if lte IE 8]>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
-  <![endif]-->
-
-  <!-- Leaflet Plugins -->
-  <link rel="stylesheet" href="src/Control.MiniMap.css" />
-  <script src="src/Control.MiniMap.js" type="text/javascript"></script>
-  
-  
-  <!--
-  <script>
-    // JQuery Modal Dialog
-	$(function() {
-	$("#dialogContainer").dialog({
-	title: 'ONLINE VIEWER TOOL',
-	resizable: true,
-	bgiframe: true,
-	background: "black",
-	overlay: { opacity: 0.5, background: "white" },
-	autoOpen: true,
-	height: 1000,
-	width: 1000,
-	modal: true,
-	});
-	});
-  </script>
- -->
-
-  <!--[if lte IE 8]>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
-  <![endif]-->
-
-  <!-- Leaflet Plugins 
-  <link rel="stylesheet" href="src/Control.MiniMap.css" />
-  <script src="src/Control.MiniMap.js" type="text/javascript"></script>-->
-  
-
-	<style>
-	body{
-		font: 60% "Lato", sans-serif;
-	}
-
-	#dialog.Container {
-    	width: 500px;
-    	height: 500px;
-	}
-	
-	#dialog-link {
-		padding: .4em 1em .4em 20px;
-		text-decoration: none;
-		position: absolute;
-	}
-	#dialog-link span.ui-icon {
-		margin: 0 5px 0 0;
-		position: absolute;
-		left: .2em;
-		top: 0%;
-		margin-top: -8px;
-	}
-	#icons {
-		margin: 0;
-		padding: 0;
-	}
-	#icons li {
-		margin: 2px;
-		position: relative;
-		padding: 4px 0;
-		cursor: pointer;
-		float: left;
-		list-style: none;
-	}
-	#icons span.ui-icon {
-		float: left;
-		margin: 0 4px;
-	}
-	.fakewindowcontain .ui-widget-overlay {
-		position: absolute;
-	}
-	select 
-	{
-		width: 200px;
-	}
-	
-	#format
-	{
-		text-align: center;
-	} 
-  
-	#screenshot{
-		position:absolute;
-		border:1.5px solid #000;
-		background:#FFF;
-		padding:3px;
-		display:none;
-		color:#fff;
-		z-index:101;
-	}	  
-  
-    html, body {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-      }
-  
-	input[type="radio"]{
-	 vertical-align: middle;
-	}
-
-	input[type="checkbox"]{
-	 vertical-align: middle;
-	}
-
-    #layer_selector {
-        position: absolute;
-        top: 4px;
-        right: 30px;
-      }
-	
-	#button {
-		position:absolute;
-		bottom: 5px;
-		left: 5px;
-	}
-
-	#myWB {
-	  width:150px;   
-	}	
-
-	.overlay {
-	  position: absolute;
-	  top: 0;
-	  bottom: 0;
-	  left: 0;
-	  right: 0;
-	  background: rgba(0, 0, 0, 0.7);
-	  transition: opacity 500ms;
-	  visibility: hidden;
-	  opacity: 0;
-	}
-	.overlay:target {
-	  visibility: visible;
-	  opacity: 1;
-	}
-
-	.popup {
-	  margin: 50px auto;
-	  padding: 15px;
-	  background: #fff;
-	  border-radius: 5px;
-	  width: 35%;
-	  position: relative;
-	  right: 10%;
-	  transition: all 5s ease-in-out;
-	  z-index:101;
-	}
-
-	.popup h2 {
-	  margin-top: 0;
-	  color: #333;
-	  font-family: "Trebuchet MS", sans-serif;
-	}
-	.popup .close {
-	  position: absolute;
-	  top: 0px;
-	  right: 10px;
-	  transition: all 200ms;
-	  font-size: 30px;
-	  font-weight: bold;
-	  text-decoration: none;
-	  color: #333;
-	}
-	.popup .close:hover {
-	  color: orange;
-	}
-	.popup .content {
-	  max-height: 50%;
-	  overflow: auto;
-	  padding: 15px;
-	}	
-
-	.info {
-		padding: 6px 8px;
-		font: 14px/16px Verdana, Geneva, sans-serif;
-		background: white;
-		background: rgba(255,255,255,1);
-		box-shadow: 0 0 15px rgba(0,0,0,0);
-		border-radius: 5px;
-		border:1px solid #000;
-		position:absolute;
-		left: 6px;
-		top: 265px;
-	}
-	
-
-	.legend {
-		line-height: 18px;
-		color: #555;
-	}
-	.legend i {
-		width: 18px;
-		height: 18px;
-		float: left;s
-		margin-right: 8px;
-		opacity: 0.7;
-	}
-	
-	@media (hover: none) {
-	  .leaflet-tooltip-pane { display: none; }
-	}	
-
-	.ui-tabs .ui-tabs-nav{
-		background: rgba(40, 92, 148, 0.75);
-
-	}
-
-	#tabs .ui-state-active {
-		background: rgba(200, 200, 200, 1);
-	}
-
-	#ui-tabs #ui-tabs-panel 
-		|/* just in case you want to change the panel */
-	{
-		background: black;
-	}
-	
-	.film-background {
-	   z-index: -1;
-	   position: absolute;
-	   top: 0;
-	   left: 0;
-	   width: 100%;
-	}
-
-	#slider {
-		margin: 5px;
-	}
-	.ui-slider-horizontal {
-		height: 10px;
-		width: 150px;
-	}
-	.ui-slider .ui-slider-handle {
-		height: 10px;
-		width: 5px;
-		padding-left: 5px;
-		padding-bottom: 5px;
-	}
-
-
-	* {
-	  box-sizing: border-box;
-	}
-
-
-	.autocomplete {
-	  /*the container must be positioned relative:*/
-	  position: relative;
-	  display: inline-block;
-	}
-
-	.autocomplete-items {
-	  position: absolute;
-	  border: 1px solid #d4d4d4;
-	  border-bottom: none;
-	  border-top: none;
-	  z-index: 99;
-	  /*position the autocomplete items to be the same width as the container:*/
-	  top: 95%;
-	  left: 5%;
-	  right: 0;
-	}
-	.autocomplete-items div {
-	  padding: 10px;
-	  cursor: pointer;
-	  background-color: #fff; 
-	  border-bottom: 1px solid #d4d4d4; 
-	}
-	.autocomplete-items div:hover {
-	  /*when hovering an item:*/
-	  background-color: #6baed6; 
-	}
-	.autocomplete-active {
-	  /*when navigating through the items using the arrow keys:*/
-	  background-color: DodgerBlue !important; 
-	  color: #ffffff; 
-	}  
-	 
-	.centerText{
-	   text-align: center; 
-	}
-
-	#page{
-		display:none;
-	}
-
-	#loading {
-	  display: block;
-	  position: absolute;
-	  top: 0;
-	  left: 0;
-	  z-index: 100;
-	  width: 100vw;
-	  height: 100vh;
-	  background-color: rgba(192, 192, 192, 1);
-	  background-image: url("https://i.stack.imgur.com/MnyxU.gif");
-	  background-repeat: no-repeat;
-	  background-position: center;
-	}
-
-
-	.my-legend .legend-title {
-	    text-align: left;
-	    margin-bottom: 8px;
-	    font-weight: bold;
-	    font-size: 90%;
-	    }
-	.my-legend .legend-scale ul {
-	    margin: 0;
-	    padding: 0;
-	    float: left;
-	    list-style: none;
-	    }
-	.my-legend .legend-scale ul li {
-	    display: block;
-	    float: left;
-	    width: 25px;
-	    margin-bottom: 6px;
-	    text-align: center;
-	    font-size: 80%;
-	    list-style: none;
-	    }
-	.my-legend ul.legend-labels li span {
-	    display: block;
-	    float: left;
-	    height: 15px;
-	    width: 25px;
-	    }
-	.my-legend .legend-source {
-	    font-size: 70%;
-	    color: #999;
-	    clear: both;
-	    }
-	.my-legend a {
-	    color: #777;
-	    }
-	.my-legend .legend-scale2 ul {
-	    margin: 0;
-	    margin-bottom: 5px;
-	    padding: 0;
-	    float: left;
-	    list-style: none;
-	    }
-	.my-legend .legend-scale2 ul li {
-	    font-size: 80%;
-	    list-style: none;
-	    margin-left: 0;
-	    line-height: 18px;
-	    margin-bottom: 2px;
-	    }
-	.my-legend ul.legend-labels2 li span {
-	    display: block;
-	    float: left;
-	    height: 16px;
-	    width: 25px;
-	    margin-right: 0px;
-	    margin-left: 0;
-	    border: 0px solid #999;
-	    }
-
-    </style>
-
-
-    <script>
-        function myFunction()
-        {
-            document.getElementById("page").style.display = "block";
-            document.getElementById("loading").style.diplay = "none";
-        }
-    </script>
 </head>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+
+/////////////////////////////////////////////////////////////////////
+// BAR CHART ////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+google.charts.load('current', {'packages':['corechart']});
+      
+function drawChart(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum){
+        
+	var dataTable = new google.visualization.DataTable();
+	dataTable.addColumn('string', 'Goals');
+	dataTable.addColumn('number', '%');
+	dataTable.addColumn({ type: 'string', role: 'style' });
+	// a column for custom tooltip content
+	dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+	dataTable.addRows([
+	  ['Science', science_sum, 'rgb(255, 244, 95)', createCustomHTMLContent('Science', science_sum)],
+	  ['Steward', steward_sum, 'rgb(198, 61, 150)', createCustomHTMLContent('Stewardship', steward_sum)],
+	  ['Protect', protect_sum, 'rgb(223, 129, 102)', createCustomHTMLContent('Protection', protect_sum)],
+	  ['Change', hab_sum, 'rgb(0, 178, 114)', createCustomHTMLContent('Habitat Change', hab_sum)],
+	]);
+
+	var options = {
+	  tooltip: {isHtml: true},
+	  legend: 'none',
+	  title: hab_sum+protect_sum+steward_sum+science_sum+' Total Actions in '+count_sum+' Unique Sites',
+      width:300,
+      height:100,
+	  bars: 'horizontal',
+	  animation: {
+	  duration: 1500,
+	  easing: 'out',
+	  startup: true
+	  },
+	  hAxis: {
+		viewWindowMode:'explicit',
+		viewWindow: {
+		  max:max_sum,
+		  min:0
+		},
+		//title: "Total Number of Actions" 
+	   }
+	};
+	
+	var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+	chart.draw(dataTable, options);
+
+  
+	function createCustomHTMLContent(goalTxt, pctComplete) {
+		return '<div style="padding:10px 10px 10px 10px;">' + 
+		+pctComplete+ " actions"
+		+"</div>"}
+		
+}
+
+</script>  
+  
+<style type="text/css">
+body{
+font: 100% "Noto Serif", sans-serif;
+margin: 0;
+padding: 0px;
+border: 0;
+height: 100%;  0
+max-height: 100%; 
+}
+
+html, body, #map {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+
+img {
+    max-width: 100%;
+    max-height: auto;
+	margin-left:0%; margin-right:0%;
+}
+
+br {
+	line-height: 100%;
+}
+
+h5 {
+	line-height: 100%;
+}
+
+input[type="text"] {
+    width: 206px;
+}
+
+input[type="radio"]{
+ vertical-align: top;
+}
+
+
+#table03a { width:100%; border:0px solid #D9D5BE; margin:0px; background:#fff; border-collapse:collapse;}
+#table03a td { border:0px solid #D9D5BE; vertical-align: middle; width: 300px; padding: 0px;}
+
+
+.cartodb-popup v2 p {z-index:9999;}
+
+.map-legend{
+	   border-radius: 5px;
+	   position: absolute;
+	   bottom: 0px;
+	   right: 0px;
+	   padding-left: 8px;
+	   padding-right: 8px;
+	   padding-top: 7px;
+	   padding-bottom: 7px;
+	   border:1px solid #000;
+	   background-color: #fff; 
+	   max-width: 310px;
+	   min-height: 128px;
+}
+
+.bottom{
+	   border-radius: 5px;
+	   position: absolute;
+	   bottom: 105px;
+	   left: 0px;
+	   padding-left: 20px;
+	   padding-right: 0px;
+	   padding-bottom: 20px;
+	   border:1px solid #000;
+	   background-color: #D4D4D4;
+	   color: #000;
+	   min-width: 240px;
+}
+  
+.key{
+	   border-radius: 5px;
+	   position: absolute;
+	   bottom: 281px;
+	   left: 0px;
+	   padding-bottom: 10px;
+	   padding-top: 10px;
+	   padding-left: 20px;
+	   padding-right: 0px;
+	   border:1px solid #000;
+	   background-color: #fff;
+	   color: #000;
+	   min-width: 240px;
+}
+  
+  
+/* gives the tooltip a margin from the pointer */
+  
+  body > div.cartodb-tooltip{
+	margin-top: 10px !important;
+	margin-left: 10px !important;
+	border-radius: 15px;
+	z-index:1;
+  }
+  /* gives to the tooltip different styles */
+  div.cartodb-tooltip-content-wrapper{
+  font: 100% "Noto Serif", sans-serif;
+	padding: 5px 5px 5px 5px;
+	max-width: 200px;
+	text-align: center;
+	background-color: #fff!important;
+	opacity: 0.9;
+	border-radius: 35px!important;
+	border:1px solid #000;
+	z-index:9999;
+  }
+  /* set styles to the <p> tag of the tooltip */
+   div.cartodb-tooltip-content-wrapper p{
+	color: black!important;
+  }
+  /* set infobox styles */
+ .cartodb-infobox{
+	opacity:0.75;
+	background-color: #fff!important;
+	color: #fff!important;
+	border-radius: 50px!important;
+  }
+ /* set styles to the div element with id= box */
+ /* #box{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 200px;
+	height: 170px;
+	opacity: 0.9;
+	padding: 25px 25px 25px 25px;
+	border-radius: 15px;
+	background-color: #FFF;
+	color: #fdb462;
+
+  }*/
+  /* set styles to the <h4> tag of the element with id= box */
+  #box h4{
+	font-style: italic;
+  }
+  /* set styles to the <p> tag of the element with id= box */
+  #box p{
+	text-align: center;
+	font-size: 18px;
+	color:red;
+
+  }
+  /* set styles to the custom infowindow */
+  .infowindow-custom{ 
+	position: relative;
+	width: 500px;
+	background-color: #FFF;
+	margin-bottom: 2px;
+	opacity: 0.9;
+	text-align: left;
+	font-style: oblique;
+	background-color: #FFF;
+	color: #fdb462;
+	border-radius: 10px;
+  }
+  
+  .cartodb-popup-content .content h3{
+	  font-style: italic;
+  }
+  .cartodb-popup-content .content p{
+	  text-align: left;
+	  font-size: 16px;
+	  color:red;
+	  margin-left: 20px;
+  }
+   
+  /* set styles to the custom infowindow -> close button */
+  .cartodb-popup-close-button {
+	position: absolute;
+	top: -12px;
+	right: -11px;
+	width: 26px;
+	height: 26px;
+	background: url('http://libs.cartodb.com/cartodb.js/v3/themes/img/light.png') no-repeat 0 -23px;
+	text-indent: -9999px;
+	font-size: 0;
+	line-height: 0;
+	opacity: 1;
+	text-transform: uppercase;
+	z-index: 3;
+  }
+  /* set styles to the custom infowindow -> tip container */
+  .cartodb-popup-tip-container{
+	position: absolute;
+	bottom: -13px;
+	left: 23px;
+	 width: 16px;
+	 height: 14px;
+	 background: url('http://libs.cartodb.com/cartodb.js/v3/themes/img/light.png') no-repeat -23px -7px;
+	 text-indent: -9999px;
+	 font-size: 0;
+	 line-height: 0;
+	 opacity: 1;
+	 z-index: 3;
+  }
+  /* change legend's position and style */
+  .cartodb-legend{
+	 left: 20px;
+	 bottom: 50px!important;
+	 width: 90px;
+	 height: auto;
+	 background-color: #FFF;
+	 opacity: 1;
+	 border-radius: 25px!important;
+   } 
+   .cartodb-legend ul li{
+	margin-left: 5px!important;
+	font-style: italic!important;
+	font-size: 10px!important;
+
+   }
+  
+
+<!-- add styles for background of checkboxes and also drop-down menu locations >> USE BAHAMAS OR UAE VIEWERS --> 
+
+</style>
 
 <body>
 
-<div class="page"> 
-	
-	<!--<div id="dialogContainer" title="ONLINE VIEWER">
-	<p><b>HEADING</b></p>
-	<br><br>
-	<p>BODY</p>
-	<br>
-	<center><img src="img/BFC_logolockup_web.png"></center>
-	</div>-->
-	</div>
 
-<div class="map" id="map"></div>
+<div id="map"></div>
 
 
-
-<div id="popup1" class="overlay">
-	<div class="popup">
-		<a class="close" href="#">×</a>
-		<div class="content">
-			<h2>Watershed Assessment Toolkit<br>for Ecosystem Resilience</h2>	
-			<p><b>Restoration Objectives</b><br><br>Forests around the US, which provide critical natural infrastructure for our water resources, are threatened by catastrophic wildfire. A suite of challenges, including historic fire exclusion and climate change, have led to unhealthy landscapes with high risk of severe wildfire and threatened water supply. Forest restoration offers a path forward – by removing excess fuels, restoring native tree species, and introducing prescribed fire, these forest health treatments restore ecological function and create more resilient forests for communities near and far that rely on forests for clean water, air, and recreation.
-			</p>
-			<p>Here we highlight the risk of catastrophic fire, the potential for water supply enhancement, and the intersection of these risks and opportunities to better understand the value of implementing forest restoration across the Sierra Nevada mountain range in California.</p>
-		</div>
-	</div>
-</div>
-
-<div id="popup2" class="overlay">
-	<div class="popup">
-		<a class="close" href="#">×</a>
-		<div class="content">
-			<b>Forest Resilience Bonds</b>
-			<p>xxx</p>
-		</div>
-	</div>
-</div>
-
-<div class="sidepanel">
-
-
-<!-- JQuery Tabs -->
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1"><b>BENEFITS</b></a></li>	
-		<li><a href="#tabs-2"><b>FINANCE</b></a></li>	
-		<li><a href="#tabs-3">&#8505;</a></li>	
-		<li><a href="#tabs-4">&#8593;</a></li>
-	</ul>
-
-
-<div id="tabs-1">
-	<fieldset> <!--style="width:375px;"-->
-	<legend><img src="img/strategies_sm.png" valign="middle">&nbsp;<b>Restoration Objectives</b>&nbsp;&nbsp;<a class="button" href="#popup1"><img src="img/info_sm.png" valign="middle" title="Click to get info" ></a></legend>
-	<ol>
-	<li>Wildfire Risk<input type="checkbox" name="checkboxName1" class="checkbox1" id="checkbox1" /></li>
-	<li>Potential for Water Supply<br>Enhancement with Restoration<input type="checkbox" name="checkboxName2" class="checkbox2" id="checkbox2" /></li>
-	<li>Fire + Water (Bivariate)<input type="checkbox" name="checkboxName3" class="checkbox3" id="checkbox3" /></li>
-		</ol>
-
-	<div id="accordion"> 
-	<h4>&nbsp;</h4>
-	<div>
-	Annual wildfire risk of forested regions is produced by the U.S. Forest Service from a nationwide fire modeling effort using USFS Wildfire Hazard Potential, which provides an absolute indication of annual fire risk at a point in time. This map reveals the severity of wildfire risk over a 30-year time period.<p></p>
-	<div class='my-legend'>
-	<div class='legend-title'>Wildfire Risk</div>
-	<div class='legend-scale'>
-	  <ul class='legend-labels'>
-	    <li><span style='background:#FFFFB2;'></span>Low</li>
-	    <li><span style='background:#FED976;'></span></li>
-	    <li><span style='background:#FEB24C;'></span></li>
-	    <li><span style='background:#FD8D3C;'></span>Intermed</li>
-	    <li><span style='background:#FC4E2A;'></span></li>
-	    <li><span style='background:#E31A1C;'></span></li>
-	    <li><span style='background:#B10026;'></span>High</li>
-	  </ul>
-	</div>
-	<div class='legend-source'>Source: <a href="https://www.firelab.org/project/wildfire-hazard-potential" target="_blank">USDA | US Forest Service</a></div>
-	</div>	 
-	</div>
-	
-	<h4>&nbsp;</h4>
-	<div>
-	In some cases, removing small-diameter trees from dry western forests can lead to increased water supply available for downstream communities. Using remote-sensing and hydrologic tools, this map shows the potential for increases in water supply following forest restoration, based on long-term precipitation and vegetation water demand.<p></p>
-	<div class='my-legend'>
-	<div class='legend-title'>Pontential for Water Supply Enhancement</div>
-	<div class='legend-scale'>
-	  <ul class='legend-labels'>
-	    <li><span style='background:#ECF0F6;'></span>Low</li>
-	    <li><span style='background:#B2C2DB;'></span></li>
-	    <li><span style='background:#9BB0D0;'></span></li>
-	    <li><span style='background:#849EC5;'></span>Intermed</li>
-	    <li><span style='background:#6182B5;'></span></li>
-	    <li><span style='background:#4E71A6;'></span></li>
-	    <li><span style='background:#43618F;'></span>High</li>
-	  </ul>
-	</div>
-	<div class='legend-source'>Source: <a href="#link to source">Landsat</a></div>
-	</div>
-	<hr>
-	<br>
-	<div class='my-legend'>
-	<div class='legend-title'>Find a waterbody:</div>
-	</div>
-	<input id='myWB' class='waterbody' type='text' name='myWB' placeholder="Enter name" onclick="clearText();"> <button onclick="zoomWB();">Zoom</button>
-	</div>
-
-	<h4>&nbsp;</h4>
-	<div>
-	Fire risk estimates interact with the water yield impact, because water yield is a function of vegetation state, which is both a function of time since treatment and time to disturbance (fire). This map overlay of two spatial layers provides insights into the coupled potential for restoration work to decrease fire risk while increasing water yield.<p></p>
-	<div class='my-legend'>
-	<div class='legend-title'>Bivariate Map<br><i>Fire Risk vs. Water Availability</i></div>
-	<div class='legend-scale2'>
-	  <ul class='legend-labels2'>
-	    <li><span style='border:#fff;'>High</span><span style='background:#64acbe;'></span><span style='background:#627f8c;'></span><span style='background:#574249;'></span></li>
-	    <li><span style='border:#fff;'>Med</span><span style='background:#b0d5df;'></span><span style='background:#ad9ea5;'></span><span style='background:#985356;'></span></li>
-	    <li><span style='border:#fff;'>Low</span><span style='background:#e8e8e8;'></span><span style='background:#e4acac;'></span><span style='background:#c85a5a;'></span></li>
-	     <li><span style='border:#fff;'></span><span style='border:#fff;'>&nbsp;Low</span><span style='border:#fff;'>&nbsp;Med</span><span style='border:#fff;'>&nbsp;High</span></li>   
-
-	  </ul>
-	</div>
-	<div class='legend-source'>Source: <a href="#link to source">Blue Forest Conservation</a></div>
-	</div>
-	</div> <!-- end accordian -->
-	</fieldset>
-	</div>
-
-	<div id="tabs-2">
-	<fieldset>
-	 <legend><img src="img/data_sm.png" valign="middle">&nbsp; <b>Forest Resilience Bonds</b></legend>
-	 The Forest Resilience Bond (FRB) is an environmental impact bond that deploys private capital to make our national forests more resilient to a changing climate.<br><br>
-	<div id="banner-slide">
-	<ul class="bjqs">
-		<li><img src="img/4.jpg" title="By investing in projects that protect forest health,"></li>
-		<li><img src="img/6.jpg" title="the FRB mitigates risk of catastrophic wildfire..."></li>
-		<li><img src="img/1.jpg" title="...while also protecting water resources, avoiding carbon emissions, and creating rural jobs."></li>
-		<li><img src="img/2.jpg" title="These impacts protect communities near and far while also benefiting public-private stakeholders"></li>
-		<!--<li><img src="img/2.jpg" title=""></li>-->
-		<li><img src="img/5.jpg" title="such as the US Forest Service, water and electric utilities, and state governments."></li>
-		<li><img src="img/7.jpg" title="The FRB contracts with the beneficiaries..."></li>
-		<li><img src="img/8.jpg" title="to share in the costs of forest restoration while providing modest returns to investors."></li>
-	</ul>
-	</div>
-	<div class="controlgroup">
-      <select id="scale">
-        <option value="0">Learn more...</option>
-        <option value="1">How it works</option>
-        <option value="2">Why you should care</option>
-        <option value="3">How it's different</option>			
-      </select>
-	</div>
-	<br>
-	<div id="test1"></div>
-	</fieldset>	
-	</div>
-
-
-	<!--
-	<div id="tabs-4">
-	<fieldset>
-	 <legend><b>Case Study Tour</b></legend>
-	<br>Click the button for a tour of the TSCI case study.<br><br> 
-	<div class="play" id="a">play</div>
-	<audio id="sound1">
-    <source src="http://www.bigsoundbank.com/sounds/ogg/0595.ogg" type="audio/ogg" />
-	</audio>
-	</fieldset>	
-	</div>
-	-->
-
-	<div id="tabs-3">
-	<fieldset>
-	 <legend><img src="img/cc_sm.png" valign="middle">&nbsp; <b>About the Partnership</b></legend>
-	 <div id="banner-slide2">
-	<ul class="bjqs">
-		<li><img src="img/1_BFC.png" title="<b><a href='https://www.blueforestconservation.com/' target='_blank'>Blue Forest Conservation</a>:</b><br>Blue Forest Conservation is an organization dedicated to leveraging financial innovation to develop sustainable solutions to systemic climate resilience challenges faced by vulnerable communities."></li>
-		<li><img src="img/2_WRI.png" title="<b><a href='https://www.wri.org/' target='_blank'>World Resources Institute (WRI)</a>:</b><br>WRI is a global research organization that works closely with leaders to turn big ideas into action to sustain a healthy environment—the foundation of economic opportunity and human well-being. They aim to achieve a water-secure future by mapping, measuring and mitigating water risks."></li>
-		<li><img src="img/3_SNRI.png" title="<b><a href='https://snri.ucmerced.edu/' target='_blank'>Sierra Nevada Research Institute</a>:</b><br>Based at the U.C. Merced, the Sierra Nevada Research Institute (SNRI) conducts basic and applied natural resources research in the San Joaquin Valley and Sierra Nevada regions of California."></li>
-		<li><img src="img/4_USDA.png" title="<b><a href='https://nifa.usda.gov/program/small-business-innovation-research-program-sbir' target='_blank'>USDA SBIR</a>:</b><br>This viewer was funded by the Small Business Innovation Research (SBIR) program at the USDA, which offers grants to qualified small businesses to support research related to important scientific problems and opportunities in agriculture that could lead to significant public benefits."></
-	</ul>
-	</div>
-	<br><br>
-	</fieldset>	
-	</div>
-	</div>
-
-	<div id="tabs-4">
-	<br>
-	</div>	
-
-</div>
-
-<div id="loading"></div> 
 
 <script>
-	function onReady(callback) {
-	  var intervalId = window.setInterval(function() {
-	    if (document.getElementsByTagName('body')[0] !== undefined) {
-	      window.clearInterval(intervalId);
-	      callback.call(this);
-	    }
-	  }, 3000);
-	}
-
-	function setVisible(selector, visible) {
-	  document.querySelector(selector).style.display = visible ? 'block' : 'none';
-	}
-
-	onReady(function() {
-	  setVisible('.page', true);
-	  setVisible('#loading', false);
-	});
 
 
-$( document ).ready(function() {
-  
-  // bjqs slider
-  $('#banner-slide').bjqs({
-    animtype      : 'slide',
-    height        : 243,
-    width         : 437,
-    responsive    : true,
-    randomstart   : false,
 
-	animtype        : 'fade',
-	animduration    : 300,      // length of transition
-	animspeed       : 5000,     // delay between transitions
-	automatic       : true,     // enable/disable automatic slide rotation
-
-	// control and marker configuration
-	showcontrols    : true,     // enable/disable next + previous UI elements
-	centercontrols  : true,     // vertically center controls
-	nexttext        : '>',   // text/html inside next UI element
-	prevtext        : '<',   // text/html inside previous UI element
-	showmarkers     : true,     // enable/disable individual slide UI markers
-	centermarkers   : true,     // horizontally center markers
-	});
-
-  
-  // bjqs slider
-  $('#banner-slide2').bjqs({
-    animtype      : 'slide',
-    height        : 350,
-    width         : 400,
-    responsive    : true,
-    randomstart   : false,
-
-	animtype        : 'fade',
-	animduration    : 300,      // length of transition
-	animspeed       : 5000,     // delay between transitions
-	automatic       : true,     // enable/disable automatic slide rotation
-
-	// control and marker configuration
-	showcontrols    : false,     // enable/disable next + previous UI elements
-	centercontrols  : true,     // vertically center controls
-	nexttext        : '>',   // text/html inside next UI element
-	prevtext        : '<',   // text/html inside previous UI element
-	showmarkers     : true,     // enable/disable individual slide UI markers
-	centermarkers   : true,     // horizontally center markers
-	});
-
-	//$( "#tabs" ).tabs({ active: 4}); 
-	$( "#tabs" ).tabs(); 
-	//$("#accordion").accordion({ header: "h4", collapsible: true, active: 0, heightStyle: 'panel' });
-	$("#accordion").accordion({ header: "h4", collapsible: true, heightStyle: 'content' });
-	$( "#tabs" ).tabs();
-    $( "#check" ).button();
-    $( "#format" ).buttonset();
-	$( "#tooltip" ).tooltip();
-	//$("#accordion").accordion({ active: 4});
-
-});
-
-		/////////////////////////////////////////////////////////////////////////////
-	
-	var ckb1 = 0;
-	var ckb2 = 0;
-	var ckb3 = 0;
-	
-	
-	$(".checkbox1").Sswitch({
-		onSwitchChange: function() {
-
-		 if($("#checkbox1").is(':checked') && ckb1 == 0){
-			//activateFire = 1;
-			showFire();
-			$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 0});
-			if($("#checkbox2").is(':checked') && ckb2 == 1){ $('.checkbox2').trigger('click');}
-			if($("#checkbox3").is(':checked') && ckb3 == 1){ $('.checkbox3').trigger('click');}
-			ckb1 = 1;
-		 }
-		 
-		 else{
-			clearFire();
-			if ($( "#accordion" ).accordion( "option", "active" ) == 0){
-				$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 4});
-			}		
-			ckb1 = 0;				
-		 }	 
-		}
-	});		
-	
-	$(".checkbox2").Sswitch({
-		onSwitchChange: function() {	
-			
-		 if($("#checkbox2").is(':checked') && ckb2 == 0){
-			//activateWater = 1;
-			showWY(); 
-			$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 1});
-			if($("#checkbox1").is(':checked') && ckb1 == 1){ $('.checkbox1').trigger('click');}
-			if($("#checkbox3").is(':checked') && ckb3 == 1){ $('.checkbox3').trigger('click');}
-			ckb2 = 1;
-		 }
-		
-		 else{
-			clearWY(); 
-			if ($( "#accordion" ).accordion( "option", "active" ) == 1){
-				$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 4});
-			}		
-			ckb2 = 0;				
-		 }	 
-		}
-	});	
-
-	
-	$(".checkbox3").Sswitch({
-		onSwitchChange: function() {
-	
-		 if($("#checkbox3").is(':checked') && ckb3 == 0){
-			//activateBivar = 1;
-			showBivar(); 
-			$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 2});
-			if($("#checkbox1").is(':checked') && ckb1 == 1){ $('.checkbox1').trigger('click');}
-			if($("#checkbox2").is(':checked') && ckb2 == 1){ $('.checkbox2').trigger('click');}
-			ckb3 = 1;
-		 }
-
-		 else{
-			clearBivar(); 
-			if ($( "#accordion" ).accordion( "option", "active" ) == 2){
-				$("#tabs").tabs({ active: 0});$("#accordion").accordion({ active: 4});
-			}		
-			ckb3 = 0;	
-		 }	 
-		}
-	});	
-
-
-	setTimeout(function() {  
-	map.setView([39.2, -120.25], 9); 
-	showWB();
-	showRivers();
-
-	// select the fire risk checkbox
-	//showFire();
-	$('.checkbox1').trigger('click');
-	$("#checkbox1").prop("checked", true);
-	$(".accordion").accordion({ active: 0});
-	ckb1 = 1;
-	//endFire = 1;
-  	}, 4000);  
-
-	/*	
-  $( "#slider1" ).slider({
-   	change: function(event, ui) {} ,
-  	//change: function(event, ui) {showWY(ui.value);} ,
-	   orientation: "horizontal",
-	   value: 80,
-	   step:10,
-	   min: 0,
-       max: 90	,
-	   slide: function( event, ui ){
-		$( "#minval1" ).val( ui.value );
-	   }	
-	});
-	$( "#minval1" ).val( $( "#slider1" ).slider( "value" ) );	
-	
-
-  $( "#slider2" ).slider({
-  	change: function(event, ui) {} ,
-	   orientation: "horizontal",
-	   value: 0,
-	   step:10,
-	   min: 0,
-       max: 90	,
-	   slide: function( event, ui ){
-		$( "#minval2" ).val( ui.value );
-	   }	
-	});
-	$( "#minval2" ).val( $( "#slider2" ).slider( "value" ) );	
-	*/
- 
-	
-///////////////////////////////////////////////////////////////////////////////////
-
-
-var sql = new cartodb.SQL({ user: 'gverutes' });
-	
-
-// base maps
+// define basemaps
 var ESRIImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, and UPR-EGP'
-});
-var OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org">OpenStreetMaps</a>'});
-var MapboxStreets = L.tileLayer('http://a.tiles.mapbox.com/v3/geointerest.afb8c76d/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.mapbox.com">Mapbox</a>'});
+	attribution: 'Tiles &copy; Esri'});
 
-// try: mapbox.streets >> https://docs.mapbox.com/help/troubleshooting/migrate-legacy-static-images-api/#how-to-tell-if-your-current-implementation-uses-a-mapbox-designed-classic-style
+var CartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+		});
 
-// map settings
-L.mapbox.accessToken = 'pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
+var ESRIOcean = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}.png', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, GEBCO, NOAA, and DeLorme'});
 
-	
+
 // set base map and controls
 var map = new L.Map('map', {
   zoomControl: false,
-  layer_selector: true,
-  layers: [MapboxStreets],
-  center: [39.29, -120.66],
+  layer_selector: false,
+  layers: [ESRIImagery],
+  center: [17, -88],
   zoom: 6,
-  minZoom: 6,
-  maxZoom: 14
+  minZoom: 5,
+  maxZoom: 10
 });
 
-// scroll wheel
-//map.scrollWheelZoom.disable();
-
-
-var southWest = L.latLng(28, -140),
-northEast = L.latLng(45, -95);
+var southWest = L.latLng(-70, -220),
+northEast = L.latLng(220, -20);
 var bounds = L.latLngBounds(southWest, northEast);
 
 map.setMaxBounds(bounds);
@@ -877,844 +356,347 @@ map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: false });
 });
 
-map.attributionControl.setPrefix('Viewer: <a href="http://cons.scienceontheweb.net" target="_blank">G. Verutes</a>');
+
+// scale
+L.control.scale({ position: 'bottomright' }).addTo(map);
+
+// zoom
+L.control.zoom({position:'bottomright'}).addTo(map);
+map.scrollWheelZoom.disable();
+
+// add CartoDB vector	
+var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
+var StateBoundaries = 'https://gverutes.cartodb.com/api/v2/viz/577322f6-49b7-47b7-8e8c-7df38968e544/viz.json';
+var Flyways = 'https://gverutes.cartodb.com/api/v2/viz/dc33b54a-0f7a-4766-95e5-aecbd6d9a680/viz.json';
+var CBRS = 'https://stanford.carto.com/u/gverutes/api/v2/viz/01fa14f0-494f-11e7-9d7d-0e233c30368f/viz.json';
+
+
+// drop-downs on map
+var legend = L.control({position: 'bottomleft'});
+legend.onAdd = function (map) {
+  
 	
-// add basemap and overlays
-var baseMaps = {
-	"<b>terrain</b>": MapboxStreets,
-	"<b>street</b>": OSM,
-	"<b>satellite</b>": ESRIImagery,
+	var div = L.DomUtil.create('div', 'info legend');
+
+	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>LOCATION AND VARIABLE:</b><br><select id='zoomState'><option value='0'>Select Geography...</option><option value='1'>MAR</option><option value='2'>Mexico</option><option value='3'>Belize</option><option value='4'>Guatemala</option><option value='5'>Honduras</option></select><select id='zoomFly'><option value='0'>Select Variable...</option><option value='1'>Precipitation</option><option value='2'>Change in Precipitation</option><option value='3'>Days Above 1mm of Precipitation</option><option value='4'>Mean Temperature Change</option><option value='5'>Days Above 35°C</option><option value='6'>Sea Level Rise</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='rcp[]' id='rcp4p5' checked/> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5' > RCP 8.5<br><input type='radio' name='est[]' id='lowest' > Low Est. <input type='radio' name='est[]' id='highest' checked/> High Est.<br><input type='radio' name='year[]' id='2050s' > 2050s <input type='radio' name='year[]' id='2080s' checked/> 2080s</div>";
+	
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
 };
-
-// add Leaflet vector
-var b1 = new L.LatLng(5.9,-55.1);
-var b2 = new L.LatLng(5.8,-55.2);
-var b12 = [b1, b2];
-var basins = new L.polyline(b12, {
-	color: '#023858',
-	weight: 0,
-	opacity: 0,
-	smoothFactor: 0,
-	});	
-
-var w1 = new L.LatLng(5.9,-55.1);
-var w2 = new L.LatLng(5.8,-55.2);
-var w12 = [w1, w2];
-var w12_line = new L.polyline(w12, {
-	color: '#023858',
-	weight: 0,
-	opacity: 0,
-	smoothFactor: 0,
-	});	
-
-var r1 = new L.LatLng(5.9,-55.1);
-var r2 = new L.LatLng(5.8,-55.2);
-var r12 = [r1, r2];
-var r12_line = new L.polyline(r12, {
-	color: '#023858',
-	weight: 0,
-	opacity: 0,
-	smoothFactor: 0,
-	});		
+legend.addTo(map);
 
 
-// add CartoDB viz.json
-var layerBasins = 'https://stanford.carto.com/u/gverutes/api/v2/viz/2f059c37-7e8f-4bc5-a0e8-fbdba0d1b6a8/viz.json'
-var layerUrban = 'https://stanford.carto.com/u/gverutes/api/v2/viz/7c0d8b25-de5d-4f94-b4ca-82b4dff29620/viz.json';
-var layerWB = 'https://stanford.carto.com/u/gverutes/api/v2/viz/3e4869d6-8684-4517-9f37-9c55527de754/viz.json';
-var layerRivers = 'https://stanford.carto.com/u/gverutes/api/v2/viz/af3383fc-b4f4-41f3-b851-b9b82c386f10/viz.json';
-var layerWY = 'https://stanford.carto.com/u/gverutes/api/v2/viz/c95af2a9-e71b-4f00-9d27-90647c51e56f/viz.json'
-var layerFire = 'https://stanford.carto.com/u/gverutes/api/v2/viz/666b159b-85c1-4549-8533-3d7216608dff/viz.json'
-var layerBivar = 'https://stanford.carto.com/u/gverutes/api/v2/viz/ab4b485c-36f2-4e55-bb56-b78d04eab1d9/viz.json'
+// drop-downs on map
 
+var key= L.control({position: 'bottomleft'});
+key.onAdd = function (map) {
+  
+	var div = L.DomUtil.create('div', 'info legend');
+	div.innerHTML = div.innerHTML + "<div class='key'><img src='img/map_legend.png'></div>";
+    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+    return div;
+};
+key.addTo(map);		
+	
+	
 
-// TSCI basin  ** temporary layer **
-cartodb.createLayer(map, 'https://stanford.carto.com/u/gverutes/api/v2/viz/2f059c37-7e8f-4bc5-a0e8-fbdba0d1b6a8/viz.json')
+// CBRS
+/*
+cartodb.createLayer(map, CBRS)
 		.addTo(map)
         .on('done', function(layer) {
-		layer.setZIndex(25);	
+		layer.setZIndex(5);	
 });
-
-
-/////////////////////////////
-
-// set base style of grid
-function style(feature) {
-  return {
-	weight: 0,
-	fillOpacity: 0.75,
-	fillColor: '#c6dbef',
-	color:'#c6dbef' 
-  };
-}
-
-function style2(feature) {
-  return {
-	weight: 1.5,
-	fillOpacity: 0.75,
-	fillColor: '#c6dbef',
-	color:'#c6dbef' 
-  };
-}
-
-function style3(feature) {
-  return {
-	weight: 0,
-	fillOpacity: 0,
-	fillColor: '#c6dbef',
-	color:'#c6dbef'
-	//hovertip: false, 
-  };
-}
-
-// set hover colors
-function highlightFeature(e) {
-	var layer = e.target;
-	layer.setStyle({
-		weight: 3,
-		opacity: 0.25,
-		color: '#EFFD5F', 
-		dashArray: '3',
-		fillOpacity: 0.2,
-		fillColor: '#2171b5'
-		//hovertip: false,
-	});
-}
-
-function highlightFeature2(e) {
-	var layer = e.target;
-	layer.setStyle({
-		weight: 2,
-		opacity: 0.35,
-		color: '#000', 
-		//dashArray: '2',
-		fillOpacity: 0.1,
-		fillColor: '#fff',
-	});
-}
-
-// a function to reset the colors when a neighborhood is no longer 'hovered'
-function resetHighlight(e) {
-	geojson.resetStyle(e.target);
-	geojson2.resetStyle(e.target);
-	geojson3.resetStyle(e.target);
-}
-
-function zoomToFeature(e) {
-	map.fitBounds(e.target.getBounds());
-}
-
-function onEachFeature(e) {
-	// turnoff watersheds/json
-	map.removeLayer(geojson3);
-	setTimeout(function() {  
-	// turn on watershed json
-	map.addLayer(geojson3)
-  	}, 7500);  
-
-}
-
-// tell what functions to call when mousing over and out of a neighborhood
-// add vector data to map
-geojson = L.geoJson(grid, {
-	style: style,
-	onEachFeature: function (feature, layer) {
-	layer.on({
-	mouseover: highlightFeature,
-	mouseout: resetHighlight
-	});
-
-	  }
-	});
-
-geojson2 = L.geoJson(grid2, {
-	style: style2,
-	onEachFeature: function (feature, layer) {
-	layer.on({
-	mouseover: highlightFeature,
-	mouseout: resetHighlight
-	});
-
-	  }
-	});
-
-geojson3 = L.geoJson(grid3, {
-	style: style3,
-	onEachFeature: function (feature, layer) {
-	layer.on({
-	mouseover: highlightFeature2,
-	mouseout: resetHighlight,
-	//click: zoomToFeature
-	click: onEachFeature
-	});
-
-	  }
-	});
-
-/*
-function openMarkerPopup(id){
-	geojson.eachLayer(function(feature){
-		if(feature.feature.properties.id==id){
-			feature.openPopup();
-		}
-	});
-}    
-map.closePopup();
 */
 
-var waterbodies= L.layerGroup([w12_line, geojson]);
-var rivers = L.layerGroup([r12_line, geojson2]);
+// Show Sites at start		
+//showSites();
 
-// add cartoDB layer and set z-index so it shows up on top
-cartodb.createLayer(map, layerUrban)
-.on('done', function(layer) {
-	//layer.setZIndex(100);
-	var overlayMaps = {
-	"rivers": rivers.addTo(map),
-	"waterbodies": waterbodies.addTo(map),
-	"watersheds": geojson3.addTo(map),
-	"urban areas": layer
-	};
-	L.control.layers(baseMaps, overlayMaps, {position: 'topleft', collapsed: false}).addTo(map);
-	//layer.addTo(map);
+$("#zoomState").change(function(event){
+	// grab numeric value of drop-down option
+	var e = document.getElementById("zoomState");
+	var ddSitesVal = e.options[e.selectedIndex].value;
+	//showSites(ddSitesVal);
+	//addLegend($( "#zoomState option:selected" ).text());
+	zoomState($( "#zoomState option:selected" ).text(), ddSitesVal);
+	$( "#zoomFly").val(0);
+});
+
+
+$("#zoomFly").change(function(event){
+	// grab numeric value of drop-down option
+	var e = document.getElementById("zoomFly");
+	var ddSitesVal = e.options[e.selectedIndex].value;
+	//showSites(ddSitesVal);
+	//addLegend($( "#zoomFly option:selected" ).text()+ " Flyway");
+	zoomFly($( "#zoomFly option:selected" ).text(), ddSitesVal);
+	$( "#zoomState").val(0);
 });
 
 
 
-// mini map
-//var ESRIStreetMap = 'http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png';
-//var StamenToner = 'http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
-var CartoLight = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
-//var MapboxStreets = 'http://a.tiles.mapbox.com/v3/geointerest.e4qjes5f/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VvaW50ZXJlc3QiLCJhIjoiQ2czbnlDMCJ9.pQ-_LxzHCL6WqMm5rJrEWw';
-var mb = new L.TileLayer(CartoLight, {minZoom: 4, maxZoom: 16});
-var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '150', width: '112'}).addTo(map); 
 
-// zoom control
-L.control.zoom({ position: 'topright' }).addTo(map);
-// scale
-L.control.scale({ position: 'topleft' }).addTo(map);
+var legend2;
+legend2 = L.control({position: 'bottomright'});	
+var legend2Count = 0;
+	
+// ADD GRAPH IN TOP RIGHT	
+function addLegend(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum, queryScale){
 
-///////////////////////////////////////////////////////////////////////
+	if (legend2Count > 0){map.removeControl(legend2);}
+	
+	legend2.onAdd = function (map) {
 
+		var div = L.DomUtil.create('div', 'info legend');
+		if (queryScale == 1){
+			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+"</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
+		}
+		else{
+			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+" Flyway</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
+		}
+		//div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+		return div;
+		legend2.setZIndex(2);
+	};
+	
+	legend2.addTo(map);	
+	legend2Count = legend2Count + 1;
+	
+	
+	// ADD CHART TO LEGEND IN BOTTOM RIGHT
+	
+	// QUERY MAP WITH SUMS AND OTHER SQL CALCS
+	google.charts.setOnLoadCallback(drawChart(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum));
+	
+}
+
+
+
+// add basemap and overlays
+var baseMaps = {
+	"imagery": ESRIImagery,
+	"dark": CartoLight,
+	"ocean": ESRIOcean
+};
+
+// add CartoDB vector	
+// var cbc_trends = 'https://stanford.carto.com/u/gverutes/api/v2/viz/30cc0a85-d108-4f84-821d-5bc105c5c0be/viz.json';
+
+
+L.control.layers(baseMaps, null, {position: 'bottomleft', collapsed: false}).addTo(map);
+
+
+
+//////////////////////////////////////////
+
+// initialize CARTO account
 var sql = cartodb.SQL({ user: 'gverutes' });
 
-///////////////////////////////////////////////////////////////////////
-
-function clearText(){document.getElementById('myWB').value = ''}
-
-map.on('overlayadd', onOverlayAdd);
-
-function onOverlayAdd(e){
-    if (e.name == 'rivers'){showRivers();} //showRivers();
-	else if (e.name == 'waterbodies'){showWB();} //showWB();
-	//else if (e.name == 'basins (TSCI)'){showBasins();} //showUrban();
-}
-
-map.on('overlayremove', onOverlayRemove);
-
-function onOverlayRemove(e){
-	if (e.name == 'rivers'){clearRivers();} //clearRivers();
-	else if (e.name == 'waterbodies'){clearWB();} //clearWB();
-	//else if (e.name == 'basins (TSCI)'){clearBasins();} //clearUrban();
-}
+//////////////////////////////////////////
 
 
-///////////////////////////////////////////////////////////////////////
-
-$("#scale").change(function(event){
-
-	if ($( "#scale option:selected" ).text() == "How it works"){
-		showMapTable(1);
-	}
-	else if ($( "#scale option:selected" ).text() == "Why you should care"){
-		showMapTable(2);
-	}
-	else if ($( "#scale option:selected" ).text() == "How it's different"){
-		showMapTable(3);
-	}
-})
-
-function showMapTable(site_num){
-	
-	if (site_num == 1){
-		var HTML1 = "Investors provide upfront capital with public and private beneficiaries then making contracted payments based on the water, fire, and other benefits created by the restoration activities.";	
-	
-		document.getElementById("test1").innerHTML = HTML1;
-	}
-
-	else if (site_num == 2){
-		var HTML1 = "By scaling restoration treatments, the FRB can decrease the risk of severe wildfire while protecting air quality, water supply, rural communities, and habitat.";	
-	
-		document.getElementById("test1").innerHTML = HTML1;
-	}	
-
-	else if (site_num == 3){
-		var HTML1 = "The FRB utilizes investor capital and cost-sharing among beneficiaries to redefine how society addresses environmental challenges.";	
-	
-		document.getElementById("test1").innerHTML = HTML1;
-	}		
-}
-
-///////////////////////////////////////////////////////////////////////
-/*
-var endUrban = 0;  
-var sublayersUrban = [];
-
-function clearUrban(){
-
-	if (endUrban > 0){sublayersUrban[endUrban-1].remove();}
-	endUrban = endUrban + 1;
-	
-	var MapQueryUrban = "SELECT * FROM urban_tsci_nad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSUrban = "#urban_tsci_nad83{polygon-fill: #FFFFFF;polygon-opacity: 0;line-color: #FFF;line-width: 0;line-opacity: 0;}}";
-	
-	  cartodb.createLayer(map, layerUrban)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryUrban,
-		  cartocss: CartoCSSUrban,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersUrban.push(sublayer);
-		layer.setZIndex(5);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showUrban(){
-
-	if (endUrban > 0){sublayersUrban[endUrban-1].remove();}
-	endUrban = endUrban + 1;
-	
-	var MapQueryUrban = "SELECT * FROM urban_tsci_nad83";
-		
-	var CartoCSSUrban = "#urban_tsci_nad83{polygon-fill: #000;polygon-opacity: 0.85;line-color: #000;line-width: 0;line-opacity: 0;}";
-	
-	  cartodb.createLayer(map, layerUrban)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryUrban,
-		  cartocss: CartoCSSUrban,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersUrban.push(sublayer);
-		layer.setZIndex(5);
-	  }).on('error', function() {
-		// log the error
-	  });
-}	
-*/
-///////////////////////////////////////////////////////////////////////
-
-var endWB = 0;  
-var sublayersWB = [];
-
-function clearWB(){
-
-	if (endWB > 0){sublayersWB[endWB-1].remove();}
-	endWB = endWB + 1;
-	
-	var MapQueryWB = "SELECT * FROM waterbodies_canv_nad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSWB = "#waterbodies_canv_nad83{polygon-fill: #FFFFFF;polygon-opacity: 0;line-color: #FFF;line-width: 0;line-opacity: 0;}}";
-	
-	  cartodb.createLayer(map, layerWB)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryWB,
-		  cartocss: CartoCSSWB,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersWB.push(sublayer);
-		layer.setZIndex(7);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showWB(){
-
-	if (endWB > 0){sublayersWB[endWB-1].remove();}
-	endWB = endWB + 1;
-	
-	var MapQueryWB = "SELECT * FROM waterbodies_canv_nad83";
-		
-	var CartoCSSWB = "#waterbodies_canv_nad83{polygon-fill: #6baed6;polygon-opacity: 1;line-color: #6baed6;line-width: 0.5;line-opacity: 1;}";
-	
-	  cartodb.createLayer(map, layerWB)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryWB,
-		  cartocss: CartoCSSWB,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersWB.push(sublayer);
-		layer.setZIndex(7);
-	  }).on('error', function() {
-		// log the error
-	  });
-}	
-
-///////////////////////////////////////////////////////////////////////
-
-var endRivers = 0;  
-var sublayersRivers = [];
-
-function clearRivers(){
-
-	if (endRivers > 0){sublayersRivers[endRivers-1].remove();}
-	endRivers = endRivers + 1;
-	
-	var MapQueryRivers = "SELECT * FROM osm_rivers_tsci_nad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSRivers = "#osm_rivers_tsci_nad83{line-color: #6baed6;line-width: 0;line-opacity: 0;}";
-	
-	  cartodb.createLayer(map, layerRivers)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryRivers,
-		  cartocss: CartoCSSRivers,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersRivers.push(sublayer);
-		layer.setZIndex(6);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showRivers(){
-
-	if (endRivers > 0){sublayersRivers[endRivers-1].remove();}
-	endRivers = endRivers + 1;
-	
-	var MapQueryRivers = "SELECT * FROM osm_rivers_tsci_nad83";
-		
-	var CartoCSSRivers = "#osm_rivers_tsci_nad83{line-color: #6baed6;line-width: 1.5;line-opacity: 0.65;[zoom>7]{line-width: 2;}[zoom>8]{line-width: 2.5;}[zoom>9]{line-width: 3.5;}[zoom>10]{line-width: 4;}[zoom>11]{line-width: 4.5;}[zoom>12]{line-width: 5;}[zoom>13]{line-width: 5.5;}[zoom>14]{line-width: 6;}[zoom>15]{line-width: 8;}}"
-	
-	  cartodb.createLayer(map, layerRivers)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryRivers,
-		  cartocss: CartoCSSRivers,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersRivers.push(sublayer);
-		layer.setZIndex(22);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-///////////////////////////////////////////////////////////////////////
-
-var endWY = 0;  
-var sublayersWY = [];
-
-function clearWY(){
-
-	if (endWY > 0){sublayersWY[endWY-1].remove();}
-	endWY = endWY + 1;
-	
-	var MapQueryWY = "SELECT * FROM tcsi_huc10_geonad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSWY = "#tcsi_huc10_geonad83{polygon-fill: #FFFFFF;polygon-opacity: 0;line-color: #FFF;line-width: 0;line-opacity: 0;}}";
-	
-	  cartodb.createLayer(map, layerWY)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryWY,
-		  cartocss: CartoCSSWY,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersWY.push(sublayer);
-		layer.setZIndex(6);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showWY(){
-
-	if (endWY > 0){sublayersWY[endWY-1].remove();}
-	endWY = endWY + 1;
-	
-	var MapQueryWY = "SELECT * FROM tcsi_huc10_geonad83";
-		
-	var CartoCSSWY = "#tcsi_huc10_geonad83{polygon-fill: #eff3ff;polygon-opacity: 1;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ pptmet_avg <= 1156.23] {polygon-fill: #084594;}#tcsi_huc10_geonad83 [ pptmet_avg <= 902.74] {polygon-fill: #2171b5;}#tcsi_huc10_geonad83 [ pptmet_avg <= 782.604] {polygon-fill: #4292c6;}#tcsi_huc10_geonad83 [ pptmet_avg <= 627.258] {polygon-fill: #6baed6;}#tcsi_huc10_geonad83 [ pptmet_avg <= 496.764] {polygon-fill: #9ecae1;}#tcsi_huc10_geonad83 [ pptmet_avg <= 426.346] {polygon-fill: #c6dbef;}#tcsi_huc10_geonad83 [ pptmet_avg <= 356.102] {polygon-fill: #eff3ff;}";
-
-	  cartodb.createLayer(map, layerWY)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryWY,
-		  cartocss: CartoCSSWY,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersWY.push(sublayer);
-		layer.setZIndex(22);
-		
-	  }).on('error', function() {
-		// log the error
-	  });
-}	
-
-///////////////////////////////////////////////////////////////////////
-
-var endBivar = 0;  
-var sublayersBivar = [];
-
-function clearBivar(){
-
-	if (endBivar > 0){sublayersBivar[endBivar-1].remove();}
-	endBivar = endBivar + 1;
-	
-	var MapQueryBivar = "SELECT * FROM tcsi_huc10_geonad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSBivar = "#tcsi_huc10_geonad83{polygon-fill: #FFFFFF;polygon-opacity: 0;line-color: #FFF;line-width: 0;line-opacity: 0;}}";
-	
-	  cartodb.createLayer(map, layerBivar)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryBivar,
-		  cartocss: CartoCSSBivar,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersBivar.push(sublayer);
-		layer.setZIndex(6);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showBivar(){
-
-	// #e8e8e8 A1
-	// #b0d5df
-	// #64acbe
-	// #e4acac B1
-	// #ad9ea5
-	// #627f8c
-	// #c85a5a C1
-	// #985356
-	// #574249
-
-	if (endBivar > 0){sublayersBivar[endBivar-1].remove();}
-	endBivar = endBivar + 1;
-	
-	var MapQueryBivar = "SELECT * FROM tcsi_huc10_geonad83";
-		
-	var CartoCSSBivar = "#tcsi_huc10_geonad83{polygon-fill: #000;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ rk_bivar = 'A1'] {polygon-fill: #e8e8e8;}#tcsi_huc10_geonad83 [ rk_bivar = 'A2'] {polygon-fill: #b0d5df;}#tcsi_huc10_geonad83 [ rk_bivar = 'A3'] {polygon-fill: #64acbe;}#tcsi_huc10_geonad83 [ rk_bivar = 'B1'] {polygon-fill: #e4acac;}#tcsi_huc10_geonad83 [ rk_bivar = 'B2'] {polygon-fill: #ad9ea5;}#tcsi_huc10_geonad83 [ rk_bivar = 'B3'] {polygon-fill: #627f8c;}#tcsi_huc10_geonad83 [ rk_bivar = 'C1'] {polygon-fill: #c85a5a;}#tcsi_huc10_geonad83 [ rk_bivar = 'C2'] {polygon-fill: #985356;}#tcsi_huc10_geonad83 [ rk_bivar = 'C3'] {polygon-fill: #574249;}";
-
-	  cartodb.createLayer(map, layerBivar)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryBivar,
-		  cartocss: CartoCSSBivar,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersBivar.push(sublayer);
-		layer.setZIndex(22);
-		
-	  }).on('error', function() {
-		// log the error
-	  });
-}	
-
-///////////////////////////////////////////////////////////////////////
-
-var endFire = 0;  
-var sublayersFire = [];
-
-function clearFire(){
-
-	if (endFire > 0){sublayersFire[endFire-1].remove();}
-	endFire = endFire + 1;
-	
-	var MapQueryFire = "SELECT * FROM tcsi_huc10_geonad83 WHERE cartodb_id = 1";
-		
-	var CartoCSSFire = "#tcsi_huc10_geonad83{polygon-fill: #FFFFFF;polygon-opacity: 0;line-color: #FFF;line-width: 0;line-opacity: 0;}}";
-	
-	  cartodb.createLayer(map, layerFire)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryFire,
-		  cartocss: CartoCSSFire,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersFire.push(sublayer);
-		layer.setZIndex(20);
-	  }).on('error', function() {
-		// log the error
-	  });
-}
-
-function showFire(){
-
-	if (endFire > 0){sublayersFire[endFire-1].remove();}
-	endFire = endFire + 1;
-	
-	var MapQueryFire = "SELECT * FROM tcsi_huc10_geonad83";
-		
-	var CartoCSSFire = "#tcsi_huc10_geonad83{polygon-fill: #FFFFB2;polygon-opacity: 1.0;line-color: #000;line-width: 0.25;line-opacity: 0.75;}#tcsi_huc10_geonad83 [ whp_avg <= 7181] {polygon-fill: #B10026;}#tcsi_huc10_geonad83 [ whp_avg <= 3694] {polygon-fill: #E31A1C;}#tcsi_huc10_geonad83 [ whp_avg <= 2747] {polygon-fill: #FC4E2A;}#tcsi_huc10_geonad83 [ whp_avg <= 2218] {polygon-fill: #FD8D3C;}#tcsi_huc10_geonad83 [ whp_avg <= 1262] {polygon-fill: #FEB24C;}#tcsi_huc10_geonad83 [ whp_avg <= 811] {polygon-fill: #FED976;}#tcsi_huc10_geonad83 [ whp_avg <= 492] {polygon-fill: #FFFFB2;}";
-
-	  cartodb.createLayer(map, layerFire)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryFire,
-		  cartocss: CartoCSSFire,
-		}
-		var sublayer = layer.getSubLayer(0);
-		sublayer.set(subLayerOptions);
-		sublayersFire.push(sublayer);
-		layer.setZIndex(20);
-		
-	  }).on('error', function() {
-		// log the error
-	  });
-}	
+var endFly = 0;  
+var sublayersFly = [];
 
 
-//////////////////////////////////////////////////////////////////////////////
-/*
-function testFunction(){
-	map.removeLayer("TSCI_basins");
-	//addLayer(map);
-}
+// zoom Flyway
+function zoomFly(name, ddSitesVal){	
 
+	var MapQueryFly = "SELECT * FROM us_coastal_flyways WHERE fly_name = '"+name+"'";
 
-$('.play').click(function(){
-    var $this = $(this);
-    $this.toggleClass('active');
-    if($this.hasClass('active')){
-        $this.text('pause');         
-    } else {
-        $this.text('play');
-    }
-});
-*/
-
-var endZoomWB= 0;  
-var sublayersZoomWB = [];
-
-function zoomWB(){
-	
-	var nameWB = document.getElementsByName('myWB')[0].value; 	
-	//alert(nameWB);
-
-	var MapQueryZoomWB = "SELECT * FROM waterbodies_canv_nad83 WHERE name = '"+nameWB+"'";
-	sql.getBounds(MapQueryZoomWB).done(function(bounds) {
+	sql.getBounds(MapQueryFly).done(function(bounds) {
 	map.fitBounds(bounds);
-	map.setZoom(9);
-	
-	// remove previous
-	//if (endCounty > 0){sublayersCounty[endCounty-1].remove();}
-	//endCounty = endCounty + 1;
 
-	var CartoCSSZoomWB = "#waterbodies_canv_nad83{polygon-opacity:0.15;polygon-fill:#3182bd;line-opacity:1;line-color:#000;line-width:1;line-join: round;#ca_counties_wgs84_geo::labels[zoom>7]{text-name: [name];text-face-name: 'Lato Bold Italic';text-size: 14;text-spacing: 10;text-fill: #fff;text-halo-fill: rgba(40,92,148,0.75);text-halo-radius: 2.5;text-allow-overlap: true;text-placement: point;text-placement-type: simple;}[zoom < 9]{line-width:2}}";
+	var FlyLatLon = [((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)];
+	if (name == 'Pacific'){FlyLatLon = [40,-122];}
+	else if (name == 'Mississippi'){FlyLatLon = [31,-89];}
 	
-	  cartodb.createLayer(map, layerWB)
+	var popup = L.popup()
+		.setLatLng(FlyLatLon)
+		.setContent(name+" Flyway")
+		.openOn(map);
+	
+	});
+
+	sql.execute(MapQueryFly).done(function(data){
+			
+	// remove previous
+	if (endFly > 0){sublayersFly[endFly-1].remove();}
+	endFly = endFly + 1;
+	
+	var CartoCSSFly = "#us_coastal_flyways{polygon-opacity: 0.4;line-color: #000;line-width: 3;line-opacity: 0.5;polygon-fill: #D4D4D4;}#us_coastal_flyways[zoom>8]{polygon-opacity: 0;}";
+	
+	//#flyways[flyway='Atlantic']{polygon-fill: #A6CEE3;}#flyways[flyway='Central'] {polygon-fill: #1F78B4;}#flyways[flyway='Mississippi'] {polygon-fill: #B2DF8A;}#flyways[flyway='Pacific'] {polygon-fill: #33A02C;}";
+	
+	  cartodb.createLayer(map, Flyways)
 	  .addTo(map)
 	  .on('done', function(layer) {
 		// change the query for the first layer
 		var subLayerOptions = {
-		  sql: MapQueryZoomWB,
-		  cartocss: CartoCSSZoomWB,
+		  sql: MapQueryFly,
+		  cartocss: CartoCSSFly,
 		}
 		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(999);	
+		layer.setZIndex(6);	
 		sublayer.set(subLayerOptions);
-		sublayersZoomWB.push(sublayer);
+		sublayersFly.push(sublayer);
 	  }).on('error', function() {
 		// log the error
 	  });
 	})
+		
+	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE flyway = '"+name+"'")
+	  .done(function(data) {
+	  
+		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 2);
+
+	});
+	
 }
 
 
-function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
-  /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
-      closeAllLists();
-      if (!val) { return false;}
-      currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
-        }
-      }
-  });
 
-  function addActive(x) {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
-  }
+//////////////////////////////////////////
 
-  function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
+var endState = 0;  
+var sublayersState = [];
 
-  function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
 
-  /*execute a function when someone clicks in the document:*/
-  document.addEventListener("click", function (e) {
-      closeAllLists(e.target);
-      });
+// zoom State
+function zoomState(name, ddSitesVal){	
+
+	var MapQueryState = "SELECT * FROM us_coastal_states WHERE state_name = '"+name+"'";
+
+	sql.getBounds(MapQueryState).done(function(bounds) {
+	map.fitBounds(bounds);
+
+	var popup = L.popup()
+		.setLatLng([((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)])
+		.setContent(name)
+		.openOn(map);
+	
+	});
+
+	sql.execute(MapQueryState).done(function(data){
+			
+	// remove previous
+	if (endState > 0){sublayersState[endState-1].remove();}
+	endState = endState + 1;
+	
+	var CartoCSSState = "#us_coastal_states{polygon-opacity:0.5;polygon-fill:#838078;line-opacity:0.5;line-color:#fff;line-width:2;}#us_coastal_states[zoom>8]{polygon-opacity: 0;}#us_coastal_states[zoom>7]{polygon-opacity: 0;}";
+	
+	  cartodb.createLayer(map, StateBoundaries)
+	  .addTo(map)
+	  .on('done', function(layer) {
+		// change the query for the first layer
+		var subLayerOptions = {
+		  sql: MapQueryState,
+		  cartocss: CartoCSSState,
+		}
+		var sublayer = layer.getSubLayer(0);
+		layer.setZIndex(7);	
+		sublayer.set(subLayerOptions);
+		sublayersState.push(sublayer);
+	  }).on('error', function() {
+		// log the error
+	  });
+	})
+		
+	
+	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE state = '"+name+"'")
+	  .done(function(data) {
+	  
+		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 1);
+
+	});
+	
 }
 
-/*An array containing all the country names in the world:*/
 
-var WBList = ['4-Q Lakes', '4-Q Lakes 2', '4-Q Lakes 3', '4-Q Lakes 4', '4-Q Lakes 5', 'A L Chaffin Dam', 'Abbott Lake', 'Aeree', 'Alexander Lake', 'Alpine Lake', 'Alta Hill Reservoir', 'Alta Morris Lake', 'Ambrosetti Pond', 'American Lake', 'Angora Lakes', 'Antelope Lake', 'Arden Bar Pond', 'Artesia Lake', 'Asa Lake', 'Aukum View', 'Avalanche Lake', 'Azalea Lake', 'Azure Lake', 'Bacchi Ranch Reservoir', 'Bald Eagle Lake', 'Baldwin Reservoir', 'Baltimore Lake', 'Banner Reservoir', 'Barnett Dam', 'Barrett Lake', 'Bass Lake', 'Beaman Lakes', 'Bear Lake', 'Bear River Reservoir', 'Bear River Reservoir, Lower', 'Beauty Lake', 'Beebe Lake', 'Beebe Lake, Lower', 'Belden Forebay', 'Berts Lake', 'Beyers Lake, Lower', 'Beyers Lakes', 'Big Bear Lake', 'Big Canyon Reservoir', 'Big Reservoir', 'Black Rock Lake', 'Blair Lake', 'Blakeley Reservoir', 'Blodgett Reservoir', 'Bloodsucker Lake', 'Bloomer Lake', 'Blue Lake', 'Blue Lake, Lower', 'Blue Lake, Upper', 'Boca Reservoir', 'Boiling Springs Lake', 'Boomerang Lake', 'Boulder Lake', 'Bowman Lake', 'Brush Creek', 'Buck Island Lake', 'Buck Lake', 'Bucks Lake', 'Bucks Lake, Lower', 'Bufo Lake', 'Bugle Lake', 'Bull Lake', 'Bull Run Lake', 'Bullpen Lake', 'Bunker Lake', 'Burnside Lake', 'Butt Valley Reservoir', 'Buzzard Roost Lake', 'Cagwin Lake', 'Camanche Reservoir', 'Camden Park Pond', 'Cameron Park Lake', 'Camino Reservoir', 'Camp Far West Reservoir', 'Campbell Lake', 'Campbell Valley', 'Cannon Reservoir', 'Cape Lake', 'Caperton Reservoir', 'Caples Lake', 'Carr Lake', 'Carson River', 'Cascade Lake', 'Cascade Lakes, Lower', 'Cascade Lakes, Upper', 'Catfish Lake', 'Cathedral Lake', 'Cedar Flat', 'Channel Lake', 'Chili Bar Reservoir', 'Chips Lake', 'Chiquita Lake', 'Chubb Lake', 'Churchill Valley', 'Cliff Lake', 'Clover Valley Reservoir', 'Clyde Lake', 'Coburn Lake', 'Cody Lake', 'Coldstream Creek Pond', 'Coldstream Valley Lakes', 'Cole Creek Lakes', 'Collins Eddy', 'Collins Lake', 'Columbian', 'Concow Reservoir', 'Corrie Lochan', 'Crag Lake', 'Crater Lake', 'Crooked Lake, Lower', 'Crooked Lakes', 'Crystal Lake', 'Cub Lake', 'Culbertson Lake', 'Cup Lake', 'Curtz Lake', 'D Agostini Reservoir', 'Dangberg Reservoir Number Four', 'Dangberg Reservoir Number Thre', 'Dardanelles Lake', 'Dark Lake', 'Deadman Lake', 'Deadwood Lake', 'Debacco Dam', 'Deer Creek Reservoir', 'Deer Lake', 'Deer Lake, Little', 'Delahunty Lake', 'Derry Lake', 'Desolation Lake', 'Devils Hole Lake', 'Devils Lake', 'Devils Oven Lake', 'Devils Peak', 'Dicks Lake', 'Diggins Pond', 'Dollar Reservoir', 'Domingo Lake', 'Donner Euer Valley', 'Donner Lake', 'Doris Lake, Lower', 'Doris Lake, Upper', 'Dorothy Lake', 'Double Spring Flat', 'Downey Lake', 'Doyle Reservoir', 'Drake Lake', 'Dream Lake', 'Drum Forebay', 'Dry Lake', 'Dry Lakes', 'Duck Lake', 'Duck Soup Pond', 'Dugan Pond', 'Dutch Flat Afterbay', 'Eagle Lake', 'Eagle Lakes', 'East Peak Lake', 'Eastern Brook Lake, Lower', 'Eastpark Lake', 'Echo Lake', 'Echo Lake, Upper and Lower', 'Eddy Lake', 'El Dorado County Fairgrounds Pond', 'El Dorado Forebay', 'Elbert Lake', 'Eldorado Canyon Reservoir', 'Elephant Rock Lake', 'Elizabeth Lake', 'Elk Grove  Park Pond', 'Ellis Lake', 'Emigrant Lake', 'Englebright Lake', 'Eureka Lake', 'Evelyn Lake', 'Evergreen Lake', 'Faggs Debris Pond', 'Faggs Reservoir', 'Fallen Leaf Lake', 'Faucherie Lake', 'Fawn Lake', 'Feather River College', 'Feely Lake', 'Fern Lake', 'Fernley Sink', 'Finnon Reservoir', 'Fisher Lake', 'Fishermans Lake', 'Five Lakes', 'Five Lakes Basin', 'Fleischmann Lake', 'Floating Island Lake', 'Flora Lake', 'Florin Creek Park Pond', 'Folsom Lake', 'Fontanilis Lake', 'Fordyce Lake', 'Forni Lake', 'Fort Churchill Cooling Ponds', 'Four Lakes', 'Fourth of July Lake', 'Fowler Lake', 'Fox Lake', 'Francis Lake', 'Frata Lake', 'Freeman Lake', 'French Lake', 'French Meadows Reservoir', 'Frenchman Lake', 'Frog Lake', 'Fuller Lake', 'Gefo Lake', 'Genevieve Lake', 'Gerle Reservoir', 'Gertrude Lake', 'Gibson Lake', 'Gilmore Lake', 'Glacier Lake', 'Goffinet Reservoir', 'Gold Lake', 'Goose Lake', 'Graeagle Pond', 'Granite Lake', 'Granite Park Pond', 'Grass Lake', 'Grass Valley Reservoir', 'Grassy Lake', 'Grassy Lakes', 'Green Island Lake', 'Grizzly Forebay', 'Grizzly Ice Pond', 'Grizzly Lake', 'Grouse Lake', 'Grouse Lakes', 'Grub Flat Reservoir', 'Hagen Park Pond', 'Hagen Pond', 'Half Moon Lake', 'Halsey Afterbay', 'Halsey Forebay', 'Hamel', 'Haven Lake', 'Hawley Lake', 'Heart Lake', 'Heather Lake', 'Heenan Lake', 'Heiser Lake', 'Hell Hole Reservoir', 'Hellhole Lake', 'Hemlock Lake', 'Henderson Reservoir', 'Herring Reservoir', 'Hiatt Lake', 'Hidden Lake', 'High Loch Leven Lake', 'Highland Lake', 'Highland Lakes', 'Hobart Creek Reservoir', 'Hobart Reservoir', 'Hole in Ground', 'Homer Lake', 'Honey Lake Valley', 'Horse Lake', 'Horseshoe Lake', 'Howe Park Pond', 'Hunkle Reservoir', 'Hunter Creek Reservoir', 'Huntley Mill Lake', 'Huth Lake', 'Huysink Lake', 'Ice House Reservoir', 'Ice Lakes', 'Icehouse Pond', 'Idaho-maryland Reservoir', 'Immigrant Lake', 'Incline Lake', 'Independence Lake', 'Indian Creek Reservoir', 'Island Lake', 'Jabu Lake', 'Jacks Meadow Pond', 'Jackson Lake', 'Jackson Meadows Reservoir', 'Jacobs Creek Dam', 'Jamison Lake', 'Jenkinson Lake', 'Jones Meadow', 'Joy Lake', 'Junction Reservoir', 'Juniper Lake', 'Kalmia Lake', 'Kellogg Lake', 'Kelly Lake', 'Kennedy Reservoir', 'Kettle Rock Lake', 'Kidd Lake', 'Kilborn Lake', 'Kinney Lake, Upper', 'Kinney Reservoir', 'Kirkwood Lake', 'Kunkle Reservoir', 'Lagoon Lake', 'Lahontan Reservoir', 'Lake Almanor', 'Lake Aloha', 'Lake Alta', 'Lake Amador', 'Lake Angela', 'Lake Arthur', 'Lake Audrian', 'Lake Christopher', 'Lake Clementine', 'Lake Combie', 'Lake Davis', 'Lake De Sabla', 'Lake Estelle', 'Lake Francis', 'Lake Greenhaven', 'Lake Lois', 'Lake Louise', 'Lake Margaret', 'Lake Margery', 'Lake Mary', 'Lake Mildred', 'Lake Natoma', 'Lake No 5', 'Lake No 9', 'Lake of the Pines', 'Lake of the Woods', 'Lake Oroville', 'Lake Putt', 'Lake Rob', 'Lake Schmidell', 'Lake Spaulding', 'Lake Sterling', 'Lake Sylvia', 'Lake Tabeaud', 'Lake Tahoe', 'Lake Theodore', 'Lake Valley Reservoir', 'Lake Vera', 'Lake Walton', 'Lake Wildwood', 'Lake Winifred', 'Lake Wyandotte', 'Lake Zitella', 'Lakes Basin', 'Land Park Pond', 'Larsen Reservoir', 'Lava Cap Reservoir', 'Lawrence Lake', 'Le Conte Lake', 'Leland Lakes', 'Liberty Hill Reservoir', 'Lily Lake', 'Lily Pad Lake', 'Lily Pond', 'Lindsey Lakes', 'Little Alkali Lake', 'Little Bear Lake', 'Little Gold Lake', 'Little Grass Valley Reservoir', 'Little Last Chance Lake', 'Little Needle Lake', 'Little Reservoir', 'Little Summit Lake', 'Little Table Rock Reservoir', 'Little Willow Lake', 'Littlefield Reservoir', 'Loch Lane', 'Loch Leven Lakes', 'Loch Leven Lakes (lower)', 'Lock Leven Lakes (upper)', 'Log Cabin Dam', 'Loney Lake', 'Long Lake', 'Loon Lake', 'Lost Creek Reservoir', 'Lost Lake', 'Lost Lakes', 'Lotts Lake', 'Lower Blackwelder Lake', 'Lower Kinney Lake', 'Lower Lola Montez Lake', 'Lower Rock Lake', 'Lower Salmon Lake', 'Lower Sardine Lake', 'Lower Sunset Lake', 'Lucille Lake', 'Lumsden Pond', 'Lyons Lake', 'Lytton Lake', 'Madora Lake', 'Madrone Lake', 'Magalia Reservoir', 'Mammoth', 'Marlette Lake', 'Marlette Lake Reservoir', 'Martis Creek Lake', 'Mary Lake', 'Marysville Lake', 'Mason Valley WMA', 'Mather Lake', 'Maud Lake', 'Max Lake', 'McConnell Lake', 'McGriff Lakes', 'Mckinney Lake', 'McKinstry Lake', 'McMurray Lake', 'Meadow Lake', 'Meadow Vista Park Pond', 'Meeker Pond', 'Meiss Lake', 'Messick Lake', 'Middle Lake', 'Middle Turret Lakes', 'Mildred Lakes', 'Milk Lake', 'Mill Pond', 'Miller Lake', 'Miller Meadows', 'Mills', 'Milton Reservoir', 'Miners Ranch Reservoir', 'Misfits Flat', 'Morgan Reservoir', 'Morris Lake', 'Mosquito Lake', 'Mossy Pond', 'Mountain Meadow Lake', 'Mud Lake', 'Mud Lakes', 'Murphy Lake', 'Mystic Lake', 'Nancy Lake', 'Needle Lake', 'New Bullards Bar Reservoir', 'Noble Lake', 'North Stone Lake', 'Number 3 Lake', 'OConnor Lakes', 'Oakland Pond', 'Oliver Lake', 'Onion Valley Reservoir', 'Osma Lake', 'Oxbow Reservoir', 'Oyster Lake', 'Packer Lake', 'Palen Reservoir', 'Palisade Lake', 'Paradise Lake', 'Pardee Reservoir', 'Pardoe Lake', 'Patterson Lake', 'Pearl Lake', 'Penner Lake', 'Perkins Lake', 'Philbrook Reservoir', 'Phipps Lake', 'Phoenix Lake', 'Pine Grove Reservoir', 'Pitt Lake', 'Poison Lake', 'Ponderosa Reservoir', 'Preston Reservoir', 'Prosser Creek Reservoir', 'Purdue Lake', 'Pyramid Lake', 'Pyramid Peak Lake', 'Quail Lake', 'Ralston Lake', 'Raymond Lake', 'Red Lake', 'Reservoir', 'Rex Reservoir', 'Rice Lake', 'Richardson Lake', 'Ridge Lake', 'Rock Creek Lake', 'Rock Creek Reservoir', 'Rock Lake', 'Rockbound Lake', 'Rogers Lake', 'Rollins Reservoir', 'Ropi Lake', 'Roseville Reservoir', 'Rough and Ready Reservoir', 'Round Hill Effluent Reservoir', 'Round Lake', 'Round Top Lake', 'Round Valley Reservoir', 'Rubicon Lake', 'Rubicon Reservoir', 'Rucker Lake', 'S P Lakes', 'Saddle Lake', 'Salmon Lake', 'Salmon Lake, Upper', 'Salt Springs Reservoir', 'Sand Pond', 'Sand Ridge Lake', 'Sanford Lake', 'Sardine Lake, Upper', 'Saucer Lake', 'Sawmill Lake', 'Sawmill Pond', 'Saxonia Lake', 'Schubin Dam', 'Scotts Flat Reservoir', 'Scotts Lake', 'Scout Carson Lake', 'Secret Lake', 'Seven Lakes', 'Shadow Lake', 'Shealor Lakes', 'Shenandoah', 'Sherrold Lake', 'Shirley Lake', 'Shotgun Lake', 'Showers Lake', 'Shriner Lake', 'Sills Lake', 'Silver Lake', 'Slab Creek Reservoir', 'Sly Creek Reservoir', 'Smith Lake', 'Snag Lake', 'Snake Lake', 'Snow Lake', 'Snowflower', 'Soto Lake', 'South Fork Diversion Dam', 'Southside Park Pond', 'Spanish Springs', 'Spencer Lakes 1', 'Spencer Lakes 2', 'Spicer Meadow Reservoir', 'Spider Lake', 'Spooner Lake', 'Spring Valley Lake', 'Spring Valley Reservoir', 'Squaw Lake', 'Stampede Reservoir', 'Star Lake', 'Stevens Lake', 'Stone Lake', 'Stony Ridge Lake', 'Stump Ranch', 'Stumpy Meadows Lake', 'Sugar Pine Reservoir', 'Summit Lake', 'Summit Meadow Lake', 'Sunset Lake, Upper', 'Sunset View Reservoir', 'Susie Lake', 'Swan Lake Junior', 'Sword Lake', 'Tailings Pond', 'Tallac Lake', 'Tamarack Lake', 'Tamarack Lakes', 'Tanner Reservoir', 'Taylor Lake', 'The Beaver Ponds', 'The Lagoon', 'Thermalito Afterbay', 'Thermalito Diversion Pool', 'Thermalito Forebay', 'Thompson Lake', 'Three Lakes', 'Tiger Creek Forbay', 'Tiger Creek Regulator Reservoir', 'Tiger Creek Reservoir', 'Toem Lake', 'Tollhouse Lake', 'Tom Jones Reservoir', 'Top Lake', 'Topaz Lake', 'Tracy Pond', 'Triangle Lake', 'Truckee River', 'Tuttle Lake', 'Twin Lake', 'Twin Lake, Lower', 'Twin Lake, Upper', 'Twin Lakes', 'Tyler Lake', 'Umpa Lake', 'Union Reservoir', 'Union Valley Reservoir', 'Upper Lola Montez Lake', 'Upper Mud Lake', 'Upper Price Lake', 'Utica Reservoir', 'Valley View Reservoir', 'Van Norden, Lake', 'Vandergrift Lake', 'Velma Lake, Lower', 'Velma Lake, Middle', 'Velma Lake, Upper', 'Virginia Lake', 'Volcano Lake', 'Volo Mining Co. Dam', 'Waca Lake', 'Wades Lake', 'Wagon Wheel Lake', 'Walker River', 'Walleys Hot Springs', 'Warm Lake', 'Warren Lake', 'Washoe Lake', 'Watson Lake', 'Weaver Lake', 'Webber Lake', 'Weber Reservoir', 'Weil Lake', 'West Lake, Upper', 'West Lakes', 'Wet Meadows Reservoir', 'Wheeler Lake', 'Wheeler Reservoir', 'White Lake', 'White Rock Lake', 'Whitecliff Lake', 'William Land Park Pond', 'Willow Hill Reservoir', 'Willow Lake', 'Wilson Reservoir', 'Winnemucca Lake', 'Wise Forebay', 'Wolf Creek Lake', 'Wood Lake', 'Woods Lake', 'Wrights Lake', 'Yerington Mine', 'Young America Lake', 'Yuba Reservoir'];
+//////////////////////////////////////////
+// ACTIONS /////////////////////////////////
+//////////////////////////////////////////
+
+var startActions = 0;  
+var countActions = 1;
+var sublayersActions = [];
+
+function showSites(){
 
 
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-autocomplete(document.getElementById("myWB"), WBList);
+	if (countActions > 0){
+			sublayersActions[countActions-1].remove();
+		}
+		countActions = countActions + 1;	
+	
+	
+	// find list of checked boxes
+	var checkedActionsList = [];	
+    var chk = document.getElementsByName('actions[]')
+    var len = chk.length
 
-</script>
+	// push text to list
+    for(i=0;i<len;i++){
+		if(chk[i].checked){
+			checkedActionsList.push(chk[i].id);
+        }
+    }
+
+	var MapQueryActions = "SELECT * FROM coastinventorytier1_b";
+
+	if (checkedActionsList[0] == 'all'){
+
+	}
+	else {
+	MapQueryActions = MapQueryActions + " WHERE "+checkedActionsList[0]+" = 1";
+		for(i=1;i<checkedActionsList.length;i++){
+			MapQueryActions = MapQueryActions + " OR "+checkedActionsList[i]+" = 1";
+		}
+	}
+
+
+	var button1 = document.getElementById("all");
+	var button2 = document.getElementById("protect1");
+	var button3 = document.getElementById("steward1");
+	var button4 = document.getElementById("change1");
+
+	
+	
+	
+	if (button1.checked){
+		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #FFFFFF;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";
+	}
+	else if(button3.checked){
+		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #C63D96;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+	}
+	else if(button2.checked){
+		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #E98166;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+	}
+	else{
+		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #00B272;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+	}	
+	
+	cartodb.createLayer(map, CoastsActions)
+	  .addTo(map)
+	  .on('done', function(layer) {
+		// change the query for the first layer
+		var subLayerOptions = {
+		  sql: MapQueryActions,
+		  cartocss: CartoCSSActions,
+		}
+		var sublayer = layer.getSubLayer(0);
+		layer.setZIndex(9999);
+		sublayer.set(subLayerOptions);
+		sublayersActions.push(sublayer);
+	  }).on('error', function() {
+		// log the error
+	  });
+	
+}
+
+
+
+</script>	
+</div>
 </body>
-
-<!--
-UPDATE tcsi_huc10_geonad83
-SET pptmet_avg = tcsi_huc10_qual_geonad83_r2
-.pptmet_avg
-FROM tcsi_huc10_qual_geonad83_r2
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
-.gnis_id
-
-UPDATE tcsi_huc10_geonad83
-SET pptmet_sum = tcsi_huc10_qual_geonad83_r2.pptmet_sum
-FROM tcsi_huc10_qual_geonad83_r2
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
-.gnis_id
-
-UPDATE tcsi_huc10_geonad83
-SET rk_bivar = tcsi_huc10_qual_geonad83_r2
-.r_bivar
-FROM tcsi_huc10_qual_geonad83_r2
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
-.gnis_id
-
-UPDATE tcsi_huc10_geonad83
-SET rk_wy = tcsi_huc10_qual_geonad83_r2
-.r_wy
-FROM tcsi_huc10_qual_geonad83_r2
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
-.gnis_id
-
-UPDATE tcsi_huc10_geonad83
-SET rk_fire = tcsi_huc10_qual_geonad83_r2
-.r_fire
-FROM tcsi_huc10_qual_geonad83_r2
-WHERE tcsi_huc10_geonad83.gnis_id = tcsi_huc10_qual_geonad83_r2
-.gnis_id
-
--->
 </html>
-
