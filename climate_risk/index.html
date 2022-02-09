@@ -155,11 +155,11 @@ input[type="radio"]{
 .bottom{
 	   border-radius: 5px;
 	   position: absolute;
-	   bottom: 105px;
+	   bottom: 0px;
 	   left: 0px;
 	   padding-left: 20px;
 	   padding-right: 0px;
-	   padding-bottom: 20px;
+	   padding-bottom: 30px;
 	   border:1px solid #000;
 	   background-color: #D4D4D4;
 	   color: #000;
@@ -357,12 +357,6 @@ map.on('drag', function() {
 });
 
 
-// scale
-L.control.scale({ position: 'bottomright' }).addTo(map);
-
-// zoom
-L.control.zoom({position:'bottomright'}).addTo(map);
-map.scrollWheelZoom.disable();
 
 // add CartoDB vector	
 var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
@@ -396,7 +390,7 @@ key.onAdd = function (map) {
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
 };
-key.addTo(map);		
+//key.addTo(map);		
 	
 	
 
@@ -483,8 +477,14 @@ var baseMaps = {
 // var cbc_trends = 'https://stanford.carto.com/u/gverutes/api/v2/viz/30cc0a85-d108-4f84-821d-5bc105c5c0be/viz.json';
 
 
-L.control.layers(baseMaps, null, {position: 'bottomleft', collapsed: false}).addTo(map);
+L.control.layers(baseMaps, null, {position: 'bottomright', collapsed: false}).addTo(map);
 
+// scale
+L.control.scale({ position: 'bottomright' }).addTo(map);
+
+// zoom
+L.control.zoom({position:'bottomright'}).addTo(map);
+map.scrollWheelZoom.disable();
 
 
 //////////////////////////////////////////
