@@ -26,70 +26,9 @@
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Lato:300italic,400italic,600italic,700italic,400,300,600,700" rel="stylesheet" type="text/css">
   
-  <!--Google-->  
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  
+
 </head>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-
-
-/////////////////////////////////////////////////////////////////////
-// BAR CHART ////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-
-google.charts.load('current', {'packages':['corechart']});
-      
-function drawChart(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum){
-        
-	var dataTable = new google.visualization.DataTable();
-	dataTable.addColumn('string', 'Goals');
-	dataTable.addColumn('number', '%');
-	dataTable.addColumn({ type: 'string', role: 'style' });
-	// a column for custom tooltip content
-	dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
-	dataTable.addRows([
-	  ['Science', science_sum, 'rgb(255, 244, 95)', createCustomHTMLContent('Science', science_sum)],
-	  ['Steward', steward_sum, 'rgb(198, 61, 150)', createCustomHTMLContent('Stewardship', steward_sum)],
-	  ['Protect', protect_sum, 'rgb(223, 129, 102)', createCustomHTMLContent('Protection', protect_sum)],
-	  ['Change', hab_sum, 'rgb(0, 178, 114)', createCustomHTMLContent('Habitat Change', hab_sum)],
-	]);
-
-	var options = {
-	  tooltip: {isHtml: true},
-	  legend: 'none',
-	  title: hab_sum+protect_sum+steward_sum+science_sum+' Total Actions in '+count_sum+' Unique Sites',
-      width:300,
-      height:100,
-	  bars: 'horizontal',
-	  animation: {
-	  duration: 1500,
-	  easing: 'out',
-	  startup: true
-	  },
-	  hAxis: {
-		viewWindowMode:'explicit',
-		viewWindow: {
-		  max:max_sum,
-		  min:0
-		},
-		//title: "Total Number of Actions" 
-	   }
-	};
-	
-	var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-	chart.draw(dataTable, options);
-
-  
-	function createCustomHTMLContent(goalTxt, pctComplete) {
-		return '<div style="padding:10px 10px 10px 10px;">' + 
-		+pctComplete+ " actions"
-		+"</div>"}
-		
-}
-
-</script>  
   
 <style type="text/css">
 body{
@@ -159,11 +98,11 @@ input[type="radio"]{
 	   left: 0px;
 	   padding-left: 20px;
 	   padding-right: 0px;
-	   padding-bottom: 30px;
+	   padding-bottom: 50px;
 	   border:1px solid #000;
 	   background-color: #D4D4D4;
 	   color: #000;
-	   min-width: 205px;
+	   min-width: 225px;
 }
   
 .key{
@@ -309,8 +248,6 @@ input[type="radio"]{
    }
   
 
-<!-- add styles for background of checkboxes and also drop-down menu locations >> USE BAHAMAS OR UAE VIEWERS --> 
-
 </style>
 
 <body>
@@ -318,10 +255,7 @@ input[type="radio"]{
 
 <div id="map"></div>
 
-
-
 <script>
-
 
 
 // define basemaps
@@ -335,20 +269,22 @@ var CartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/
 var ESRIOcean = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}.png', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, GEBCO, NOAA, and DeLorme'});
 
+var ESRIStreetMap = L.tileLayer('http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png', {
+	attribution: 'Tiles &copy; Esri'});
 
 // set base map and controls
 var map = new L.Map('map', {
   zoomControl: false,
   layer_selector: false,
-  layers: [ESRIImagery],
-  center: [39, -120],
-  zoom: 6,
+  layers: [ESRIStreetMap],
+  center: [41,	 -119],
+  zoom: 5,
   minZoom: 5,
   maxZoom: 10
 });
 
-var southWest = L.latLng(-70, -220),
-northEast = L.latLng(220, -20);
+var southWest = L.latLng(25, -165),
+northEast = L.latLng(55, -75);
 var bounds = L.latLngBounds(southWest, northEast);
 
 map.setMaxBounds(bounds);
@@ -359,10 +295,8 @@ map.on('drag', function() {
 
 
 // add CartoDB vector	
-var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
-var StateBoundaries = 'https://gverutes.cartodb.com/api/v2/viz/577322f6-49b7-47b7-8e8c-7df38968e544/viz.json';
-var Flyways = 'https://gverutes.cartodb.com/api/v2/viz/dc33b54a-0f7a-4766-95e5-aecbd6d9a680/viz.json';
-var CBRS = 'https://stanford.carto.com/u/gverutes/api/v2/viz/01fa14f0-494f-11e7-9d7d-0e233c30368f/viz.json';
+var ProjectsPtsPolys= 'https://stanford.carto.com/u/gverutes/api/v2/viz/f396b937-b8f2-4eb6-b0af-e7bd9bd20c72/viz.json';
+var NationalForests = 'https://stanford.carto.com/u/gverutes/api/v2/viz/133b9c7d-e192-4895-87d5-66311268b88d/viz.json';
 
 
 // drop-downs on map
@@ -372,11 +306,22 @@ legend.onAdd = function (map) {
 	
 	var div = L.DomUtil.create('div', 'info legend');
 
-	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>ZOOM TO...</b><br><select id='zoomState'><option value='0'>Select Project...</option><option value='1'>Yuba / Yuba II</option><option value='2'>Snoquera</option><option value='3'>Upper Wenatchee</option><option value='4'>Rogue Valley</option><option value='5'>Mexico</option></select></div><br><b>SHOW ME PROJECTS...</b><br><input type='radio' name='projects[]' id='underway' checked/> Underway <input type='radio' name='projects[]' id='pipeline'> In the pipeline</div>";
+	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>ZOOM TO...</b><br><select id='zoomProject'>\
+	<option value='0'>Select Project...</option>\
+	<option value='1'>The Yuba Project</option>\
+	<option value='2'>Yuba II</option>\
+	<option value='3'>The Snoquera Project</option>\
+	<option value='4'>Upper Wenatchee Pilot Project</option>\
+	<option value='5'>Rogue Valley Projects</option>\
+	</select></div><br><b>PROJECT STATUS</b><br>\
+	<img src='img/yellow_star.png' width=9% height=9%> Underway \
+	<img src='img/pink_star.png'  width=9% height=9%> In the pipeline\
+	</div>";
 	
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
 };
+
 legend.addTo(map);
 
 
@@ -390,92 +335,52 @@ key.onAdd = function (map) {
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
 };
+
 //key.addTo(map);		
 	
-	
 
-// CBRS
-/*
-cartodb.createLayer(map, CBRS)
+// National Forests
+cartodb.createLayer(map, NationalForests)
 		.addTo(map)
         .on('done', function(layer) {
 		layer.setZIndex(5);	
 });
-*/
+
+// Projects
+cartodb.createLayer(map, ProjectsPtsPolys)
+		.addTo(map)
+        .on('done', function(layer) {
+		layer.setZIndex(10);	
+});
+
+
 
 // Show Sites at start		
 //showSites();
 
-$("#zoomState").change(function(event){
+$("#zoomProject").change(function(event){
 	// grab numeric value of drop-down option
-	var e = document.getElementById("zoomState");
+	var e = document.getElementById("zoomProject");
 	var ddSitesVal = e.options[e.selectedIndex].value;
 	//showSites(ddSitesVal);
 	//addLegend($( "#zoomState option:selected" ).text());
-	zoomState($( "#zoomState option:selected" ).text(), ddSitesVal);
-	$( "#zoomFly").val(0);
+	zoomProject($( "#zoomProject option:selected" ).text(), ddSitesVal);
 });
-
-
-$("#zoomFly").change(function(event){
-	// grab numeric value of drop-down option
-	var e = document.getElementById("zoomFly");
-	var ddSitesVal = e.options[e.selectedIndex].value;
-	//showSites(ddSitesVal);
-	//addLegend($( "#zoomFly option:selected" ).text()+ " Flyway");
-	zoomFly($( "#zoomFly option:selected" ).text(), ddSitesVal);
-	$( "#zoomState").val(0);
-});
-
-
-
-
-var legend2;
-legend2 = L.control({position: 'bottomright'});	
-var legend2Count = 0;
-	
-// ADD GRAPH IN TOP RIGHT	
-function addLegend(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum, queryScale){
-
-	if (legend2Count > 0){map.removeControl(legend2);}
-	
-	legend2.onAdd = function (map) {
-
-		var div = L.DomUtil.create('div', 'info legend');
-		if (queryScale == 1){
-			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+"</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
-		}
-		else{
-			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+" Flyway</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
-		}
-		//div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-		return div;
-		legend2.setZIndex(2);
-	};
-	
-	legend2.addTo(map);	
-	legend2Count = legend2Count + 1;
-	
-	
-	// ADD CHART TO LEGEND IN BOTTOM RIGHT
-	
-	// QUERY MAP WITH SUMS AND OTHER SQL CALCS
-	google.charts.setOnLoadCallback(drawChart(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum));
-	
-}
 
 
 
 // add basemap and overlays
 var baseMaps = {
 	"imagery": ESRIImagery,
-	"dark": CartoLight,
-	"ocean": ESRIOcean
+	"streets": ESRIStreetMap,
+	"terrain": ESRIOcean
 };
 
-// add CartoDB vector	
-// var cbc_trends = 'https://stanford.carto.com/u/gverutes/api/v2/viz/30cc0a85-d108-4f84-821d-5bc105c5c0be/viz.json';
 
+// mini map
+var CartoLight = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
+var mb = new L.TileLayer(CartoLight, {minZoom: 4, maxZoom: 12});
+var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '150', width: '145'}).addTo(map);
 
 L.control.layers(baseMaps, null, {position: 'bottomright', collapsed: false}).addTo(map);
 
@@ -495,79 +400,12 @@ var sql = cartodb.SQL({ user: 'gverutes' });
 //////////////////////////////////////////
 
 
-var endFly = 0;  
-var sublayersFly = [];
+// zoom Project
+function zoomProject(name, ddSitesVal){	
 
+	var MapQueryProject= "SELECT * FROM bf_projects_polygons WHERE proj_name = '"+name+"'";
 
-// zoom Flyway
-function zoomFly(name, ddSitesVal){	
-
-	var MapQueryFly = "SELECT * FROM us_coastal_flyways WHERE fly_name = '"+name+"'";
-
-	sql.getBounds(MapQueryFly).done(function(bounds) {
-	map.fitBounds(bounds);
-
-	var FlyLatLon = [((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)];
-	if (name == 'Pacific'){FlyLatLon = [40,-122];}
-	else if (name == 'Mississippi'){FlyLatLon = [31,-89];}
-	
-	var popup = L.popup()
-		.setLatLng(FlyLatLon)
-		.setContent(name+" Flyway")
-		.openOn(map);
-	
-	});
-
-	sql.execute(MapQueryFly).done(function(data){
-			
-	// remove previous
-	if (endFly > 0){sublayersFly[endFly-1].remove();}
-	endFly = endFly + 1;
-	
-	var CartoCSSFly = "#us_coastal_flyways{polygon-opacity: 0.4;line-color: #000;line-width: 3;line-opacity: 0.5;polygon-fill: #D4D4D4;}#us_coastal_flyways[zoom>8]{polygon-opacity: 0;}";
-	
-	//#flyways[flyway='Atlantic']{polygon-fill: #A6CEE3;}#flyways[flyway='Central'] {polygon-fill: #1F78B4;}#flyways[flyway='Mississippi'] {polygon-fill: #B2DF8A;}#flyways[flyway='Pacific'] {polygon-fill: #33A02C;}";
-	
-	  cartodb.createLayer(map, Flyways)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryFly,
-		  cartocss: CartoCSSFly,
-		}
-		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(6);	
-		sublayer.set(subLayerOptions);
-		sublayersFly.push(sublayer);
-	  }).on('error', function() {
-		// log the error
-	  });
-	})
-		
-	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE flyway = '"+name+"'")
-	  .done(function(data) {
-	  
-		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 2);
-
-	});
-	
-}
-
-
-
-//////////////////////////////////////////
-
-var endState = 0;  
-var sublayersState = [];
-
-
-// zoom State
-function zoomState(name, ddSitesVal){	
-
-	var MapQueryState = "SELECT * FROM us_coastal_states WHERE state_name = '"+name+"'";
-
-	sql.getBounds(MapQueryState).done(function(bounds) {
+	sql.getBounds(MapQueryProject).done(function(bounds) {
 	map.fitBounds(bounds);
 
 	var popup = L.popup()
@@ -577,120 +415,6 @@ function zoomState(name, ddSitesVal){
 	
 	});
 
-	sql.execute(MapQueryState).done(function(data){
-			
-	// remove previous
-	if (endState > 0){sublayersState[endState-1].remove();}
-	endState = endState + 1;
-	
-	var CartoCSSState = "#us_coastal_states{polygon-opacity:0.5;polygon-fill:#838078;line-opacity:0.5;line-color:#fff;line-width:2;}#us_coastal_states[zoom>8]{polygon-opacity: 0;}#us_coastal_states[zoom>7]{polygon-opacity: 0;}";
-	
-	  cartodb.createLayer(map, StateBoundaries)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryState,
-		  cartocss: CartoCSSState,
-		}
-		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(7);	
-		sublayer.set(subLayerOptions);
-		sublayersState.push(sublayer);
-	  }).on('error', function() {
-		// log the error
-	  });
-	})
-		
-	
-	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE state = '"+name+"'")
-	  .done(function(data) {
-	  
-		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 1);
-
-	});
-	
-}
-
-
-//////////////////////////////////////////
-// ACTIONS /////////////////////////////////
-//////////////////////////////////////////
-
-var startActions = 0;  
-var countActions = 1;
-var sublayersActions = [];
-
-function showSites(){
-
-
-	if (countActions > 0){
-			sublayersActions[countActions-1].remove();
-		}
-		countActions = countActions + 1;	
-	
-	
-	// find list of checked boxes
-	var checkedActionsList = [];	
-    var chk = document.getElementsByName('actions[]')
-    var len = chk.length
-
-	// push text to list
-    for(i=0;i<len;i++){
-		if(chk[i].checked){
-			checkedActionsList.push(chk[i].id);
-        }
-    }
-
-	var MapQueryActions = "SELECT * FROM coastinventorytier1_b";
-
-	if (checkedActionsList[0] == 'all'){
-
-	}
-	else {
-	MapQueryActions = MapQueryActions + " WHERE "+checkedActionsList[0]+" = 1";
-		for(i=1;i<checkedActionsList.length;i++){
-			MapQueryActions = MapQueryActions + " OR "+checkedActionsList[i]+" = 1";
-		}
-	}
-
-
-	var button1 = document.getElementById("all");
-	var button2 = document.getElementById("protect1");
-	var button3 = document.getElementById("steward1");
-	var button4 = document.getElementById("change1");
-
-	
-	
-	
-	if (button1.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #FFFFFF;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";
-	}
-	else if(button3.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #C63D96;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
-	}
-	else if(button2.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #E98166;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
-	}
-	else{
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #00B272;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
-	}	
-	
-	cartodb.createLayer(map, CoastsActions)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryActions,
-		  cartocss: CartoCSSActions,
-		}
-		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(9999);
-		sublayer.set(subLayerOptions);
-		sublayersActions.push(sublayer);
-	  }).on('error', function() {
-		// log the error
-	  });
 	
 }
 
