@@ -362,8 +362,8 @@ map.on('drag', function() {
 var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
 var StateBoundaries = 'https://gverutes.cartodb.com/api/v2/viz/577322f6-49b7-47b7-8e8c-7df38968e544/viz.json';
 var Flyways = 'https://gverutes.cartodb.com/api/v2/viz/dc33b54a-0f7a-4766-95e5-aecbd6d9a680/viz.json';
-var CBRS = 'https://stanford.carto.com/u/gverutes/api/v2/viz/01fa14f0-494f-11e7-9d7d-0e233c30368f/viz.json';
-
+var slr_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/cab5c8d5-95f5-4e2c-9353-145d51ffd6f8/viz.json';
+var land_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/8da1ba27-aeae-494c-99d6-91666a07136e/viz.json';
 
 // drop-downs on map
 var legend = L.control({position: 'bottomleft'});
@@ -372,7 +372,7 @@ legend.onAdd = function (map) {
 	
 	var div = L.DomUtil.create('div', 'info legend');
 
-	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>LOCATION AND VARIABLE:</b><br><select id='zoomState'><option value='0'>Select Geography...</option><option value='1'>MAR</option><option value='2'>Mexico</option><option value='3'>Belize</option><option value='4'>Guatemala</option><option value='5'>Honduras</option></select><select id='zoomFly'><option value='0'>Select Variable...</option><option value='1'>Precipitation</option><option value='2'>Change in Precipitation</option><option value='3'>Days Above 1mm of Precipitation</option><option value='4'>Mean Temperature Change</option><option value='5'>Days Above 35°C</option><option value='6'>Sea Level Rise</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='rcp[]' id='rcp4p5' checked/> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5' > RCP 8.5<br><input type='radio' name='est[]' id='lowest' > Low Est. <input type='radio' name='est[]' id='highest' checked/> High Est.<br><input type='radio' name='year[]' id='2050s' > 2050s <input type='radio' name='year[]' id='2080s' checked/> 2080s</div>";
+	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>LOCATION AND VARIABLE:</b><br><select id='zoomState'><option value='0'>Select Geography...</option><option value='1'>MAR</option><option value='2'>Mexico</option><option value='3'>Belize</option><option value='4'>Guatemala</option><option value='5'>Honduras</option></select><select id='zoomFly'><option value='0'>Select Variable...</option><option value='1'>Precipitation</option><option value='2'>Change in Precipitation</option><option value='3'>Days Above 1mm of Precipitation</option><option value='4'>Mean Temperature Change</option><option value='5'>Days Above 35°C</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='metric[]' id='base' onclick='showSites();' checked/> Baseline <input type='radio' name='metric[]' id='annual' onclick='showSites();'> Annual <input type='radio' name='metric[]' id='change' onclick='showSites();'> Change<br><input type='radio' name='year[]' id='2050s' checked/> 2050s <input type='radio' name='year[]' id='2080s'> 2080s<br><input type='radio' name='rcp[]' id='rcp4p5' checked/> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5' > RCP 8.5<br><input type='radio' name='est[]' id='lowest' checked/> Low <input type='radio' name='est[]' id='highest'> High Estimate</div>";
 	
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
@@ -394,14 +394,23 @@ key.onAdd = function (map) {
 	
 	
 
-// CBRS
+// SLR grid
 /*
-cartodb.createLayer(map, CBRS)
+cartodb.createLayer(map, SLR)
+		.addTo(map)
+        .on('done', function(layer) {
+		layer.setZIndex(5);	
+});
+
+
+// land grid
+cartodb.createLayer(map, Land)
 		.addTo(map)
         .on('done', function(layer) {
 		layer.setZIndex(5);	
 });
 */
+
 
 // Show Sites at start		
 //showSites();
@@ -429,7 +438,7 @@ $("#zoomFly").change(function(event){
 
 
 
-
+/*
 var legend2;
 legend2 = L.control({position: 'bottomright'});	
 var legend2Count = 0;
@@ -464,7 +473,7 @@ function addLegend(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_su
 	
 }
 
-
+*/
 
 // add basemap and overlays
 var baseMaps = {
@@ -494,69 +503,6 @@ var sql = cartodb.SQL({ user: 'gverutes' });
 
 //////////////////////////////////////////
 
-
-var endFly = 0;  
-var sublayersFly = [];
-
-
-// zoom Flyway
-function zoomFly(name, ddSitesVal){	
-
-	var MapQueryFly = "SELECT * FROM us_coastal_flyways WHERE fly_name = '"+name+"'";
-
-	sql.getBounds(MapQueryFly).done(function(bounds) {
-	map.fitBounds(bounds);
-
-	var FlyLatLon = [((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)];
-	if (name == 'Pacific'){FlyLatLon = [40,-122];}
-	else if (name == 'Mississippi'){FlyLatLon = [31,-89];}
-	
-	var popup = L.popup()
-		.setLatLng(FlyLatLon)
-		.setContent(name+" Flyway")
-		.openOn(map);
-	
-	});
-
-	sql.execute(MapQueryFly).done(function(data){
-			
-	// remove previous
-	if (endFly > 0){sublayersFly[endFly-1].remove();}
-	endFly = endFly + 1;
-	
-	var CartoCSSFly = "#us_coastal_flyways{polygon-opacity: 0.4;line-color: #000;line-width: 3;line-opacity: 0.5;polygon-fill: #D4D4D4;}#us_coastal_flyways[zoom>8]{polygon-opacity: 0;}";
-	
-	//#flyways[flyway='Atlantic']{polygon-fill: #A6CEE3;}#flyways[flyway='Central'] {polygon-fill: #1F78B4;}#flyways[flyway='Mississippi'] {polygon-fill: #B2DF8A;}#flyways[flyway='Pacific'] {polygon-fill: #33A02C;}";
-	
-	  cartodb.createLayer(map, Flyways)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryFly,
-		  cartocss: CartoCSSFly,
-		}
-		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(6);	
-		sublayer.set(subLayerOptions);
-		sublayersFly.push(sublayer);
-	  }).on('error', function() {
-		// log the error
-	  });
-	})
-		
-	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE flyway = '"+name+"'")
-	  .done(function(data) {
-	  
-		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 2);
-
-	});
-	
-}
-
-
-
-//////////////////////////////////////////
 
 var endState = 0;  
 var sublayersState = [];
@@ -602,23 +548,23 @@ function zoomState(name, ddSitesVal){
 	  });
 	})
 		
-	
+	/*
 	sql.execute("SELECT sum(steward1) sum_steward, sum(protect1) sum_protect, sum(hab_chg1) sum_hab_change, sum(science1) sum_science, count(*) count_pts FROM coastinventorytier1_b WHERE state = '"+name+"'")
 	  .done(function(data) {
 	  
 		addLegend(name, ddSitesVal, data.rows[0].count_pts, data.rows[0].sum_hab_change, data.rows[0].sum_protect, data.rows[0].sum_steward, data.rows[0].sum_science, data.rows[0].sum_steward+data.rows[0].sum_protect+data.rows[0].sum_hab_change+data.rows[0].sum_science+5, 1);
 
 	});
-	
+	*/
 }
 
 
 //////////////////////////////////////////
-// ACTIONS /////////////////////////////////
+// CLIMATE ///////////////////////////////
 //////////////////////////////////////////
 
 var startActions = 0;  
-var countActions = 1;
+var countActions = 0;
 var sublayersActions = [];
 
 function showSites(){
@@ -631,19 +577,23 @@ function showSites(){
 	
 	
 	// find list of checked boxes
-	var checkedActionsList = [];	
-    var chk = document.getElementsByName('actions[]')
-    var len = chk.length
+	//var checkedActionsList = [];	
+    var chk = document.getElementsByName('metric[]')
+    //var len = chk.length
 
 	// push text to list
+	/*
     for(i=0;i<len;i++){
 		if(chk[i].checked){
 			checkedActionsList.push(chk[i].id);
         }
     }
+	*/
 
-	var MapQueryActions = "SELECT * FROM coastinventorytier1_b";
+	var MapQueryActions = "SELECT * FROM land_grid_join";
 
+	// DON'T NEED THIS
+	/*  
 	if (checkedActionsList[0] == 'all'){
 
 	}
@@ -653,30 +603,24 @@ function showSites(){
 			MapQueryActions = MapQueryActions + " OR "+checkedActionsList[i]+" = 1";
 		}
 	}
+	*/
 
+	var button1 = document.getElementById("base");
+	var button2 = document.getElementById("annual");
+	var button3 = document.getElementById("change");
+	
 
-	var button1 = document.getElementById("all");
-	var button2 = document.getElementById("protect1");
-	var button3 = document.getElementById("steward1");
-	var button4 = document.getElementById("change1");
-
-	
-	
-	
 	if (button1.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #FFFFFF;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";
-	}
-	else if(button3.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #C63D96;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+		var CartoCSSActions = "#land_grid_join{polygon-fill: #ECF0F6;polygon-opacity: 0.75;line-color: #FFF;line-width: 0;line-opacity: 0;}#land_grid_join [ p_bs_m <= 3763.73767748] {polygon-fill: #43618F;}#land_grid_join [ p_bs_m <= 2440.43410723] {polygon-fill: #4E71A6;}#land_grid_join [ p_bs_m <= 1804.94982883] {polygon-fill: #6182B5;}#land_grid_join [ p_bs_m <= 1433.49429081] {polygon-fill: #B2C2DB;}#land_grid_join [ p_bs_m <= 1234.28416123] {polygon-fill: #ECF0F6;}";
 	}
 	else if(button2.checked){
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #E98166;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+		var CartoCSSActions = "#land_grid_join{polygon-fill: #ECF0F6;polygon-opacity: 0.75;line-color: #FFF;line-width: 0;line-opacity: 0;}#land_grid_join [ p_bs_25 <= 3763.73767748] {polygon-fill: #43618F;}#land_grid_join [ p_bs_25 <= 2440.43410723] {polygon-fill: #4E71A6;}#land_grid_join [ p_bs_25 <= 1804.94982883] {polygon-fill: #6182B5;}#land_grid_join [ p_bs_25 <= 1433.49429081] {polygon-fill: #B2C2DB;}#land_grid_join [ p_bs_25 <= 1234.28416123] {polygon-fill: #ECF0F6;}";	
 	}
 	else{
-		var CartoCSSActions = "#coastinventorytier1_b{marker-fill-opacity: 0.8;marker-line-color: #000000;marker-line-width: 0.25;marker-line-opacity: 0.5;marker-width: 7;marker-fill: #00B272;marker-allow-overlap: true;}#coastinventorytier1_b [ zoom > 6] {marker-width: 9;}#coastinventorytier1_b [ zoom > 6] {marker-width: 14;marker-line-width: 2;}#coastinventorytier1_b [ zoom > 9] {marker-width: 18.5;marker-line-width: 3.5;}#coastinventorytier1_b [ zoom > 12] {marker-width: 25;marker-line-width: 4.25;}";	
+		var CartoCSSActions = "#land_grid_join{polygon-fill: #ECF0F6;polygon-opacity: 0.75;line-color: #FFF;line-width: 0;line-opacity: 0;}#land_grid_join [ p_bs_75 <= 3763.73767748] {polygon-fill: #43618F;}#land_grid_join [ p_bs_75 <= 2440.43410723] {polygon-fill: #4E71A6;}#land_grid_join [ p_bs_75 <= 1804.94982883] {polygon-fill: #6182B5;}#land_grid_join [ p_bs_75 <= 1433.49429081] {polygon-fill: #B2C2DB;}#land_grid_join [ p_bs_75 <= 1234.28416123] {polygon-fill: #ECF0F6;}";	
 	}	
 	
-	cartodb.createLayer(map, CoastsActions)
+	cartodb.createLayer(map, land_grid)
 	  .addTo(map)
 	  .on('done', function(layer) {
 		// change the query for the first layer
