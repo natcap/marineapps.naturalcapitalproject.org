@@ -139,17 +139,18 @@ input[type="radio"]{
 
 .map-legend{
 	   border-radius: 5px;
-	   position: absolute;
-	   bottom: 0px;
+	   position: relative;
+	   bottom: 185px;
 	   right: 0px;
-	   padding-left: 8px;
-	   padding-right: 8px;
+	   padding-left: 20px;
+	   padding-right: 0px;
 	   padding-top: 7px;
 	   padding-bottom: 7px;
 	   border:1px solid #000;
 	   background-color: #fff; 
-	   max-width: 310px;
-	   min-height: 128px;
+	   min-width: 240px;
+	   max-width: 240px;
+	   min-height: 100px;
 }
 
 .bottom{
@@ -309,7 +310,6 @@ input[type="radio"]{
    }
   
 
-<!-- add styles for background of checkboxes and also drop-down menu locations >> USE BAHAMAS OR UAE VIEWERS --> 
 
 </style>
 
@@ -328,7 +328,7 @@ input[type="radio"]{
 var ESRIImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri'});
 
-var CartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+var CartoLight = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 		});
 
@@ -340,9 +340,9 @@ var ESRIOcean = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services
 var map = new L.Map('map', {
   zoomControl: false,
   layer_selector: false,
-  layers: [ESRIImagery],
-  center: [17, -88],
-  zoom: 6,
+  layers: [CartoLight],
+  center: [18, -88],
+  zoom: 7,
   minZoom: 5,
   maxZoom: 10
 });
@@ -359,20 +359,28 @@ map.on('drag', function() {
 
 
 // add CartoDB vector	
-var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
+//var CoastsActions = 'https://stanford.carto.com/u/gverutes/api/v2/viz/930bfa59-5191-43b2-95ab-eed4c1ff6996/viz.json';	
 var StateBoundaries = 'https://gverutes.cartodb.com/api/v2/viz/577322f6-49b7-47b7-8e8c-7df38968e544/viz.json';
 var Flyways = 'https://gverutes.cartodb.com/api/v2/viz/dc33b54a-0f7a-4766-95e5-aecbd6d9a680/viz.json';
 var slr_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/cab5c8d5-95f5-4e2c-9353-145d51ffd6f8/viz.json';
-var land_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/8da1ba27-aeae-494c-99d6-91666a07136e/viz.json';
+var land_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/0a053efe-8e4c-42c5-9c66-9ab7473d58b0/viz.json';
+var land_grid2 = 'https://stanford.carto.com/u/gverutes/api/v2/viz/d46896f6-f0f7-4148-a85a-8a8de2780152/viz.json';
+
+//var extreme_heat_days = 'https://stanford.carto.com/u/gverutes/api/v2/viz/8da1ba27-aeae-494c-99d6-91666a07136e/viz.json';
+//var rainy_days = 'https://stanford.carto.com/u/gverutes/api/v2/viz/6afeb6b6-ed3c-4803-9435-f94e32dafde9/viz.json';
+
+
 
 // drop-downs on map
 var legend = L.control({position: 'bottomleft'});
 legend.onAdd = function (map) {
   
+//<select id='zoomState'><option value='0'>Select Geography...</option><option value='1'>MAR</option><option value='2'>Mexico</option><option value='3'>Belize</option><option value='4'>Guatemala</option><option value='5'>Honduras</option></select>
+
 	
 	var div = L.DomUtil.create('div', 'info legend');
 
-	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>LOCATION AND VARIABLE:</b><br><select id='zoomState'><option value='0'>Select Geography...</option><option value='1'>MAR</option><option value='2'>Mexico</option><option value='3'>Belize</option><option value='4'>Guatemala</option><option value='5'>Honduras</option></select><select id='zoomFly'><option value='0'>Select Variable...</option><option value='2'>Extreme Heat Days</option><option value='4'>Rainy Days</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='metric[]' id='annual' onclick='showSites();'checked/> Total<input type='radio' name='metric[]' id='change' onclick='showSites();'> Change<br><input type='radio' name='year[]' id='2050s' onclick='showSites();' checked/> 2050s <input type='radio' name='year[]' id='2080s' onclick='showSites();'> 2080s<br><input type='radio' name='rcp[]' id='rcp4p5' onclick='showSites();'> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5'  onclick='showSites();' checked/> RCP 8.5<br><input type='radio' name='est[]' id='lowest' onclick='showSites();'> Low <input type='radio' name='est[]' id='highest' onclick='showSites();' checked/> High Estimate</div>";
+	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>CLIMATE VARIABLE:</b><br><select id='zoomFly'><option value='0'>Select Variable...</option><option value='2'>Extreme Heat Days</option><option value='4'>Rainy Days</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='metric[]' id='annual' onclick='showSites();'checked/> Total<input type='radio' name='metric[]' id='change' onclick='showSites();'> Change<br><input type='radio' name='year[]' id='2050s' onclick='showSites();' checked/> 2050s <input type='radio' name='year[]' id='2080s' onclick='showSites();'> 2080s<br><input type='radio' name='rcp[]' id='rcp4p5' onclick='showSites();'> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5'  onclick='showSites();' checked/> RCP 8.5<br><input type='radio' name='est[]' id='lowest' onclick='showSites();'> Low <input type='radio' name='est[]' id='highest' onclick='showSites();' checked/> High Estimate</div>";
 	
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
     return div;
@@ -395,12 +403,14 @@ key.onAdd = function (map) {
 	
 
 // SLR grid
+
 /*
-cartodb.createLayer(map, SLR)
+cartodb.createLayer(map, StateBoundaries)
 		.addTo(map)
         .on('done', function(layer) {
-		layer.setZIndex(5);	
+		layer.setZIndex(4);	
 });
+
 
 
 // land grid
@@ -432,32 +442,38 @@ $("#zoomFly").change(function(event){
 	var e = document.getElementById("zoomFly");
 	var ddSitesVal = e.options[e.selectedIndex].value;
 	showSites(ddSitesVal);
-	//addLegend($( "#zoomFly option:selected" ).text()+ " Flyway");
-	zoomFly($( "#zoomFly option:selected" ).text(), ddSitesVal);
+	addLegend($( "#zoomFly option:selected" ).text());
+	//zoomFly($( "#zoomFly option:selected" ).text(), ddSitesVal);
 	//$( "#zoomState").val(0);
 });
 
 
 
-/*
+
 var legend2;
-legend2 = L.control({position: 'bottomright'});	
+legend2 = L.control({position: 'bottomleft'});	
 var legend2Count = 0;
 	
 // ADD GRAPH IN TOP RIGHT	
-function addLegend(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum, queryScale){
+function addLegend(name, queryScale){
 
 	if (legend2Count > 0){map.removeControl(legend2);}
 	
 	legend2.onAdd = function (map) {
 
 		var div = L.DomUtil.create('div', 'info legend');
-		if (queryScale == 1){
-			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+"</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
+		if (name == "Extreme Heat Days"){
+			div.innerHTML = div.innerHTML + "<div class='map-legend'><b>EXTREME HEAT DAYS</b><br><img src='img/h_legend.png' width='95%' height='95%'></div>";
 		}
 		else{
-			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+" Flyway</h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
+			div.innerHTML = div.innerHTML + "<div class='map-legend'><b>RAINY DAYS (TOTAL)</b><br><img src='img/rt_legend.png' width='95%' height='95%'></center><br><b>RAINY DAYS (CHANGE)</b><br><img src='img/rc_legend.png' width='95%' height='95%'></center></div>";
+
 		}
+		/*
+		else{
+			div.innerHTML = div.innerHTML + "<div class='map-legend'><center><h5>"+name+" TEST 2 </h5></center><hr><div id='chart_div' style='width: 475px; height: 100px;'></div></div>";
+		}
+		*/
 		//div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
 		return div;
 		legend2.setZIndex(2);
@@ -466,20 +482,15 @@ function addLegend(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_su
 	legend2.addTo(map);	
 	legend2Count = legend2Count + 1;
 	
-	
-	// ADD CHART TO LEGEND IN BOTTOM RIGHT
-	
-	// QUERY MAP WITH SUMS AND OTHER SQL CALCS
-	google.charts.setOnLoadCallback(drawChart(name, ddSitesVal, count_sum, hab_sum, protect_sum, steward_sum, science_sum, max_sum));
-	
+
 }
 
-*/
+
 
 // add basemap and overlays
 var baseMaps = {
 	"imagery": ESRIImagery,
-	"dark": CartoLight,
+	"light": CartoLight,
 	"ocean": ESRIOcean
 };
 
@@ -594,20 +605,10 @@ function showSites(){
     }
 	*/
 
-	var MapQueryActions = "SELECT * FROM land_grid_join";
-
-	// DON'T NEED THIS
-	/*  
-	if (checkedActionsList[0] == 'all'){
-
-	}
-	else {
-	MapQueryActions = MapQueryActions + " WHERE "+checkedActionsList[0]+" = 1";
-		for(i=1;i<checkedActionsList.length;i++){
-			MapQueryActions = MapQueryActions + " OR "+checkedActionsList[i]+" = 1";
-		}
-	}
-	*/
+	var MapQueryActions1 = "";
+	var MapQueryActions2 = "SELECT * FROM land_grid_join";
+	var CartoCSSActions1 = "";
+	var CartoCSSActions2 = "";
 
 	var button1 = document.getElementById("annual");
 	var button2 = document.getElementById("change");
@@ -620,7 +621,6 @@ function showSites(){
 
 	var button7 = document.getElementById("lowest");
 	var button8 = document.getElementById("highest");
-	
 
 
 	if ($( "#zoomFly option:selected" ).text() == 'Extreme Heat Days'){	
@@ -628,37 +628,45 @@ function showSites(){
 		if (button1.checked){
 			if (button3.checked){ // button 3 (2050s)
 				if (button5.checked){ // button 5 (rcp4.5)
-					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045a_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5045a_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5045a_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045a_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5045a_25 <= 50] {polygon-fill: #F2D2D3;}";
+					if (button7.checked){ // button 7 (lowest)
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5045a_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 2;  line-opacity: 0;}#land_grid_join [ h_5045a_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5045a_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5045a_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045a_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5045a_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
-					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045a_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5045a_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5045a_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045a_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5045a_75 <= 50] {polygon-fill: #F2D2D3;}";
+					else{ // button 8 (highest)
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5045a_75 >= 0";	
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045a_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5045a_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5045a_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045a_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5045a_75 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085a_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5085a_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5085a_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045a_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5085a_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5085a_25 >= 0";	
+						var CartoCSSActions1 = "#land_grid_join{ polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085a_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5085a_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5085a_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045a_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5085a_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085a_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5085a_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5085a_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5085a_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5085a_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5085a_75 >= 0";	
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085a_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5085a_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5085a_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5085a_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5085a_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				}
 			else{ // button 4 (2080s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045a_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8045a_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8045a_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045a_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8045a_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8045a_25 >= 0";	
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045a_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8045a_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8045a_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045a_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8045a_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045a_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8045a_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8045a_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045a_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8045a_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8045a_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045a_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8045a_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8045a_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045a_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8045a_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085a_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8085a_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8085a_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045a_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8085a_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8085a_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085a_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8085a_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8085a_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045a_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8085a_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085a_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8085a_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8085a_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8085a_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8085a_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8085a_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085a_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8085a_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8085a_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8085a_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8085a_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				}
@@ -670,44 +678,66 @@ function showSites(){
 			if (button3.checked){ // button 3 (2050s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045c_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5045c_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5045c_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045c_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5045c_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5045c_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045c_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5045c_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5045c_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045c_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5045c_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045c_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5045c_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5045c_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045c_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5045c_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5045c_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5045c_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5045c_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5045c_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045c_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5045c_75 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085c_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5085c_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5085c_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5045c_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5085c_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5085c_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085c_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5085c_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5085c_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5045c_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5085c_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085c_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_5085c_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_5085c_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_5085c_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_5085c_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_5085c_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_5085c_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_5085c_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_5085c_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_5085c_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_5085c_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				}
 			else{ // button 4 (2080s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045c_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8045c_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8045c_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045c_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8045c_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8045c_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045c_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8045c_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8045c_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045c_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8045c_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045c_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8045c_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8045c_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045c_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8045c_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8045c_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8045c_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8045c_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8045c_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045c_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8045c_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085c_25 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8085c_25 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8085c_25 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8045c_25 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8085c_25 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8085c_25 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085c_25 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8085c_25 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8085c_25 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8045c_25 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8085c_25 <= 50] {polygon-fill: #ffffb2;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #F2D2D3;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085c_75 <= 250] {polygon-fill: #C1373C;}#land_grid_join [ h_8085c_75 <= 200] {polygon-fill: #CC4E52;}#land_grid_join [ h_8085c_75 <= 150] {polygon-fill: #D4686C;}#land_grid_join [ h_8085c_75 <= 100] {polygon-fill: #EBB7B9;}#land_grid_join [ h_8085c_75 <= 50] {polygon-fill: #F2D2D3;}";
+						var MapQueryActions1 = "SELECT * FROM land_grid_join where h_8085c_75 >= 0";
+						var CartoCSSActions1 = "#land_grid_join{  polygon-fill: #bd0026;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ h_8085c_75 <= 250] {polygon-fill: #f03b20;}#land_grid_join [ h_8085c_75 <= 200] {polygon-fill: #fd8d3c;}#land_grid_join [ h_8085c_75 <= 150] {polygon-fill: #feb24c;}#land_grid_join [ h_8085c_75 <= 100] {polygon-fill: #fed976;}#land_grid_join [ h_8085c_75 <= 50] {polygon-fill: #ffffb2;}";
 						} 
 					}
 				}
-			}					
-		}
+			}
+		
 
-
-
+		cartodb.createLayer(map, land_grid)
+		  .addTo(map)
+		  .on('done', function(layer) {
+			// change the query for the first layer
+			var subLayerOptions = {
+			  sql: MapQueryActions1,
+			  cartocss: CartoCSSActions1,
+			}
+			var sublayer = layer.getSubLayer(0);
+			layer.setZIndex(5);
+			sublayer.set(subLayerOptions);
+			sublayersActions.push(sublayer);
+		  }).on('error', function() {
+			// log the error
+		  });
+	}
 
 	if ($( "#zoomFly option:selected" ).text() == 'Rainy Days'){	
 
@@ -715,40 +745,41 @@ function showSites(){
 			if (button3.checked){ // button 3 (2050s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045a_25 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_5045a_25 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_5045a_25 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_5045a_25 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_5045a_25 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045a_25 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_5045a_25 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_5045a_25 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_5045a_25 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_5045a_25 <= 50] {polygon-fill: #a8ddb5;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045a_75 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_5045a_75 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_5045a_75 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_5045a_75 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_5045a_75 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045a_75 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_5045a_75 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_5045a_75 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_5045a_75 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_5045a_75 <= 50] {polygon-fill: #a8ddb5;}";
 						}
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085a_25 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_5085a_25 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_5085a_25 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_5045a_25 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_5085a_25 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085a_25 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_5085a_25 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_5085a_25 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_5045a_25 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_5085a_25 <= 50] {polygon-fill: #a8ddb5;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085a_75 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_5085a_75 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_5085a_75 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_5085a_75 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_5085a_75 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085a_75 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_5085a_75 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_5085a_75 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_5085a_75 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_5085a_75 <= 50] {polygon-fill: #a8ddb5;}";
 						} 
 					}
 				}
 			else{ // button 4 (2080s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045a_25 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_8045a_25 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_8045a_25 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_8045a_25 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_8045a_25 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045a_25 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_8045a_25 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_8045a_25 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_8045a_25 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_8045a_25 <= 50] {polygon-fill: #a8ddb5;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045a_75 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_8045a_75 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_8045a_75 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_8045a_75 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_8045a_75 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045a_75 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_8045a_75 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_8045a_75 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_8045a_75 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_8045a_75 <= 50] {polygon-fill: #a8ddb5;}";
 						} 
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085a_25 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_8085a_25 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_8085a_25 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_8045a_25 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_8085a_25 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085a_25 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_8085a_25 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_8085a_25 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_8045a_25 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_8085a_25 <= 50] {polygon-fill: #a8ddb5;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #ECF0F6;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085a_75 <= 250] {polygon-fill: #43618F;}#land_grid_join [ r_8085a_75 <= 200] {polygon-fill: #4E71A6;}#land_grid_join [ r_8085a_75 <= 150] {polygon-fill: #6182B5;}#land_grid_join [ r_8085a_75 <= 100] {polygon-fill: #B2C2DB;}#land_grid_join [ r_8085a_75 <= 50] {polygon-fill: #ECF0F6;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #084081;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085a_75 <= 250] {polygon-fill: #0868ac;}#land_grid_join [ r_8085a_75 <= 200] {polygon-fill: #2b8cbe;}#land_grid_join [ r_8085a_75 <= 150] {polygon-fill: #4eb3d3;}#land_grid_join [ r_8085a_75 <= 100] {polygon-fill: #7bccc4;}#land_grid_join [ r_8085a_75 <= 50] {polygon-fill: #a8ddb5;}";
 						} 
 					}
 				}
 			}
+		
 
 		//////////////////////////
 
@@ -756,64 +787,60 @@ function showSites(){
 			if (button3.checked){ // button 3 (2050s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045c_25 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_5045c_25 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_5045c_25 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_5045c_25 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_5045c_25 <= -20] {polygon-fill: #d73027;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045c_25 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_5045c_25 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_5045c_25 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_5045c_25 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_5045c_25 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_5045c_25 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_5045c_25 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_5045c_25 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_5045c_25 <= -20] {polygon-fill: #543005;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045c_75 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_5045c_75 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_5045c_75 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_5045c_75 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_5045c_75 <= -20] {polygon-fill: #d73027;}";
-						}
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5045c_75 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_5045c_75 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_5045c_75 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_5045c_75 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_5045c_75 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_5045c_75 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_5045c_75 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_5045c_75 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_5045c_75 <= -20] {polygon-fill: #543005;}";
+						} 
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085c_25 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_5085c_25 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_5085c_25 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_5085c_25 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_5085c_25 <= -20] {polygon-fill: #d73027;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085c_25 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_5085c_25 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_5085c_25 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_5085c_25 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_5085c_25 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_5085c_25 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_5085c_25 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_5085c_25 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_5085c_25 <= -20] {polygon-fill: #543005;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085c_75 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_5085c_75 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_5085c_75 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_5085c_75 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_5085c_75 <= -20] {polygon-fill: #d73027;}";
-						}
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_5085c_75 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_5085c_75 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_5085c_75 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_5085c_75 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_5085c_75 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_5085c_75 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_5085c_75 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_5085c_75 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_5085c_75 <= -20] {polygon-fill: #543005;}";
+						} 
 					}
 				}
 			else{ // button 4 (2080s)
 				if (button5.checked){ // button 5 (rcp4.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045c_25 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_8045c_25 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_8045c_25 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_8045c_25 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_8045c_25 <= -20] {polygon-fill: #d73027;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045c_25 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_8045c_25 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_8045c_25 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_8045c_25 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_8045c_25 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_8045c_25 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_8045c_25 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_8045c_25 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_8045c_25 <= -20] {polygon-fill: #543005;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045c_75 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_8045c_75 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_8045c_75 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_8045c_75 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_8045c_75 <= -20] {polygon-fill: #d73027;}";
-						}
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8045c_75 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_8045c_75 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_8045c_75 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_8045c_75 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_8045c_75 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_8045c_75 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_8045c_75 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_8045c_75 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_8045c_75 <= -20] {polygon-fill: #543005;}";
+						} 
 					}
 				else{ // button 6 (rcp8.5)
 					if (button7.checked){ // button 7 (lowest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085c_25 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_8085c_25 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_8085c_25 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_8085c_25 <= -10] {polygon-fill: #f79272;}#land_grid_join [ r_8085c_25 <= -20] {polygon-fill: #d73027;}";
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085c_25 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_8085c_25 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_8085c_25 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_8085c_25 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_8085c_25 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_8085c_25 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_8085c_25 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_8085c_25 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_8085c_25 <= -20] {polygon-fill: #543005;}";
 						}
 					else{ // button 8 (highest)	
-						var CartoCSSActions = "#land_grid_join{  polygon-fill: #136400;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085c_75 <= 20] {polygon-fill: #1a9850;}#land_grid_join [ r_8085c_75 <= 10] {polygon-fill: #8cce8a;}#land_grid_join [ r_8085c_75 <= 0] {polygon-fill: #fff2cc;}#land_grid_join [ r_8085c_75 <= -10] {polygon-fill: #f79272;}#land_grid_join [    r_8085c_75 <= -20] {polygon-fill: #d73027;}";
-						}
+						var CartoCSSActions2 = "#land_grid_join{  polygon-fill: #003c30;  polygon-opacity: 0.8;  line-color: #FFF;  line-width: 0;  line-opacity: 0;}#land_grid_join [ r_8085c_75 <= 20] {polygon-fill: #01665e;}#land_grid_join [ r_8085c_75 <= 15] {polygon-fill: #35978f;}#land_grid_join [ r_8085c_75 <= 10] {polygon-fill: #80cdc1;}#land_grid_join [ r_8085c_75 <= 5] {polygon-fill: #c7eae5;}#land_grid_join [ r_8085c_75 <= 0] {polygon-fill: #f6e8c3;}#land_grid_join [ r_8085c_75 <= -5] {polygon-fill: #dfc27d;}#land_grid_join [ r_8085c_75 <= -10] {polygon-fill: #bf812d;}#land_grid_join [ r_8085c_75 <= -15] {polygon-fill: #8c510a;}#land_grid_join [ r_8085c_75 <= -20] {polygon-fill: #543005;}";
+						} 
 					}
 				}
-			}						
-		}
+			}
+		
+					
+		cartodb.createLayer(map, land_grid2)
+		  .addTo(map)
+		  .on('done', function(layer) {
+			// change the query for the first layer
+			var subLayerOptions = {
+			  sql: MapQueryActions2,
+			  cartocss: CartoCSSActions2,
+			}
+			var sublayer = layer.getSubLayer(0);
+			layer.setZIndex(5);
+			sublayer.set(subLayerOptions);
+			sublayersActions.push(sublayer);
+		  }).on('error', function() {
+			// log the error
+		  });
 
-
-
-
-	cartodb.createLayer(map, land_grid)
-	  .addTo(map)
-	  .on('done', function(layer) {
-		// change the query for the first layer
-		var subLayerOptions = {
-		  sql: MapQueryActions,
-		  cartocss: CartoCSSActions,
-		}
-		var sublayer = layer.getSubLayer(0);
-		layer.setZIndex(9999);
-		sublayer.set(subLayerOptions);
-		sublayersActions.push(sublayer);
-	  }).on('error', function() {
-		// log the error
-	  });
-	
+	}
 }
-
-
 
 </script>	
 </div>
