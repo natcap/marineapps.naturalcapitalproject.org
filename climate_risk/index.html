@@ -365,6 +365,7 @@ var Flyways = 'https://gverutes.cartodb.com/api/v2/viz/dc33b54a-0f7a-4766-95e5-a
 var slr_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/cab5c8d5-95f5-4e2c-9353-145d51ffd6f8/viz.json';
 var land_grid = 'https://stanford.carto.com/u/gverutes/api/v2/viz/0a053efe-8e4c-42c5-9c66-9ab7473d58b0/viz.json';
 var land_grid2 = 'https://stanford.carto.com/u/gverutes/api/v2/viz/d46896f6-f0f7-4148-a85a-8a8de2780152/viz.json';
+var cntry_mpa = 'https://stanford.carto.com/u/gverutes/api/v2/viz/7bd2c014-c1ca-434a-a313-bacce5adc800/viz.json';
 
 //var extreme_heat_days = 'https://stanford.carto.com/u/gverutes/api/v2/viz/8da1ba27-aeae-494c-99d6-91666a07136e/viz.json';
 //var rainy_days = 'https://stanford.carto.com/u/gverutes/api/v2/viz/6afeb6b6-ed3c-4803-9435-f94e32dafde9/viz.json';
@@ -402,17 +403,17 @@ key.onAdd = function (map) {
 	
 	
 
-// SLR grid
+// countries and MPAs
 
-/*
-cartodb.createLayer(map, StateBoundaries)
+
+cartodb.createLayer(map, cntry_mpa)
 		.addTo(map)
         .on('done', function(layer) {
-		layer.setZIndex(4);	
+		layer.setZIndex(6);	
 });
 
 
-
+/*
 // land grid
 cartodb.createLayer(map, Land)
 		.addTo(map)
