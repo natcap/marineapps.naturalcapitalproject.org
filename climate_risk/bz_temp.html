@@ -266,6 +266,16 @@ input[type="radio"]{
 
 <script>
 
+$( document ).ready(function() {
+  
+	$( "#zoomFly").val(6);
+	var e = document.getElementById("zoomFly");
+	var ddSitesVal = e.options[e.selectedIndex].value;
+	showSites(ddSitesVal);
+	addLegend($( "#zoomFly option:selected" ).text());
+
+});
+
 // define basemaps
 var ESRIImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri'});
@@ -283,8 +293,8 @@ var map = new L.Map('map', {
   zoomControl: false,
   layer_selector: false,
   layers: [CartoLight],
-  center: [18, -88],
-  zoom: 7,
+  center: [17, -88],
+  zoom: 8,
   minZoom: 5,
   maxZoom: 10
 });
@@ -319,7 +329,7 @@ var legend = L.control({position: 'bottomleft'});
 
 legend.onAdd = function (map) {
   	var div = L.DomUtil.create('div', 'info legend');
-	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>CLIMATE VARIABLES</b><br><select id='zoomFly'><option value='0'>Select...</option><option value='2'>Extreme Heat Days</option><option value='4'>Rainy Days</option><option value='5'>Precipitation</option><option value='6'>Temperature</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='metric[]' id='annual' onclick='showSites();'checked/> Total or Mean<input type='radio' name='metric[]' id='change' onclick='showSites();'> Change<br><input type='radio' name='year[]' id='2050s' onclick='showSites();' checked/> 2050s <input type='radio' name='year[]' id='2080s' onclick='showSites();'> 2080s<br><input type='radio' name='rcp[]' id='rcp4p5' onclick='showSites();'> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5'  onclick='showSites();' checked/> RCP 8.5<br><input type='radio' name='est[]' id='lowest' onclick='showSites();'> Low <input type='radio' name='est[]' id='highest' onclick='showSites();' checked/> High Estimate</div>";
+	div.innerHTML = div.innerHTML + "<div class='bottom'>&nbsp;&nbsp;<div class='controlgroup'><b>CLIMATE VARIABLES</b><br><select id='zoomFly'><option value='2'>Extreme Heat Days</option><option value='4'>Rainy Days</option><option value='5'>Precipitation</option><option value='6'>Temperature</option></select></div><br><b>SHOW ME...</b><br><input type='radio' name='metric[]' id='annual' onclick='showSites();'> Total or Mean<input type='radio' name='metric[]' id='change' onclick='showSites();'checked/> Change<br><input type='radio' name='year[]' id='2050s' onclick='showSites();' checked/> 2050s <input type='radio' name='year[]' id='2080s' onclick='showSites();'> 2080s<br><input type='radio' name='rcp[]' id='rcp4p5' onclick='showSites();'> RCP 4.5 <input type='radio' name='rcp[]' id='rcp8p5'  onclick='showSites();' checked/> RCP 8.5<br><input type='radio' name='est[]' id='lowest' onclick='showSites();'> Low <input type='radio' name='est[]' id='highest' onclick='showSites();' checked/> High Estimate</div>";
 	
 	div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
 	return div;
@@ -348,7 +358,7 @@ cartodb.createLayer(map, cntry_mpa)
 });
 
 
-//$( "#zoomFly").val(4);
+//$( "#zoomFly").val(6);
 // Show sites at start		
 //showSites();
 
