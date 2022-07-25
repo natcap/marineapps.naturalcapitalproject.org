@@ -12,7 +12,10 @@
   <!--jQuery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
-  <!--CartoDB-->
+
+  <!--CartoDB SidePanel-->
+  <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/makeitresponsive.css">
   <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
   <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.uncompressed.js"></script>
   
@@ -69,6 +72,17 @@ input[type="radio"]{
  vertical-align: top;
 }
 
+fieldset {
+    border: 1px solid black;
+    padding: 30px;
+    }
+    fieldset legend {
+        background-color: silver;
+    }
+    fieldset div {
+        border: 1px dotted silver;
+    }
+
 
 #table03a { width:100%; border:0px solid #D9D5BE; margin:0px; background:#fff; border-collapse:collapse;}
 #table03a td { border:0px solid #D9D5BE; vertical-align: middle; width: 300px; padding: 0px;}
@@ -78,8 +92,8 @@ input[type="radio"]{
 
 .map-legend{
 	   border-radius: 5px;
-	   position: absolute;
-	   bottom: 0px;
+	   position: relative;
+	   top: 50px;
 	   right: 0px;
 	   padding-left: 8px;
 	   padding-right: 8px;
@@ -94,7 +108,7 @@ input[type="radio"]{
 .bottom{
 	   border-radius: 5px;
 	   position: absolute;
-	   bottom: 0px;
+	   top: 0px;
 	   left: 0px;
 	   padding-left: 20px;
 	   padding-right: 0px;
@@ -255,6 +269,10 @@ input[type="radio"]{
 
 <div id="map"></div>
 
+<div class="sidepanel">
+<div id="Summary"></div>
+</div>
+
 <script>
 
 
@@ -277,21 +295,22 @@ var map = new L.Map('map', {
   zoomControl: false,
   layer_selector: false,
   layers: [ESRIStreetMap],
-  center: [41,	 -119],
+  center: [41,	 -110],
   zoom: 5,
   minZoom: 5,
-  maxZoom: 10
+  maxZoom: 12
 });
 
 var southWest = L.latLng(25, -165),
 northEast = L.latLng(55, -75);
 var bounds = L.latLngBounds(southWest, northEast);
 
+/*
 map.setMaxBounds(bounds);
 map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: false });
 });
-
+*/
 
 
 // add CartoDB vector	
@@ -300,7 +319,7 @@ var NationalForests = 'https://stanford.carto.com/u/gverutes/api/v2/viz/133b9c7d
 
 
 // drop-downs on map
-var legend = L.control({position: 'bottomleft'});
+var legend = L.control({position: 'topleft'});
 legend.onAdd = function (map) {
   
 	
@@ -327,7 +346,7 @@ legend.addTo(map);
 
 // drop-downs on map
 
-var key= L.control({position: 'bottomleft'});
+var key= L.control({position: 'topleft'});
 key.onAdd = function (map) {
   
 	var div = L.DomUtil.create('div', 'info legend');
@@ -376,20 +395,27 @@ var baseMaps = {
 	"terrain": ESRIOcean
 };
 
-
+/*
 // mini map
 var CartoLight = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
 var mb = new L.TileLayer(CartoLight, {minZoom: 4, maxZoom: 12});
 var miniMap = new L.Control.MiniMap(mb, { toggleDisplay: true, height: '150', width: '145'}).addTo(map);
+*/
 
-L.control.layers(baseMaps, null, {position: 'bottomright', collapsed: false}).addTo(map);
+L.control.layers(baseMaps, null, {position: 'bottomleft', collapsed: false}).addTo(map);
 
 // scale
-L.control.scale({ position: 'bottomright' }).addTo(map);
+L.control.scale({ position: 'bottomleft' }).addTo(map);
 
 // zoom
-L.control.zoom({position:'bottomright'}).addTo(map);
+L.control.zoom({position:'bottomleft'}).addTo(map);
 map.scrollWheelZoom.disable();
+
+
+// when map moves, update listing
+map.on("moveend", function(e) {
+  showSummary();
+});	
 
 
 //////////////////////////////////////////
@@ -417,6 +443,67 @@ function zoomProject(name, ddSitesVal){
 
 	
 }
+
+
+// Leaflet popup
+function zoomFeature(fid, name){	
+
+var MapQuery1 = "SELECT * FROM plant_operational_externalgisfy2020revised WHERE cartodb_id = "+fid;
+
+	sql.getBounds(MapQuery1).done(function(bounds) {
+	//map.fitBounds(bounds);
+	map.setView([((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)]);
+	
+	var popup = L.popup()
+		.setLatLng([((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)])
+		.setContent(name.toUpperCase())
+		.openOn(map);
+		
+	});
+	
+}
+
+
+function showSummary(){
+
+	var HTML = '';
+	
+	bounds = map.getBounds();
+	west = bounds.getWest();
+	westStr = west.toString();
+	north = bounds.getNorth();
+	northStr = north.toString();
+	east = bounds.getEast();
+	eastStr = east.toString();
+	south = bounds.getSouth();
+	southStr = south.toString();
+
+	
+	sql.execute("SELECT * FROM plant_operational_externalgisfy2020revised WHERE (the_geom && ST_SetSRID(ST_MakeBox2D(ST_Point("+westStr+", "+northStr+"), ST_Point("+eastStr+", "+southStr+")), 4326)) ORDER BY ptname ASC")
+	  .done(function(data) {
+
+		// read table to variable "HTML"
+		count = data.total_rows;
+	
+		if (count > 75){
+			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><i>Too many features to list. Zoom in.</i></fieldset>"		
+		}
+		else if (count == 0){
+			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><i>No features in the map window.</i></fieldset>"
+		}
+		else{
+			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><table id='table02c'><tr id='cellClass'><td align='center'><u><b>MAP IT</b></u>&nbsp;</td><td align='center'><u><b>STATE</b></u></td><td align='center'><u><b>PLANT NAME</b></u></td></tr>"
+			for (var i = 0; i < data.total_rows; i++) {HTML = HTML + "<tr><td align='center' id='cellClass'><a href='#' onclick='zoomFeature("+data.rows[i].cartodb_id+",\""+data.rows[i].ptname+"\");'>&#9668;</a></td><td align='center'>"+data.rows[i].state+"</td><td align='center'>"+data.rows[i].ptname.toUpperCase().substr(0,30)+"</td></tr>"}
+			HTML = HTML + "</table></fieldset><br>"
+		}
+		
+		// write results to right side panel
+		document.getElementById("Summary").innerHTML = HTML;
+	
+	  })	
+	
+}
+
 
 
 
