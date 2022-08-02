@@ -53,7 +53,7 @@ html, body, #map {
 img {
     max-width: 100%;
     max-height: auto;
-	margin-left:0%; margin-right:0%;
+	margin-left:5%; margin-right:0%;
 }
 
 br {
@@ -74,18 +74,18 @@ input[type="radio"]{
 
 fieldset {
     border: 1px solid black;
-    padding: 30px;
+    margin: 15px;
     }
     fieldset legend {
-        background-color: silver;
+        background-color: white;
     }
     fieldset div {
-        border: 1px dotted silver;
+        border: 1px dotted white;
     }
 
 
 #table03a { width:100%; border:0px solid #D9D5BE; margin:0px; background:#fff; border-collapse:collapse;}
-#table03a td { border:0px solid #D9D5BE; vertical-align: middle; width: 300px; padding: 0px;}
+#table03a td { border:0px solid #D9D5BE; vertical-align: middle; width: 300px; margin: 25px;padding: 25px;}
 
 
 .cartodb-popup v2 p {z-index:9999;}
@@ -112,7 +112,7 @@ fieldset {
 	   left: 0px;
 	   padding-left: 20px;
 	   padding-right: 0px;
-	   padding-bottom: 50px;
+	   padding-bottom: 20px;
 	   border:1px solid #000;
 	   background-color: #D4D4D4;
 	   color: #000;
@@ -270,7 +270,9 @@ fieldset {
 <div id="map"></div>
 
 <div class="sidepanel">
-<div id="Summary"></div>
+<div id="Summary1"></div>
+<div id="Summary2"></div>
+<div id="Summary3"></div>
 </div>
 
 <script>
@@ -329,12 +331,28 @@ legend.onAdd = function (map) {
 	<option value='0'>Select Project...</option>\
 	<option value='1'>The Yuba Project</option>\
 	<option value='2'>Yuba II</option>\
-	<option value='3'>The Snoquera Project</option>\
-	<option value='4'>Upper Wenatchee Pilot Project</option>\
-	<option value='5'>Rogue Valley Projects</option>\
+	<option value='3'>Rogue Valley Projects</option>\
+	<option value='4'>The Snoquera Project</option>\
+	<option value='5'>Upper Wenatchee Pilot Project</option>\
+	<option value='6'>Bear River Watershed</option>\
+	<option value='7'>Bitterroot National Forest</option>\
+	<option value='8'>Coastal Oregon</option>\
+	<option value='9'>Crystal Basin</option>\
+	<option value='10'>Flathead National Forest</option>\
+	<option value='11'>Groveland Ranger District</option>\
+	<option value='12'>Inyo National Forest</option>\
+	<option value='13'>Plumas National Forest</option>\
+	<option value='14'>Round Valley</option>\
+	<option value='15'>San Bernardino National Forest</option>\
+	<option value='16'>Sierra National Forest</option>\
+	<option value='17'>Tahoe National Forest</option>\
+	<option value='18'>UMRWA</option>\
+	<option value='19'>Warner Lakes</option>\
+	<option value='20'>Willamette National Forest</option>\
 	</select></div><br><b>PROJECT STATUS</b><br>\
-	<img src='img/yellow_star.png' width=9% height=9%> Underway \
-	<img src='img/pink_star.png'  width=9% height=9%> In the pipeline\
+	<img style='vertical-align:middle' src='img/yellow_star.png' width=12% height=12%> <span style=''>Active</span><br> \
+	<img style='vertical-align:middle' src='img/pink_star.png' width=12% height=12%> <span style=''>Design</span><br> \
+	<img style='vertical-align:middle' src='img/blue_star.png' width=12% height=12%> <span style=''>Explore</span><br> \
 	</div>";
 	
     div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
@@ -362,14 +380,14 @@ key.onAdd = function (map) {
 cartodb.createLayer(map, NationalForests)
 		.addTo(map)
         .on('done', function(layer) {
-		layer.setZIndex(5);	
+		layer.setZIndex(11);	
 });
 
 // Projects
 cartodb.createLayer(map, ProjectsPtsPolys)
 		.addTo(map)
         .on('done', function(layer) {
-		layer.setZIndex(10);	
+		layer.setZIndex(12);	
 });
 
 
@@ -409,7 +427,7 @@ L.control.scale({ position: 'bottomleft' }).addTo(map);
 
 // zoom
 L.control.zoom({position:'bottomleft'}).addTo(map);
-map.scrollWheelZoom.disable();
+//map.scrollWheelZoom.disable();
 
 
 // when map moves, update listing
@@ -429,7 +447,7 @@ var sql = cartodb.SQL({ user: 'gverutes' });
 // zoom Project
 function zoomProject(name, ddSitesVal){	
 
-	var MapQueryProject= "SELECT * FROM bf_projects_polygons WHERE proj_name = '"+name+"'";
+	var MapQueryProject= "SELECT * FROM bf_projects_polygons_v2 WHERE proj_name = '"+name+"'";
 
 	sql.getBounds(MapQueryProject).done(function(bounds) {
 	map.fitBounds(bounds);
@@ -456,7 +474,7 @@ var MapQuery1 = "SELECT * FROM plant_operational_externalgisfy2020revised WHERE 
 	
 	var popup = L.popup()
 		.setLatLng([((bounds[0][0]+bounds[1][0])/2),((bounds[0][1]+bounds[1][1])/2)])
-		.setContent(name.toUpperCase())
+		.setContent(name)
 		.openOn(map);
 		
 	});
@@ -466,7 +484,7 @@ var MapQuery1 = "SELECT * FROM plant_operational_externalgisfy2020revised WHERE 
 
 function showSummary(){
 
-	var HTML = '';
+	var HTML1 = ''; var HTM2 = '';	var HTM3 = '';
 	
 	bounds = map.getBounds();
 	west = bounds.getWest();
@@ -478,34 +496,81 @@ function showSummary(){
 	south = bounds.getSouth();
 	southStr = south.toString();
 
-	
-	sql.execute("SELECT * FROM plant_operational_externalgisfy2020revised WHERE (the_geom && ST_SetSRID(ST_MakeBox2D(ST_Point("+westStr+", "+northStr+"), ST_Point("+eastStr+", "+southStr+")), 4326)) ORDER BY ptname ASC")
+	sql.execute("SELECT * FROM bf_projects_points_v2 WHERE (the_geom && ST_SetSRID(ST_MakeBox2D(ST_Point("+westStr+", "+northStr+"), ST_Point("+eastStr+", "+southStr+")), 4326)) ORDER BY proj_name ASC")
 	  .done(function(data) {
 
 		// read table to variable "HTML"
-		count = data.total_rows;
+		count1 = data.total_rows;
 	
-		if (count > 75){
-			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><i>Too many features to list. Zoom in.</i></fieldset>"		
+		if (count1 > 7){
+			HTML1 = "<fieldset><legend><b>PROJECTS</b></legend><i>Too many projects to list. Zoom in.</i></fieldset>"	
 		}
-		else if (count == 0){
-			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><i>No features in the map window.</i></fieldset>"
+		else if (count1 == 0){
+			HTML1 = "<fieldset><legend><b>PROJECTS</b></legend><i>No features in the map window.</i></fieldset>"
 		}
 		else{
-			HTML = "<fieldset><legend><b>HYDROPOWER PLANTS</b></legend><table id='table02c'><tr id='cellClass'><td align='center'><u><b>MAP IT</b></u>&nbsp;</td><td align='center'><u><b>STATE</b></u></td><td align='center'><u><b>PLANT NAME</b></u></td></tr>"
-			for (var i = 0; i < data.total_rows; i++) {HTML = HTML + "<tr><td align='center' id='cellClass'><a href='#' onclick='zoomFeature("+data.rows[i].cartodb_id+",\""+data.rows[i].ptname+"\");'>&#9668;</a></td><td align='center'>"+data.rows[i].state+"</td><td align='center'>"+data.rows[i].ptname.toUpperCase().substr(0,30)+"</td></tr>"}
-			HTML = HTML + "</table></fieldset><br>"
+			HTML1 = "<fieldset><legend><b>PROJECTS</b></legend><table id='table02c'><tr id='cellClass'><td align='center'><u><b>NAME</b></u></td><td align='center'><u><b>STATUS</b></u></td></tr>"
+			for (var i = 0; i < data.total_rows; i++) {HTML1 = HTML1 + "<tr><td align='center'>"+data.rows[i].name+"</td><td align='center'>"+data.rows[i].status.substr(0,30)+"</td></tr>"}
+			HTML1 = HTML1 + "</table></fieldset>"
 		}
 		
+
 		// write results to right side panel
-		document.getElementById("Summary").innerHTML = HTML;
+		document.getElementById("Summary1").innerHTML = HTML1;
+
+	  })	
+		
+
+
+	sql.execute("SELECT * FROM huc250k_selectwest_geo WHERE (the_geom && ST_SetSRID(ST_MakeBox2D(ST_Point("+westStr+", "+northStr+"), ST_Point("+eastStr+", "+southStr+")), 4326)) ORDER BY area DESC")
+	  .done(function(data) {
+
+		// read table to variable "HTML"
+		count2 = data.total_rows;
+	
+		if (count2 > 15){
+			HTML2 = "<fieldset><legend><b>WATERSHEDS</b></legend><i>Too many watersheds to list. Zoom in.</i></fieldset>"	
+		}
+		else if (count2 == 0){
+			HTML2 = "<fieldset><legend><b>WATERSHEDS</b></legend><i>No features in the map window.</i></fieldset>"
+		}
+		else{
+			HTML2 = "<fieldset><legend><b>WATERSHEDS</b></legend><table id='table02c'><tr id='cellClass'><td align='center'><u><b>NAME</b></u></td><td align='center'><u><b>AREA (ha)</b></u></td></tr>"
+			for (var i = 0; i < data.total_rows; i++) {HTML2 = HTML2 + "<tr><td align='center'>"+data.rows[i].huc_name+"</td><td align='center'>"+data.rows[i].area+"</td></tr>"}
+			HTML2 = HTML2 + "</table></fieldset>"
+		}
+		
+
+		// write results to right side panel
+		document.getElementById("Summary2").innerHTML = HTML2;
+
+	  })	
+
+	
+	sql.execute("SELECT * FROM plant_operational_externalgisfy2020revised WHERE (the_geom && ST_SetSRID(ST_MakeBox2D(ST_Point("+westStr+", "+northStr+"), ST_Point("+eastStr+", "+southStr+")), 4326)) ORDER BY ch_mwh DESC")
+	  .done(function(data) {
+
+		// read table to variable "HTML"
+		count3 = data.total_rows;
+	
+		if (count3 >  15){
+			HTML3 = "<fieldset><legend><b>HYDRO FACILITIES</b></legend><i>Too many features to list. Zoom in.</i></fieldset>"		
+		}
+		else if (count3 == 0){
+			HTML3 = "<fieldset><legend><b>HYDRO FACILITIES</b></legend><i>No features in the map window.</i></fieldset>"
+		}
+		else{
+			HTML3 = "<fieldset><legend><b>HYDRO FACILITIES</b></legend><table id='table02c'><tr id='cellClass'><td align='center'><u><b>MAP IT</b></u>&nbsp;</td><td align='center'><u><b>NAME</b></u></td><td align='center'><u><b>POWER GENERATION (mwh/yr)</b></u></td></tr>"
+			for (var i = 0; i < data.total_rows; i++) {HTML3 = HTML3 + "<tr><td align='center' id='cellClass'><a href='#' onclick='zoomFeature("+data.rows[i].cartodb_id+",\""+data.rows[i].ptname+"\");'>&#9668;</a></td><td align='center'>"+data.rows[i].ptname.substr(0,30)+"</td><td align='center'>"+data.rows[i].ch_mwh+"</td></tr>"}
+			HTML3 = HTML3 + "</table></fieldset><br>"
+		}
+		
+		  // write results to right side panel
+		document.getElementById("Summary3").innerHTML = HTML3;
 	
 	  })	
-	
+
 }
-
-
-
 
 </script>	
 </div>
